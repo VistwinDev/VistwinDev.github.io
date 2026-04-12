@@ -8,8 +8,7 @@ export const sharedPageComponents: SharedLayout = {
   afterBody: [],
   footer: Component.Footer({
     links: {
-      GitHub: "https://github.com/jackyzha0/quartz",
-      "Discord Community": "https://discord.gg/cRFFHYye7t",
+      GitHub: "https://github.com/metaarchetech/metaarchetech.github.io",
     },
   }),
 }
@@ -66,36 +65,46 @@ export const defaultContentPageLayout: PageLayout = {
       ],
     }),
     Component.Explorer(),
+    Component.GraphLink(),
   ],
   right: [
-    Component.Graph({
-      localGraph: {
-        depth: 2,
-        scale: 1.3,
-        repelForce: 0.8,
-        centerForce: 0.3,
-        linkDistance: 50,
-        fontSize: 0.7,
-        opacityScale: 1.5,
-        focusOnHover: true,
-        showTags: true,
-        enableRadial: false,
-      },
-      globalGraph: {
-        depth: -1,
-        scale: 0.85,
-        repelForce: 0.6,
-        centerForce: 0.2,
-        linkDistance: 45,
-        fontSize: 0.65,
-        opacityScale: 1.2,
-        focusOnHover: true,
-        enableRadial: true,
-        showTags: true,
-      },
+    Component.ConditionalRender({
+      component: Component.Graph({
+        localGraph: {
+          depth: 2,
+          scale: 1.3,
+          repelForce: 0.8,
+          centerForce: 0.3,
+          linkDistance: 50,
+          fontSize: 0.7,
+          opacityScale: 1.5,
+          focusOnHover: true,
+          showTags: true,
+          enableRadial: false,
+        },
+        globalGraph: {
+          depth: -1,
+          scale: 0.85,
+          repelForce: 0.6,
+          centerForce: 0.2,
+          linkDistance: 45,
+          fontSize: 0.65,
+          opacityScale: 1.2,
+          focusOnHover: true,
+          enableRadial: true,
+          showTags: true,
+        },
+      }),
+      condition: (page) => page.fileData.slug !== "graph",
     }),
-    Component.DesktopOnly(Component.TableOfContents()),
-    Component.Backlinks(),
+    Component.ConditionalRender({
+      component: Component.DesktopOnly(Component.TableOfContents()),
+      condition: (page) => page.fileData.slug !== "graph",
+    }),
+    Component.ConditionalRender({
+      component: Component.Backlinks(),
+      condition: (page) => page.fileData.slug !== "graph",
+    }),
   ],
 }
 
@@ -115,6 +124,7 @@ export const defaultListPageLayout: PageLayout = {
       ],
     }),
     Component.Explorer(),
+    Component.GraphLink(),
   ],
   right: [],
 }

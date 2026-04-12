@@ -1,0 +1,30 @@
+a.graph-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.4em 0.6em;
+  border-radius: 6px;
+  border: 1px solid var(--lightgray);
+  color: var(--darkgray);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  width: fit-content;
+
+  svg {
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+  }
+
+  &:hover {
+    color: var(--secondary);
+    border-color: var(--secondary);
+    background: color-mix(in srgb, var(--secondary) 8%, transparent);
+    box-shadow: 0 0 10px -3px var(--secondary);
+
+    svg {
+      opacity: 1;
+    }
+  }
+}
