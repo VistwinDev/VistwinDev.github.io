@@ -683,5 +683,40 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
   // Auto-open global graph on dedicated /graph page
   if (simplifySlug(slug) === "graph") {
     await renderGlobalGraph()
+
+    // Inject floating UI overlay
+    const existing = document.getElementById("graph-ui")
+    if (existing) existing.remove()
+
+    const totalNodes = graphData.nodes.length
+    const totalLinks = graphData.links.length
+
+    const ui = document.createElement("div")
+    ui.id = "graph-ui"
+    ui.innerHTML = `
+      <a href="/" class="graph-ui-back" aria-label="Back to home">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Home
+      </a>
+      <div class="graph-ui-title">Knowledge Graph</div>
+      <div class="graph-ui-stats">${totalNodes} nodes · ${totalLinks} links</div>
+      <div class="graph-ui-legend">
+        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#a78bfa"></span>Meta</div>
+        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#60a5fa"></span>Projects</div>
+        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#34d399"></span>Areas</div>
+        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#fbbf24"></span>Resources</div>
+        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#9ca3af"></span>Archive</div>
+        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:transparent;border:2px solid var(--tertiary)"></span>Tags</div>
+      </div>
+      <div class="graph-ui-hint">Scroll to zoom · Drag to pan · Click node to open</div>
+    `
+    document.body.appendChild(ui)
+
+    window.addCleanup(() => {
+      const el = document.getElementById("graph-ui")
+      if (el) el.remove()
+    })
   }
 })
