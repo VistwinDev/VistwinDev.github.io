@@ -20,19 +20,14 @@
     background: var(--light);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 
+    // glow only on hover — no persistent frame
     &:hover {
       border-color: var(--secondary);
       box-shadow: 0 0 18px -4px var(--secondary), 0 0 40px -12px var(--tertiary);
-    }
 
-    // glow on the canvas itself
-    canvas {
-      filter: drop-shadow(0 0 3px var(--secondary));
-      transition: filter 0.3s ease;
-    }
-
-    &:hover canvas {
-      filter: drop-shadow(0 0 6px var(--secondary)) drop-shadow(0 0 2px var(--tertiary));
+      canvas {
+        filter: drop-shadow(0 0 5px var(--secondary));
+      }
     }
 
     & > .global-graph-icon {
@@ -90,10 +85,6 @@
         0 0 30px -6px var(--secondary),
         0 0 80px -20px var(--tertiary),
         0 30px 80px rgba(0, 0, 0, 0.3);
-
-      canvas {
-        filter: drop-shadow(0 0 4px var(--secondary));
-      }
 
       @media all and not ($desktop) {
         width: 94%;

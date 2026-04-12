@@ -3,22 +3,47 @@
 // ── Dedicated Graph Page (/graph) ─────────────────────────────────────────────
 
 body:has(article.graph-page) {
+  overflow: hidden;
+
+  // Remove page max-width constraint
+  .page {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+  }
+
+  // Flatten grid to single block
+  #quartz-body {
+    display: block !important;
+    height: 100vh !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
   // Hide both sidebars
   .sidebar.left,
   .sidebar.right {
     display: none !important;
   }
 
-  // Make center span full width
-  #quartz-body {
-    display: block !important;
+  // Hide header and footer
+  .page-header,
+  .page-footer,
+  footer {
+    display: none !important;
   }
 
+  // Center fills everything
   .center {
     width: 100% !important;
     max-width: 100% !important;
+    min-width: 100% !important;
+    height: 100vh !important;
     margin: 0 !important;
     padding: 0 !important;
+    overflow: hidden !important;
   }
 
   // Article wrapper
@@ -26,27 +51,36 @@ body:has(article.graph-page) {
     padding: 0 !important;
     margin: 0 !important;
     max-width: 100% !important;
+    height: 100vh !important;
+    overflow: hidden !important;
   }
 
-  // The graph component itself
+  // Graph component: fill everything, no decoration
   article.graph-page .graph {
     height: 100vh !important;
     margin: 0 !important;
 
-    // Hide the "Graph View" title label
     & > h3 {
       display: none !important;
     }
 
-    // Graph canvas area — full screen
     & > .graph-outer {
-      height: 100% !important;
+      height: 100vh !important;
       border: none !important;
       border-radius: 0 !important;
       box-shadow: none !important;
+      background: var(--light) !important;
+
+      canvas {
+        filter: none !important;
+      }
 
       &:hover {
-        box-shadow: inset 0 0 80px -30px var(--secondary) !important;
+        box-shadow: none !important;
+
+        canvas {
+          filter: none !important;
+        }
       }
     }
   }
