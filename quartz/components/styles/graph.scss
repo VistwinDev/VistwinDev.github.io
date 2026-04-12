@@ -1,5 +1,7 @@
 @use "../../styles/variables.scss" as *;
 
+// ── Standard sidebar graph ────────────────────────────────────────────────────
+
 .graph {
   & > h3 {
     font-size: 1rem;
@@ -20,7 +22,6 @@
     background: var(--light);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 
-    // glow only on hover — no persistent frame
     &:hover {
       border-color: var(--secondary);
       box-shadow: 0 0 18px -4px var(--secondary), 0 0 40px -12px var(--tertiary);
@@ -89,6 +90,86 @@
       @media all and not ($desktop) {
         width: 94%;
         height: 85vh;
+      }
+    }
+  }
+}
+
+// ── Dedicated graph page (/graph) ─────────────────────────────────────────────
+// These rules live here so they load AFTER the standard rules above and win.
+
+body:has(article.graph-page) {
+  overflow: hidden;
+
+  .page {
+    max-width: 100% !important;
+    height: 100dvh !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #quartz-body {
+    display: block !important;
+    height: 100dvh !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .sidebar.left,
+  .sidebar.right {
+    display: none !important;
+  }
+
+  .page-header,
+  .page-footer,
+  footer {
+    display: none !important;
+  }
+
+  .center {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    height: 100dvh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  article.graph-page {
+    height: 100dvh !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+
+  article.graph-page .graph {
+    height: 100dvh !important;
+    margin: 0 !important;
+
+    & > h3 {
+      display: none !important;
+    }
+
+    & > .graph-outer {
+      height: 100dvh !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+
+      canvas {
+        filter: none !important;
+      }
+
+      &:hover {
+        box-shadow: none !important;
+        border-color: transparent !important;
+
+        canvas {
+          filter: none !important;
+        }
       }
     }
   }
