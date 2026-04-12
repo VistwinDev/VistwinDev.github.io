@@ -19,11 +19,38 @@ export const defaultContentPageLayout: PageLayout = {
   beforeBody: [
     Component.ConditionalRender({
       component: Component.Breadcrumbs(),
-      condition: (page) => page.fileData.slug !== "index",
+      condition: (page) => page.fileData.slug !== "index" && page.fileData.slug !== "graph",
     }),
-    Component.ArticleTitle(),
-    Component.ContentMeta(),
-    Component.TagList(),
+    Component.ConditionalRender({
+      component: Component.ArticleTitle(),
+      condition: (page) => page.fileData.slug !== "graph",
+    }),
+    Component.ConditionalRender({
+      component: Component.ContentMeta(),
+      condition: (page) => page.fileData.slug !== "graph",
+    }),
+    Component.ConditionalRender({
+      component: Component.TagList(),
+      condition: (page) => page.fileData.slug !== "graph",
+    }),
+    Component.ConditionalRender({
+      component: Component.Graph({
+        localGraph: {
+          depth: -1,
+          scale: 0.8,
+          repelForce: 0.6,
+          centerForce: 0.2,
+          linkDistance: 45,
+          fontSize: 0.65,
+          opacityScale: 1.2,
+          focusOnHover: true,
+          showTags: true,
+          enableRadial: true,
+        },
+        globalGraph: undefined,
+      }),
+      condition: (page) => page.fileData.slug === "graph",
+    }),
   ],
   left: [
     Component.PageTitle(),

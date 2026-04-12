@@ -1,3 +1,48 @@
 @use "./base.scss";
 
-// put your custom CSS here!
+// ── Dedicated Graph Page ──────────────────────────────────────────────────────
+// Hide sidebars and make the graph fill the full viewport on /graph
+
+body:has(article.graph-page) {
+  .sidebar.left,
+  .sidebar.right {
+    display: none !important;
+  }
+
+  #quartz-body {
+    grid-template-columns: 1fr !important;
+  }
+
+  .center {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    grid-column: 1 / -1 !important;
+  }
+
+  article.graph-page {
+    padding: 0;
+    margin: 0;
+
+    // The graph container injected via beforeBody
+    .graph {
+      height: calc(100vh - 60px); // leave room for top header
+      margin: 0;
+
+      & > h3 {
+        display: none; // title hidden — slug "Knowledge Graph" speaks for itself
+      }
+
+      & > .graph-outer {
+        height: 100%;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+
+        &:hover {
+          box-shadow: inset 0 0 60px -20px var(--secondary);
+        }
+      }
+    }
+  }
+}
