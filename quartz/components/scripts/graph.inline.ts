@@ -195,16 +195,16 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
   )
 
   // PARA folder color palette
-  const folderColors: Record<string, string> = {
-    "00-meta": "#a78bfa",     // purple
-    "01-projects": "#60a5fa", // blue
-    "02-areas": "#34d399",    // green
-    "03-resources": "#fbbf24", // amber
-    "04-archive": "#9ca3af",  // gray
-  }
+  const folderColors: [string, string][] = [
+    ["00-Meta",      "#a78bfa"], // purple
+    ["01-Projects",  "#60a5fa"], // blue
+    ["02-Areas",     "#34d399"], // green
+    ["03-Resources", "#fbbf24"], // amber
+    ["04-Archive",   "#9ca3af"], // gray
+  ]
 
   function getFolderColor(id: string): string | null {
-    for (const [prefix, col] of Object.entries(folderColors)) {
+    for (const [prefix, col] of folderColors) {
       if (id.startsWith(prefix)) return col
     }
     return null
