@@ -194,23 +194,43 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     {} as Record<(typeof cssVars)[number], string>,
   )
 
+  // PARA folder color palette
+  const folderColors: Record<string, string> = {
+    "00-meta": "#a78bfa",     // purple
+    "01-projects": "#60a5fa", // blue
+    "02-areas": "#34d399",    // green
+    "03-resources": "#fbbf24", // amber
+    "04-archive": "#9ca3af",  // gray
+  }
+
+  function getFolderColor(id: string): string | null {
+    for (const [prefix, col] of Object.entries(folderColors)) {
+      if (id.startsWith(prefix)) return col
+    }
+    return null
+  }
+
   // calculate color
   const color = (d: NodeData) => {
     const isCurrent = d.id === slug
     if (isCurrent) {
       return computedStyleMap["--secondary"]
-    } else if (visited.has(d.id) || d.id.startsWith("tags/")) {
+    } else if (d.id.startsWith("tags/")) {
       return computedStyleMap["--tertiary"]
-    } else {
-      return computedStyleMap["--gray"]
     }
+    const fc = getFolderColor(d.id)
+    if (fc) return fc
+    if (visited.has(d.id)) {
+      return computedStyleMap["--tertiary"]
+    }
+    return computedStyleMap["--gray"]
   }
 
   function nodeRadius(d: NodeData) {
     const numLinks = graphData.links.filter(
       (l) => l.source.id === d.id || l.target.id === d.id,
     ).length
-    return 2 + Math.sqrt(numLinks)
+    return (isFullPage ? 4 : 2) + Math.sqrt(numLinks) * (isFullPage ? 1.8 : 1)
   }
 
   let hoveredNodeId: string | null = null
@@ -391,7 +411,7 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
       interactive: false,
       eventMode: "none",
       text: n.text,
-      alpha: 0,
+      alpha: isFullPage ? 0.8 : 0,
       anchor: { x: 0.5, y: 1.2 },
       style: {
         fontSize: fontSize * 15,
@@ -554,7 +574,7 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
       l.gfx.moveTo(linkData.source.x! + width / 2, linkData.source.y! + height / 2)
       l.gfx
         .lineTo(linkData.target.x! + width / 2, linkData.target.y! + height / 2)
-        .stroke({ alpha: l.alpha, width: 1, color: l.color })
+        .stroke({ alpha: l.alpha, width: isFullPage ? 2 : 1, color: l.color })
     }
 
     tweens.forEach((t) => t.update(time))
