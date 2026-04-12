@@ -95,56 +95,69 @@
   }
 }
 
-// ── Dedicated graph page (/graph) ─────────────────────────────────────────────
-// These rules live here so they load AFTER the standard rules above and win.
+// ── Dedicated /graph page ─────────────────────────────────────────────────────
+// Structure: #quartz-body > .center > .page-header > .popover-hint > .graph
+// The article.graph-page is a SIBLING of .page-header, not a parent.
 
 body:has(article.graph-page) {
   overflow: hidden;
 
-  .page {
+  // Remove page max-width
+  #quartz-root {
     max-width: 100% !important;
-    height: 100dvh !important;
-    overflow: hidden !important;
     margin: 0 !important;
     padding: 0 !important;
   }
 
+  // Flatten grid
   #quartz-body {
     display: block !important;
-    height: 100dvh !important;
     padding: 0 !important;
     margin: 0 !important;
   }
 
+  // Hide sidebars
   .sidebar.left,
   .sidebar.right {
     display: none !important;
   }
 
-  .page-header,
-  .page-footer,
+  // Hide footer (direct child of #quartz-body, outside .center)
   footer {
     display: none !important;
   }
 
+  // Make .center fill full viewport
   .center {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 100% !important;
-    height: 100dvh !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-  }
-
-  article.graph-page {
-    height: 100dvh !important;
     padding: 0 !important;
     margin: 0 !important;
     overflow: hidden !important;
   }
 
-  article.graph-page .graph {
+  // .page-header wraps the Graph — remove all spacing
+  .page-header {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  // .popover-hint is the direct parent of the Graph component
+  .popover-hint {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  // Hide article body (empty on this page) and surrounding chrome
+  article.graph-page,
+  .center > hr,
+  .page-footer {
+    display: none !important;
+  }
+
+  // ── The graph itself ──
+  .popover-hint .graph {
     height: 100dvh !important;
     margin: 0 !important;
 
@@ -164,8 +177,8 @@ body:has(article.graph-page) {
       }
 
       &:hover {
-        box-shadow: none !important;
         border-color: transparent !important;
+        box-shadow: none !important;
 
         canvas {
           filter: none !important;
