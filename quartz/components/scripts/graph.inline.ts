@@ -659,4 +659,9 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
     cleanupLocalGraphs()
     cleanupGlobalGraphs()
   })
+
+  // Auto-open global graph on dedicated /graph page
+  if (simplifySlug(slug) === "graph") {
+    await renderGlobalGraph()
+  }
 })

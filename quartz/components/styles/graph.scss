@@ -102,8 +102,31 @@
 }
 
 // ── Dedicated /graph page ─────────────────────────────────────────────────────
+// Strategy: auto-trigger global graph (position:fixed, correct dimensions)
+// instead of fighting local graph's overflow:hidden constraints.
+
+body:has(article.graph-page) {
+  // Show global graph container full-screen, no modal styling
+  .global-graph-outer {
+    display: block !important;
+    backdrop-filter: none !important;
+    background: var(--light) !important;
+  }
+
+  .global-graph-container {
+    width: 100vw !important;
+    height: 100dvh !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+// ── Local graph page overrides (hide everything else) ─────────────────────────
 // Structure: #quartz-body > .center > .page-header > .popover-hint > .graph
-// The article.graph-page is a SIBLING of .page-header, not a parent.
 
 body:has(article.graph-page) {
   overflow: hidden;
