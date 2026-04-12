@@ -364,6 +364,18 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
   })
   graph.appendChild(app.canvas)
 
+  // On the dedicated /graph page, pin the canvas to cover the full viewport
+  // so it escapes the overflow:hidden clip from .graph-outer
+  if (isFullPage) {
+    const c = app.canvas
+    c.style.position = "fixed"
+    c.style.top = "0"
+    c.style.left = "0"
+    c.style.width = "100vw"
+    c.style.height = "100dvh"
+    c.style.zIndex = "0"
+  }
+
   const stage = app.stage
   stage.interactive = false
 
