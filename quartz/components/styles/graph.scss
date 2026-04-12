@@ -4,36 +4,58 @@
   & > h3 {
     font-size: 1rem;
     margin: 0;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0.7;
   }
 
   & > .graph-outer {
-    border-radius: 5px;
+    border-radius: 8px;
     border: 1px solid var(--lightgray);
     box-sizing: border-box;
-    height: 250px;
+    height: 420px;
     margin: 0.5em 0;
     position: relative;
     overflow: hidden;
+    background: var(--light);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      border-color: var(--secondary);
+      box-shadow: 0 0 18px -4px var(--secondary), 0 0 40px -12px var(--tertiary);
+    }
+
+    // glow on the canvas itself
+    canvas {
+      filter: drop-shadow(0 0 3px var(--secondary));
+      transition: filter 0.3s ease;
+    }
+
+    &:hover canvas {
+      filter: drop-shadow(0 0 6px var(--secondary)) drop-shadow(0 0 2px var(--tertiary));
+    }
 
     & > .global-graph-icon {
       cursor: pointer;
       background: none;
       border: none;
       color: var(--dark);
-      opacity: 0.5;
-      width: 24px;
-      height: 24px;
+      opacity: 0.4;
+      width: 26px;
+      height: 26px;
       position: absolute;
       padding: 0.2rem;
-      margin: 0.3rem;
+      margin: 0.4rem;
       top: 0;
       right: 0;
-      border-radius: 4px;
+      border-radius: 6px;
       background-color: transparent;
-      transition: background-color 0.5s ease;
-      cursor: pointer;
+      transition: background-color 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+
       &:hover {
+        opacity: 1;
         background-color: var(--lightgray);
+        box-shadow: 0 0 8px var(--secondary);
       }
     }
   }
@@ -45,7 +67,7 @@
     top: 0;
     width: 100vw;
     height: 100%;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(8px) brightness(0.7);
     display: none;
     overflow: hidden;
 
@@ -54,19 +76,28 @@
     }
 
     & > .global-graph-container {
-      border: 1px solid var(--lightgray);
+      border: 1px solid var(--secondary);
       background-color: var(--light);
-      border-radius: 5px;
+      border-radius: 12px;
       box-sizing: border-box;
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      height: 80vh;
-      width: 80vw;
+      height: 88vh;
+      width: 88vw;
+      box-shadow:
+        0 0 30px -6px var(--secondary),
+        0 0 80px -20px var(--tertiary),
+        0 30px 80px rgba(0, 0, 0, 0.3);
+
+      canvas {
+        filter: drop-shadow(0 0 4px var(--secondary));
+      }
 
       @media all and not ($desktop) {
-        width: 90%;
+        width: 94%;
+        height: 85vh;
       }
     }
   }
