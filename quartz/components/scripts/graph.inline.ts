@@ -688,8 +688,13 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
     const existing = document.getElementById("graph-ui")
     if (existing) existing.remove()
 
-    const totalNodes = graphData.nodes.length
-    const totalLinks = graphData.links.length
+    // Count nodes/links from the content index (graphData is scoped inside renderGraph)
+    const contentData = Object.entries<ContentDetails>(await fetchData)
+    const totalNodes = contentData.length
+    let totalLinks = 0
+    for (const [, details] of contentData) {
+      totalLinks += (details.links ?? []).length
+    }
 
     const ui = document.createElement("div")
     ui.id = "graph-ui"
