@@ -27,6 +27,7 @@ tags:
 - **主標**：`OTA 120`
 - **副標**：全透明 · 全健築 · 全生命週期
 - **tagline**：建築5.0 的智慧靈魂
+- **副線**：感知 · 建模 · 進化 · 體驗
 - **英文副線**：Sensing · Modeling · Evolving · Experiencing
 - **合作方**：寶舖建設 × WELLTEK × NVIDIA Omniverse
 - **版號**：`v6 · 2026.04`　**標註**：CONFIDENTIAL

@@ -3,7 +3,7 @@ tags: [moc, resources]
 created: 2026-04-11
 ---
 
-# 📚 03 Resources MOC
+# 📚 04 Resources MOC
 
 > 可重複使用的知識庫與參考資料。與特定專案無關的長期資產都放這裡。
 

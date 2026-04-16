@@ -30,7 +30,10 @@ created: 2026-04-11
   - [[XR + 3DGS Unity]]
 - BIM（`Technology Stack/BIM/`）
 - [[Model Context Protocol]]
+- [[Ontology Engineering]]
+  - [[The Palantir Ontology System]]
+  - [[Ontology 工程堆疊]]
 
 ## 返回
 
-- [[03 Resources MOC]] → [[Vault Home]]
+- [[04 Resources MOC]] → [[Vault Home]]

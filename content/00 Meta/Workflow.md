@@ -38,8 +38,9 @@ updated: 2026-04-11
 │  00 Meta       ← Claude Memory, Workflow    │
 │  01 Projects   ← 有時效的事 + Gantt         │
 │  02 Areas      ← 長期角色/責任               │
-│  03 Resources  ← 永久性知識                  │
-│  04 Archive    ← 完成/歸檔                   │
+│  03 Products   ← 產品技術文件               │
+│  04 Resources  ← 永久性知識                  │
+│  05 Archive    ← 完成/歸檔                   │
 │                    │                        │
 │                    ▼                        │
 ├─────────────────────────────────────────────┤
@@ -55,8 +56,9 @@ updated: 2026-04-11
 | **00 Meta** | 系統層的檔案 (Workflow, Claude Memory, Vault Home, 使用指南) | 架構變動時 |
 | **01 Projects** | 有明確目標和結束時間的事 (含 Projects Dashboard 的 gantt) | 有進展就動 |
 | **02 Areas** | 長期責任領域,沒有結束日 (健康、財務、家庭等) | 每週/每月回顧 |
-| **03 Resources** | 永久性知識、技術 stack、參考資料 | 學到新東西就存 |
-| **04 Archive** | 結束或不再活躍的 Projects/Areas/Resources | 專案結束時搬過來 |
+| **03 Products** | 產品技術文件、插件 SDK 文件 | 產品更新時 |
+| **04 Resources** | 永久性知識、技術 stack、參考資料 | 學到新東西就存 |
+| **05 Archive** | 結束或不再活躍的 Projects/Areas/Resources | 專案結束時搬過來 |
 
 ## ⏰ 排程 Agent 任務 (Dispatch)
 

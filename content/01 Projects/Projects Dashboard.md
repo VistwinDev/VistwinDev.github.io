@@ -1,8 +1,8 @@
 ---
 tags: [projects, dashboard, gantt]
 created: 2026-04-11
-updated: 2026-04-12
-last-synced: 2026-04-12T08:11+08:00
+updated: 2026-04-14
+last-synced: 2026-04-14T00:00+08:00
 ---
 
 # 📊 Projects Dashboard
@@ -48,10 +48,9 @@ gantt
 
     %% === AUTO-SYNC 區:agent 從 gcal 拉的事件會放這裡 === %%
     %% AUTO-SYNC START %%
-    section Calendar Events
-    維斯孿生公司登記資訊交給媽媽 (Urgent) :crit,   cal1, 2026-04-12, 8h
-    繼續保舖孿生系統簡報 (Daily)         :active, cal2, 2026-04-12, 8h
-    %% 本週 (04-13 ~ 04-19) 目前尚無 calendar 事件 %%
+    section Calendar Events (04-14)
+    %% ⚠️ Google Calendar 連線需要重新認證，無法取得今日事件 %%
+    %% 上次成功同步: 2026-04-13 %%
     %% AUTO-SYNC END %%
 ```
 
@@ -59,22 +58,19 @@ gantt
 
 > 這個區塊由 agent 每日晨間更新。格式是方便人讀的清單。
 
-**最後同步:** 2026-04-12 08:11 Asia/Taipei (vault-morning-sync)
+**最後同步:** 2026-04-14 — ⚠️ Google Calendar 需要重新認證，本次同步失敗 (vault-morning-sync)
 
-### 📅 今日 (2026-04-12 週日)
+### 📅 今日 (2026-04-14 週二)
 
-- 09:00–17:00 **維斯孿生公司登記資訊交給媽媽** (Urgent Tasks) — 時間窗口寬鬆,今天內完成即可
-- 14:00–22:00 **繼續保舖孿生系統簡報** (Daily Tasks) — 下午到晚間的深度工作時段
+- ⚠️ 無法取得行事曆事件 — Google Calendar 連線已過期，請重新認證
 
-### 📆 本週剩餘
+### 📆 本週剩餘 (04-15 ~ 04-19)
 
-- 今日即為本週最後一天,本週已無其他事件
-- 下週 (2026-04-13 ~ 2026-04-19) 目前所有 7 個行事曆皆無事件
+- ⚠️ 無法取得 — 同上
 
 ### 👥 共享行事曆提醒
 
-- Francis (本人): 無行程
-- Sylvie: 無行程
+- ⚠️ 無法取得 — 同上
 
 ## 🧭 使用說明
 

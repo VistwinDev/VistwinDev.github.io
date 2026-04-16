@@ -11,8 +11,9 @@ created: 2026-04-11
 
 - [[01 Projects MOC|01 📌 Projects（進行中專案）]]
 - [[02 Areas MOC|02 🎯 Areas（長期領域）]]
-- [[03 Resources MOC|03 📚 Resources（參考資源）]]
-- [[04 Archive MOC|04 🗄 Archive（已封存）]]
+- [[03 Products MOC|03 🚀 Products（產品文件）]]
+- [[04 Resources MOC|04 📚 Resources（參考資源）]]
+- [[05 Archive MOC|05 🗄 Archive（已封存）]]
 
 ## 🧭 快速導覽
 
@@ -24,8 +25,9 @@ created: 2026-04-11
 00 Meta/         vault 本身的設定、使用指南、首頁
 01 Projects/     有明確截止日的工作 → 完成後搬去 Archive
 02 Areas/        長期要維持的責任領域（研究方向、合作關係）
-03 Resources/    可重複使用的知識庫（技術筆記、收藏）
-04 Archive/      已完成或封存的舊內容
+03 Products/     產品技術文件（Omniverse 插件、SDK、工具）
+04 Resources/    可重複使用的知識庫（技術筆記、收藏）
+05 Archive/      已完成或封存的舊內容
 Images/          圖片附件（Obsidian attachment folder）
 ```
 
