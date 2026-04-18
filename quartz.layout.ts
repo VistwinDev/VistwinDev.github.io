@@ -4,8 +4,12 @@ import * as Component from "./quartz/components"
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
-  header: [],
-  afterBody: [],
+  header: [Component.DnaHeader()],
+  afterBody: [
+    Component.AiChat({
+      workerUrl: "https://metaarchetech-ai.metaarteorg.workers.dev",
+    }),
+  ],
   footer: Component.Footer({
     links: {
       GitHub: "https://github.com/metaarchetech/metaarchetech.github.io",
@@ -52,16 +56,9 @@ export const defaultContentPageLayout: PageLayout = {
     }),
   ],
   left: [
-    Component.PageTitle(),
-    Component.MobileOnly(Component.Spacer()),
     Component.Flex({
       components: [
-        {
-          Component: Component.Search(),
-          grow: true,
-        },
-        { Component: Component.Darkmode() },
-        { Component: Component.ReaderMode() },
+        { Component: Component.Search(), grow: true },
       ],
     }),
     Component.Explorer(),
@@ -108,19 +105,13 @@ export const defaultContentPageLayout: PageLayout = {
   ],
 }
 
-// components for pages that display lists of pages  (e.g. tags or folders)
+// components for pages that display lists of pages (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
   beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
   left: [
-    Component.PageTitle(),
-    Component.MobileOnly(Component.Spacer()),
     Component.Flex({
       components: [
-        {
-          Component: Component.Search(),
-          grow: true,
-        },
-        { Component: Component.Darkmode() },
+        { Component: Component.Search(), grow: true },
       ],
     }),
     Component.Explorer(),
