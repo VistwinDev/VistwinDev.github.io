@@ -24,6 +24,7 @@ export default ((opts: AiChatOptions) => {
 
       {/* ── Chat panel ────────────────────────────────────────────────── */}
       <div id="dna-ai-panel" class="dna-ai-panel" role="dialog" aria-label="Knowledge base AI assistant">
+        <canvas id="dna-ai-canvas" class="dna-ai-canvas" aria-hidden="true" />
         <div class="dna-ai-resize-top" aria-hidden="true" />
         <div class="dna-ai-resize-left" aria-hidden="true" />
 
@@ -470,6 +471,25 @@ export default ((opts: AiChatOptions) => {
   #dna-ai-chat { left: 1rem; right: 1rem; width: auto; }
   .dna-ai-panel { width: 100% !important; right: 0; border-radius: 20px; }
 }
+
+/* ── Shader canvas background ─────────────────────────────────────────── */
+.dna-ai-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 24px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.22;
+  mix-blend-mode: screen;
+}
+:root[saved-theme="light"] .dna-ai-canvas {
+  opacity: 0.07;
+  mix-blend-mode: multiply;
+}
+/* All panel content must sit above the canvas */
+.dna-ai-panel > *:not(.dna-ai-canvas) { position: relative; z-index: 1; }
 
 /* ── Resize handles ───────────────────────────────────────────────────── */
 .dna-ai-resize-top,
