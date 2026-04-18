@@ -259,3 +259,10 @@ iPad Safari → React UI
 - Slide 3、Slide 6 需要實拍或截圖素材（iPad UI 近拍、UE5 主螢幕）；未備妥時以灰框佔位。
 - 技術架構圖（Slide 7）的 code block 為內容規格，建議由設計師以向量圖重製。
 - Roadmap 與 KPI 已從本版移除（內容不足以獨立成頁）；如後續需要可補充為附錄頁。
+
+---
+
+## Related
+
+- [[寶舖品牌概念對照表]] — 寶舖建設品牌語言 × OTA120 對應
+- [[MOC|OTA120 MOC]]

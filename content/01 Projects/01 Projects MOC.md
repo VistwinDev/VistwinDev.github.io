@@ -9,7 +9,8 @@ created: 2026-04-11
 
 ## 進行中
 
-_尚未建立任何 2026 專案。_
+- [[OTA120/MOC|OTA120]] — 建築5.0 數位孿生展示，合作方：寶舖建設 × WELLTEK × NVIDIA Omniverse
+- [[Visustwin/MOC|Visustwin]] — 數位孿生平台開發，含 6 個 repos + 展間掃描 HUD 系統
 
 ## 建立新專案
 

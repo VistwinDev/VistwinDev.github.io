@@ -33,6 +33,8 @@ flowchart TD
 
 ```
 
+[[Augment Machine Learning Agent (CrewAI)]]
+
 好！我們可以**逐步細化 LSEG 語意分割 agent pipeline 每一步所需的「資料/參數/檔案/工具/依賴」**，讓你設計 agent 時每個步驟都清楚知道：
 
 - 需要什麼輸入/依賴（如資料集、特徵檔、權重、設定）

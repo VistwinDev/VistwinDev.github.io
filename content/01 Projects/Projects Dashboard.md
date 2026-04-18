@@ -1,8 +1,8 @@
 ---
 tags: [projects, dashboard, gantt]
 created: 2026-04-11
-updated: 2026-04-14
-last-synced: 2026-04-14T00:00+08:00
+updated: 2026-04-18
+last-synced: 2026-04-18T08:00+08:00
 ---
 
 # 📊 Projects Dashboard
@@ -48,8 +48,8 @@ gantt
 
     %% === AUTO-SYNC 區:agent 從 gcal 拉的事件會放這裡 === %%
     %% AUTO-SYNC START %%
-    section Calendar Events (04-14)
-    %% ⚠️ Google Calendar 連線需要重新認證，無法取得今日事件 %%
+    section Calendar Events (04-18)
+    %% ⚠️ Google Calendar MCP 尚未連接於本次 session，無法取得今日事件 %%
     %% 上次成功同步: 2026-04-13 %%
     %% AUTO-SYNC END %%
 ```
@@ -58,17 +58,17 @@ gantt
 
 > 這個區塊由 agent 每日晨間更新。格式是方便人讀的清單。
 
-**最後同步:** 2026-04-14 — ⚠️ Google Calendar 需要重新認證，本次同步失敗 (vault-morning-sync)
+**最後同步:** 2026-04-18 — ⚠️ Google Calendar MCP 未於本次 session 連接，本次同步未取得事件 (vault-morning-sync)
 
-### 📅 今日 (2026-04-14 週二)
+### 📅 今日 (2026-04-18 週六)
 
-- ⚠️ 無法取得行事曆事件 — Google Calendar 連線已過期，請重新認證
+- ⚠️ 無法取得行事曆事件 — 本次 agent 執行時無 Google Calendar MCP 工具可用，請確認 connector 已啟用
 
-### 📆 本週剩餘 (04-15 ~ 04-19)
+### 📆 本週剩餘 (04-18 ~ 04-19)
 
 - ⚠️ 無法取得 — 同上
 
-### 👥 共享行事曆提醒
+### 👥 共享行事曆提醒 (Francis / Sylvie)
 
 - ⚠️ 無法取得 — 同上
 
@@ -80,6 +80,7 @@ gantt
 
 ## 🔗 相關
 
+- [[01 Projects MOC]] — 進行中專案索引
 - [[Workflow]] — 整體工作流說明
 - [[Claude Memory]] — 使用者偏好與行事曆對應表
 
