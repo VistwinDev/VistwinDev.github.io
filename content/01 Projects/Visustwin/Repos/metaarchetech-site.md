@@ -52,4 +52,4 @@ Metaarchetech 公開知識站，基於 Quartz v4 架設，部署於 GitHub Pages
 
 ## 返回
 
-- [[../MOC|Visustwin MOC]]
+- [[01 Projects/Visustwin/MOC|Visustwin MOC]]

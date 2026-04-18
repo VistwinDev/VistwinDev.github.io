@@ -265,4 +265,4 @@ iPad Safari → React UI
 ## Related
 
 - [[寶舖品牌概念對照表]] — 寶舖建設品牌語言 × OTA120 對應
-- [[MOC|OTA120 MOC]]
+- [[01 Projects/OTA120/MOC|OTA120 MOC]]
