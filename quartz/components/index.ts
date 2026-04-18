@@ -26,6 +26,7 @@ import ConditionalRender from "./ConditionalRender"
 import GraphLink from "./GraphLink"
 import DnaHeader from "./DnaHeader"
 import AiChat from "./AiChat"
+import HomeShader from "./HomeShader"
 
 export {
   ArticleTitle,
@@ -56,4 +57,5 @@ export {
   GraphLink,
   DnaHeader,
   AiChat,
+  HomeShader,
 }
