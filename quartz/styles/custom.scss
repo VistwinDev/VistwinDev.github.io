@@ -553,3 +553,72 @@ th { border-bottom: 1px solid var(--secondary); }
     .graph-ui-legend { flex-direction: row; flex-wrap: wrap; gap: 0.25rem 0.75rem; }
   }
 }
+
+// ── Explorer inside fixed glass drawer ───────────────────────────────────────
+// custom.scss makes .sidebar.left always position:fixed (a slide-in drawer).
+// The Explorer component's original mobile behaviour — an absolute overlay with
+// its own hamburger toggle — is redundant and creates a broken two-step UX.
+// Everything below resets it so content is always visible inside the drawer.
+
+.page > #quartz-body > .sidebar.left {
+  // DnaHeader hamburger handles drawer open/close — hide Explorer's own toggle
+  .mobile-explorer {
+    display: none !important;
+  }
+
+  // Always show desktop-style section title button inside the drawer
+  .desktop-explorer {
+    display: flex !important;
+  }
+
+  // Explorer container: fill drawer vertically, let drawer scroll
+  .explorer {
+    flex: 1 1 auto !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    align-self: stretch !important;
+    order: unset !important;
+    flex-shrink: unset !important;
+  }
+
+  // Explorer content: static flow (not absolute overlay) — overrides all mobile states
+  .explorer-content {
+    position: static !important;
+    transform: none !important;
+    visibility: visible !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 0.25rem 0 1rem !important;
+    overflow-y: visible !important;
+    display: block !important;
+  }
+
+  // Collapsed: hide content with display (arrow rotation handled by existing CSS)
+  .explorer.collapsed > .explorer-content {
+    display: none !important;
+  }
+
+  // Not collapsed: definitely show content
+  .explorer:not(.collapsed) > .explorer-content {
+    display: block !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+}
+
+// Disable the old push-sidebar transform (we use fixed drawer + backdrop instead)
+.page > #quartz-body.lock-scroll > :not(.sidebar.left) {
+  transform: none !important;
+}
+
+// ── Mobile tap-target sizing (≥ 44 × 44 px per WCAG / HIG guidelines) ────────
+@media (max-width: 800px) {
+  .dna-hamburger,
+  .dna-search-btn,
+  .dna-theme-toggle {
+    width: 44px !important;
+    height: 44px !important;
+  }
+}

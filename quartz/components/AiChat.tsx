@@ -476,17 +476,18 @@ export default ((opts: AiChatOptions) => {
     right: 0.75rem;
     bottom: 1rem;
     width: auto;
+    /* Smooth lift when soft keyboard appears (JS sets bottom dynamically) */
+    transition: bottom 120ms ease;
   }
   .dna-ai-panel {
-    /* Cover screen height but cap so it never overflows above the fold */
+    /* height: 100dvh tracks visual viewport → shrinks when keyboard opens */
     width: 100% !important;
     height: min(520px, calc(100dvh - 5rem)) !important;
     right: 0;
     border-radius: 20px 20px 16px 16px;
-    /* When soft keyboard opens, dvh shrinks → panel shrinks too (no blank space) */
   }
   .dna-ai-input {
-    /* Prevent iOS zoom on focus (font must be ≥16px) */
+    /* Prevent iOS auto-zoom on focus (≥16px required) */
     font-size: 16px;
   }
 }
