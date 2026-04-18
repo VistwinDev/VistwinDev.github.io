@@ -481,11 +481,11 @@ export default ((opts: AiChatOptions) => {
   border-radius: 24px;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.22;
-  mix-blend-mode: screen;
+  opacity: 0.55;
+  mix-blend-mode: lighten;
 }
 :root[saved-theme="light"] .dna-ai-canvas {
-  opacity: 0.07;
+  opacity: 0.12;
   mix-blend-mode: multiply;
 }
 /* All panel content must sit above the canvas */

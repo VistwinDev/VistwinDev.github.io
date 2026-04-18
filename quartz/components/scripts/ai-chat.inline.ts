@@ -48,7 +48,7 @@ void main(){
   float n=fbm(q*1.2+t*0.8);
   n+=0.3*fbm(q*2.5-t*0.4);
   n=smoothstep(-0.9,0.9,n);
-  float nb=pow(clamp(n,0.0,1.0),1.6);
+  float nb=pow(clamp(n,0.0,1.0),0.9);
   vec3 col=mix(u_colA,u_colB,nb);
   col*=1.0-0.3*length(p);
   col=pow(max(col,0.0),vec3(0.88));
@@ -78,10 +78,10 @@ void main(){
     colB:  gl.getUniformLocation(prog, "u_colB"),
   }
 
-  // Green-tinted: near-black → site green (#76b900)
-  const colA = [0.03, 0.04, 0.05]
-  const colB = [0.463, 0.722, 0.0]
-  const speed = 0.025
+  // near-black → bright green, boosted for visibility
+  const colA = [0.01, 0.02, 0.03]
+  const colB = [0.55, 0.95, 0.02]
+  const speed = 0.03
   const start = performance.now()
   let rafId = 0
 
