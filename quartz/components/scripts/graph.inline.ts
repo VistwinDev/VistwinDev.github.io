@@ -194,19 +194,24 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     {} as Record<(typeof cssVars)[number], string>,
   )
 
-  // PARA folder color palette — mirrors Obsidian graph.json colorGroups
+  // PARA folder color palette
+  // "css:--varname" entries are resolved from computedStyleMap at render time
   const folderColors: [string, string][] = [
-    ["00-Meta",      "#ff4747"], // red    (rgb 16729927)
-    ["01-Projects",  "#ffcd42"], // amber  (rgb 16764226)
-    ["02-Areas",     "#c3ff42"], // lime   (rgb 12844866)
-    ["03-Products",  "#42bfff"], // sky    (new folder)
-    ["04-Resources", "#52ff5d"], // green  (rgb  5439325)
-    ["05-Archive",   "#ababab"], // gray   (rgb 11250603)
+    ["00-Meta",      "css:--dark"], // theme-reactive: #2b2b2b light / #ebebec dark
+    ["01-Projects",  "#60a5fa"],   // blue-400
+    ["02-Areas",     "#34d399"],   // emerald-400
+    ["03-Products",  "#a78bfa"],   // violet-400 (freed from Meta)
+    ["04-Resources", "#fbbf24"],   // amber-400
+    ["05-Archive",   "#9ca3af"],   // gray-400
   ]
 
   function getFolderColor(id: string): string | null {
     for (const [prefix, col] of folderColors) {
-      if (id.startsWith(prefix)) return col
+      if (id.startsWith(prefix)) {
+        return col.startsWith("css:")
+          ? computedStyleMap[col.slice(4) as keyof typeof computedStyleMap].trim()
+          : col
+      }
     }
     return null
   }
@@ -450,7 +455,7 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
       })
 
     if (isTagNode) {
-      gfx.stroke({ width: 2, color: computedStyleMap["--tertiary"] })
+      gfx.stroke({ width: 2, color: "#f472b6" })
     }
 
     nodesContainer.addChild(gfx)
@@ -709,12 +714,12 @@ document.addEventListener("nav", async (e: CustomEventMap["nav"]) => {
       <div class="graph-ui-title">Knowledge Graph</div>
       <div class="graph-ui-stats">${totalNodes} nodes · ${totalLinks} links</div>
       <div class="graph-ui-legend">
-        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#a78bfa"></span>Meta</div>
+        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:var(--dark)"></span>Meta</div>
         <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#60a5fa"></span>Projects</div>
         <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#34d399"></span>Areas</div>
         <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#fbbf24"></span>Resources</div>
         <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#9ca3af"></span>Archive</div>
-        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:transparent;border:2px solid var(--tertiary)"></span>Tags</div>
+        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:transparent;border:2px solid #f472b6"></span>Tags</div>
       </div>
       <div class="graph-ui-hint">Scroll to zoom · Drag to pan · Click node to open</div>
     `
