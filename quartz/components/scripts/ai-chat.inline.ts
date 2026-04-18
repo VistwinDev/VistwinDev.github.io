@@ -70,6 +70,66 @@ document.addEventListener("nav", () => {
   let abortCtrl: AbortController | null = null
   let currentMode: "researcher" | "manager" = "researcher"
 
+  // ── Restore saved panel size ───────────────────────────────────────────────
+  const savedPanelW = localStorage.getItem("dna-ai-panel-width")
+  const savedPanelH = localStorage.getItem("dna-ai-panel-height")
+  if (savedPanelW) panel.style.width = savedPanelW
+  if (savedPanelH) panel.style.height = savedPanelH
+
+  // ── Panel resize (left edge + top edge) ────────────────────────────────────
+  const makeDragger = (
+    handle: HTMLElement,
+    axis: "x" | "y",
+  ) => {
+    let startPos = 0
+    let startSize = 0
+
+    const onMove = (e: PointerEvent) => {
+      if (axis === "x") {
+        // left handle: drag left = wider (panel is right-anchored)
+        const delta = startPos - e.clientX
+        const newW = Math.max(320, Math.min(700, startSize + delta))
+        panel.style.width = newW + "px"
+      } else {
+        // top handle: drag up = taller (panel is bottom-anchored)
+        const delta = startPos - e.clientY
+        const newH = Math.max(280, Math.min(800, startSize + delta))
+        panel.style.height = newH + "px"
+      }
+    }
+
+    const onUp = (e: PointerEvent) => {
+      handle.classList.remove("dna-dragging")
+      handle.releasePointerCapture(e.pointerId)
+      document.removeEventListener("pointermove", onMove)
+      document.removeEventListener("pointerup", onUp)
+      document.body.style.userSelect = ""
+      document.body.style.cursor = ""
+      if (axis === "x") localStorage.setItem("dna-ai-panel-width", panel.style.width)
+      else localStorage.setItem("dna-ai-panel-height", panel.style.height)
+    }
+
+    const onDown = (e: PointerEvent) => {
+      startPos = axis === "x" ? e.clientX : e.clientY
+      startSize = axis === "x" ? panel.offsetWidth : panel.offsetHeight
+      handle.classList.add("dna-dragging")
+      handle.setPointerCapture(e.pointerId)
+      document.addEventListener("pointermove", onMove)
+      document.addEventListener("pointerup", onUp)
+      document.body.style.userSelect = "none"
+      document.body.style.cursor = axis === "x" ? "ew-resize" : "ns-resize"
+      e.preventDefault()
+    }
+
+    handle.addEventListener("pointerdown", onDown)
+    window.addCleanup(() => handle.removeEventListener("pointerdown", onDown))
+  }
+
+  const leftHandle = panel.querySelector(".dna-ai-resize-left") as HTMLElement | null
+  const topHandle  = panel.querySelector(".dna-ai-resize-top")  as HTMLElement | null
+  if (leftHandle) makeDragger(leftHandle, "x")
+  if (topHandle)  makeDragger(topHandle,  "y")
+
   // ── Mode toggle ────────────────────────────────────────────────────────────
   for (const btn of document.querySelectorAll<HTMLButtonElement>(".dna-ai-mode-btn")) {
     btn.addEventListener("click", () => {

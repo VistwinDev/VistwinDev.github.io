@@ -24,6 +24,8 @@ export default ((opts: AiChatOptions) => {
 
       {/* ── Chat panel ────────────────────────────────────────────────── */}
       <div id="dna-ai-panel" class="dna-ai-panel" role="dialog" aria-label="Knowledge base AI assistant">
+        <div class="dna-ai-resize-top" aria-hidden="true" />
+        <div class="dna-ai-resize-left" aria-hidden="true" />
 
         {/* Header */}
         <div class="dna-ai-header">
@@ -154,7 +156,8 @@ export default ((opts: AiChatOptions) => {
   bottom: calc(52px + 0.875rem);
   right: 0;
   pointer-events: none;
-  width: 360px;
+  width: 440px;
+  height: 500px;
   display: flex;
   flex-direction: column;
   border-radius: 24px;
@@ -310,8 +313,8 @@ export default ((opts: AiChatOptions) => {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  min-height: 200px;
-  max-height: 380px;
+  flex: 1;
+  min-height: 100px;
   scroll-behavior: smooth;
 }
 .dna-ai-messages::-webkit-scrollbar { width: 4px; }
@@ -465,7 +468,35 @@ export default ((opts: AiChatOptions) => {
 /* Mobile */
 @media (max-width: 480px) {
   #dna-ai-chat { left: 1rem; right: 1rem; width: auto; }
-  .dna-ai-panel { width: 100%; right: 0; border-radius: 20px; }
+  .dna-ai-panel { width: 100% !important; right: 0; border-radius: 20px; }
+}
+
+/* ── Resize handles ───────────────────────────────────────────────────── */
+.dna-ai-resize-top,
+.dna-ai-resize-left {
+  position: absolute;
+  z-index: 20;
+  transition: background 150ms;
+}
+.dna-ai-resize-top {
+  top: 0; left: 8px; right: 8px;
+  height: 6px;
+  cursor: ns-resize;
+  border-radius: 24px 24px 0 0;
+}
+.dna-ai-resize-left {
+  left: 0; top: 8px; bottom: 8px;
+  width: 6px;
+  cursor: ew-resize;
+  border-radius: 24px 0 0 24px;
+}
+.dna-ai-resize-top:hover,
+.dna-ai-resize-top.dna-dragging {
+  background: rgba(118, 185, 0, 0.25);
+}
+.dna-ai-resize-left:hover,
+.dna-ai-resize-left.dna-dragging {
+  background: rgba(118, 185, 0, 0.25);
 }
 `
 
