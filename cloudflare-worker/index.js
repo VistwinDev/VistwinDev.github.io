@@ -75,7 +75,7 @@ ${context}`
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: mode === "manager" ? "openai/gpt-oss-20b" : "openai/gpt-oss-120b",
+        model: mode === "manager" ? "llama-3.1-8b-instant" : "llama-3.3-70b-versatile",
         stream: true,
         max_tokens: mode === "manager" ? 600 : 1500,
         temperature: mode === "manager" ? 0.3 : 0.6,
