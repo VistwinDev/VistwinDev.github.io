@@ -8,8 +8,11 @@ const initShader = (canvas: HTMLCanvasElement) => {
 precision highp float;
 uniform vec2  u_res;
 uniform float u_time;
-uniform vec2  u_mouse;    // normalized panel coords 0..1, (-1,-1) = no hover
-uniform float u_mstr;     // mouse strength 0..1 (smoothed)
+uniform vec2  u_mouse;
+uniform float u_mstr;
+uniform vec3  u_colA;
+uniform vec3  u_colB;
+uniform float u_bias;
 
 vec3 mod289v3(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
 vec2 mod289v2(vec2 x){return x-floor(x*(1.0/289.0))*289.0;}
@@ -61,12 +64,8 @@ void main(){
   n+=0.25*fbm(q*0.55-t*0.4);
   n=smoothstep(-0.85,0.85,n);
 
-  // High pow → mostly dark, green only at bright peaks
-  float nb=pow(clamp(n,0.0,1.0),2.8);
-  // near-black → dark forest green (muted)
-  vec3 colA=vec3(0.01,0.02,0.025);
-  vec3 colB=vec3(0.3,0.58,0.01);
-  vec3 col=mix(colA,colB,nb);
+  float nb=pow(clamp(n,0.0,1.0),u_bias);
+  vec3 col=mix(u_colA,u_colB,nb);
 
   // Subtle glow at mouse position
   col+=vec3(0.0,0.12,0.0)*exp(-dM*3.5)*u_mstr;
@@ -96,7 +95,27 @@ void main(){
     time:  gl.getUniformLocation(prog, "u_time"),
     mouse: gl.getUniformLocation(prog, "u_mouse"),
     mstr:  gl.getUniformLocation(prog, "u_mstr"),
+    colA:  gl.getUniformLocation(prog, "u_colA"),
+    colB:  gl.getUniformLocation(prog, "u_colB"),
+    bias:  gl.getUniformLocation(prog, "u_bias"),
   }
+
+  // Theme-aware palette — called on init and on themechange
+  type Theme = { colA: number[], colB: number[], bias: number, opacity: string, blend: string }
+  const palette = (): Theme => {
+    const light = document.documentElement.getAttribute("saved-theme") === "light"
+    return light
+      ? { colA: [0.90, 0.95, 0.90], colB: [0.40, 0.72, 0.08], bias: 0.75, opacity: "0.35", blend: "multiply" }
+      : { colA: [0.01, 0.02, 0.025], colB: [0.30, 0.58, 0.01], bias: 2.8,  opacity: "0.45", blend: "lighten"  }
+  }
+  let theme = palette()
+  const applyTheme = () => {
+    theme = palette()
+    canvas.style.opacity = theme.opacity
+    canvas.style.mixBlendMode = theme.blend
+  }
+  applyTheme()
+  document.addEventListener("themechange", applyTheme)
 
   const start = performance.now()
   let rafId = 0
@@ -134,6 +153,9 @@ void main(){
     gl.uniform1f(loc.time, (now - start) / 1000)
     gl.uniform2f(loc.mouse, mx, my)
     gl.uniform1f(loc.mstr, mstr)
+    gl.uniform3f(loc.colA, theme.colA[0], theme.colA[1], theme.colA[2])
+    gl.uniform3f(loc.colB, theme.colB[0], theme.colB[1], theme.colB[2])
+    gl.uniform1f(loc.bias, theme.bias)
     gl.drawArrays(gl.TRIANGLES, 0, 3)
     rafId = requestAnimationFrame(render)
   }
@@ -144,6 +166,7 @@ void main(){
       cancelAnimationFrame(rafId); rafId = 0
       canvas.parentElement?.removeEventListener("pointermove", onMouseMove)
       canvas.parentElement?.removeEventListener("pointerleave", onMouseLeave)
+      document.removeEventListener("themechange", applyTheme)
     },
   }
 }

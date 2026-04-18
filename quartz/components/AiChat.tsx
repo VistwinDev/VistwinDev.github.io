@@ -484,10 +484,7 @@ export default ((opts: AiChatOptions) => {
   opacity: 0.45;
   mix-blend-mode: lighten;
 }
-:root[saved-theme="light"] .dna-ai-canvas {
-  opacity: 0.12;
-  mix-blend-mode: multiply;
-}
+/* light/dark palette + opacity handled by JS (applyTheme in ai-chat.inline.ts) */
 /* All panel content must sit above the canvas */
 .dna-ai-panel > *:not(.dna-ai-canvas) { position: relative; z-index: 1; }
 
