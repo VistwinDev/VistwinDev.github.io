@@ -6,11 +6,10 @@ const initShader = (canvas: HTMLCanvasElement) => {
   const VERT = `attribute vec2 a;void main(){gl_Position=vec4(a,0.0,1.0);}`
   const FRAG = `
 precision highp float;
-uniform vec2 u_res;
+uniform vec2  u_res;
 uniform float u_time;
-uniform float u_speed;
-uniform vec3 u_colA;
-uniform vec3 u_colB;
+uniform vec2  u_mouse;    // normalized panel coords 0..1, (-1,-1) = no hover
+uniform float u_mstr;     // mouse strength 0..1 (smoothed)
 
 vec3 mod289v3(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
 vec2 mod289v2(vec2 x){return x-floor(x*(1.0/289.0))*289.0;}
@@ -37,21 +36,43 @@ float snoise(vec2 v){
 }
 float fbm(vec2 p){
   float v=0.0,a=0.5;
-  for(int i=0;i<5;i++){v+=a*snoise(p);p*=2.03;a*=0.5;}
+  for(int i=0;i<4;i++){v+=a*snoise(p);p*=2.03;a*=0.5;}
   return v;
 }
 void main(){
   vec2 p=(gl_FragCoord.xy-0.5*u_res.xy)/min(u_res.x,u_res.y);
-  float t=u_time*u_speed;
-  vec2 flow=vec2(fbm(p*0.8+vec2(t,0.0)),fbm(p*0.8+vec2(0.0,t)+7.3));
-  vec2 q=p+flow*0.4;
-  float n=fbm(q*1.2+t*0.8);
-  n+=0.3*fbm(q*2.5-t*0.4);
-  n=smoothstep(-0.9,0.9,n);
-  float nb=pow(clamp(n,0.0,1.0),0.9);
-  vec3 col=mix(u_colA,u_colB,nb);
-  col*=1.0-0.3*length(p);
-  col=pow(max(col,0.0),vec3(0.88));
+  float t=u_time*0.022;
+
+  // Large-scale flow: small multiplier = big blobs
+  vec2 flow=vec2(
+    fbm(p*0.22+vec2(t,0.0)),
+    fbm(p*0.22+vec2(0.0,t)+7.3)
+  );
+
+  // Mouse ripple radiating outward from cursor
+  vec2 aspect=vec2(u_res.x/min(u_res.x,u_res.y), u_res.y/min(u_res.x,u_res.y));
+  vec2 mp=(u_mouse-0.5)*aspect;
+  float dM=length(p-mp);
+  float ripple=sin(dM*9.0-u_time*5.5)*exp(-dM*2.8)*u_mstr;
+  flow+=ripple*normalize(p-mp+0.001)*0.45;
+
+  vec2 q=p+flow*0.55;
+  float n=fbm(q*0.28+t*0.85);
+  n+=0.25*fbm(q*0.55-t*0.4);
+  n=smoothstep(-0.85,0.85,n);
+
+  // High pow → mostly dark, green only at bright peaks
+  float nb=pow(clamp(n,0.0,1.0),2.8);
+  // near-black → dark forest green (muted)
+  vec3 colA=vec3(0.01,0.02,0.025);
+  vec3 colB=vec3(0.3,0.58,0.01);
+  vec3 col=mix(colA,colB,nb);
+
+  // Subtle glow at mouse position
+  col+=vec3(0.0,0.12,0.0)*exp(-dM*3.5)*u_mstr;
+
+  col*=1.0-0.28*length(p);
+  col=pow(max(col,0.0),vec3(0.85));
   gl_FragColor=vec4(col,1.0);
 }`
 
@@ -73,17 +94,24 @@ void main(){
     a:     gl.getAttribLocation(prog, "a"),
     res:   gl.getUniformLocation(prog, "u_res"),
     time:  gl.getUniformLocation(prog, "u_time"),
-    speed: gl.getUniformLocation(prog, "u_speed"),
-    colA:  gl.getUniformLocation(prog, "u_colA"),
-    colB:  gl.getUniformLocation(prog, "u_colB"),
+    mouse: gl.getUniformLocation(prog, "u_mouse"),
+    mstr:  gl.getUniformLocation(prog, "u_mstr"),
   }
 
-  // near-black → bright green, boosted for visibility
-  const colA = [0.01, 0.02, 0.03]
-  const colB = [0.55, 0.95, 0.02]
-  const speed = 0.03
   const start = performance.now()
   let rafId = 0
+  // Mouse state
+  let mx = -1, my = -1, mstrTarget = 0, mstr = 0
+
+  const onMouseMove = (e: PointerEvent) => {
+    const r = canvas.getBoundingClientRect()
+    mx = (e.clientX - r.left) / r.width
+    my = 1.0 - (e.clientY - r.top) / r.height
+    mstrTarget = 1
+  }
+  const onMouseLeave = () => { mstrTarget = 0 }
+  canvas.parentElement?.addEventListener("pointermove", onMouseMove)
+  canvas.parentElement?.addEventListener("pointerleave", onMouseLeave)
 
   const resize = () => {
     const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
@@ -96,6 +124,7 @@ void main(){
 
   const render = (now: number) => {
     resize()
+    mstr += (mstrTarget - mstr) * 0.06   // smooth ramp
     gl.viewport(0, 0, canvas.width, canvas.height)
     gl.useProgram(prog)
     gl.bindBuffer(gl.ARRAY_BUFFER, buf)
@@ -103,16 +132,19 @@ void main(){
     gl.vertexAttribPointer(loc.a, 2, gl.FLOAT, false, 0, 0)
     gl.uniform2f(loc.res, canvas.width, canvas.height)
     gl.uniform1f(loc.time, (now - start) / 1000)
-    gl.uniform1f(loc.speed, speed)
-    gl.uniform3f(loc.colA, colA[0], colA[1], colA[2])
-    gl.uniform3f(loc.colB, colB[0], colB[1], colB[2])
+    gl.uniform2f(loc.mouse, mx, my)
+    gl.uniform1f(loc.mstr, mstr)
     gl.drawArrays(gl.TRIANGLES, 0, 3)
     rafId = requestAnimationFrame(render)
   }
 
   return {
     start: () => { if (!rafId) rafId = requestAnimationFrame(render) },
-    stop:  () => { cancelAnimationFrame(rafId); rafId = 0 },
+    stop:  () => {
+      cancelAnimationFrame(rafId); rafId = 0
+      canvas.parentElement?.removeEventListener("pointermove", onMouseMove)
+      canvas.parentElement?.removeEventListener("pointerleave", onMouseLeave)
+    },
   }
 }
 

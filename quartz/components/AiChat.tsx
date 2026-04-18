@@ -481,7 +481,7 @@ export default ((opts: AiChatOptions) => {
   border-radius: 24px;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.55;
+  opacity: 0.45;
   mix-blend-mode: lighten;
 }
 :root[saved-theme="light"] .dna-ai-canvas {
