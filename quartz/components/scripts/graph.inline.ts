@@ -194,13 +194,14 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     {} as Record<(typeof cssVars)[number], string>,
   )
 
-  // PARA folder color palette
+  // PARA folder color palette — mirrors Obsidian graph.json colorGroups
   const folderColors: [string, string][] = [
-    ["00-Meta",      "#a78bfa"], // purple
-    ["01-Projects",  "#60a5fa"], // blue
-    ["02-Areas",     "#34d399"], // green
-    ["03-Resources", "#fbbf24"], // amber
-    ["04-Archive",   "#9ca3af"], // gray
+    ["00-Meta",      "#ff4747"], // red    (rgb 16729927)
+    ["01-Projects",  "#ffcd42"], // amber  (rgb 16764226)
+    ["02-Areas",     "#c3ff42"], // lime   (rgb 12844866)
+    ["03-Products",  "#42bfff"], // sky    (new folder)
+    ["04-Resources", "#52ff5d"], // green  (rgb  5439325)
+    ["05-Archive",   "#ababab"], // gray   (rgb 11250603)
   ]
 
   function getFolderColor(id: string): string | null {
