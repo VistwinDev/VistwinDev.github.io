@@ -393,6 +393,56 @@ document.addEventListener("nav", () => {
     closeBtn.removeEventListener("click", closePanel)
   })
 
+  // ── Mobile: keyboard avoidance (Method A — visualViewport) ────────────────
+  // On mobile the panel is position:absolute inside a position:fixed container.
+  // When the soft keyboard opens the visual viewport shrinks but the fixed
+  // container stays anchored at its CSS `bottom` value relative to the layout
+  // viewport, which means the keyboard covers the input.  We lift the container
+  // by exactly the keyboard height whenever the visual viewport resizes.
+  const MOBILE_BP = 640
+  const isMobile = () => window.innerWidth <= MOBILE_BP
+
+  const adjustForKeyboard = () => {
+    if (!isMobile() || !window.visualViewport) return
+    const vv = window.visualViewport
+    // keyboard height = layout-viewport height − (visual-viewport height + its top offset)
+    const kbHeight = Math.max(0, window.innerHeight - (vv.height + vv.offsetTop))
+    const basePx = 16 // matches CSS bottom: 1rem on mobile
+    root.style.bottom = (basePx + kbHeight) + "px"
+  }
+
+  const resetKeyboardOffset = () => {
+    if (isMobile()) root.style.bottom = ""
+  }
+
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", adjustForKeyboard)
+    window.visualViewport.addEventListener("scroll", adjustForKeyboard)
+    window.addCleanup(() => {
+      window.visualViewport?.removeEventListener("resize", adjustForKeyboard)
+      window.visualViewport?.removeEventListener("scroll", adjustForKeyboard)
+    })
+  }
+
+  // On focus: lift immediately (keyboard may not have fired resize yet) and
+  // scroll the input into the visible area (critical on iOS Safari).
+  const onInputFocus = () => {
+    if (!isMobile()) return
+    adjustForKeyboard()
+    // Delay scroll until keyboard animation finishes (~350 ms)
+    setTimeout(() => {
+      input.scrollIntoView({ block: "nearest", behavior: "smooth" })
+    }, 350)
+  }
+  const onInputBlur = () => resetKeyboardOffset()
+
+  input.addEventListener("focus", onInputFocus)
+  input.addEventListener("blur",  onInputBlur)
+  window.addCleanup(() => {
+    input.removeEventListener("focus", onInputFocus)
+    input.removeEventListener("blur",  onInputBlur)
+  })
+
   const onKey = (e: KeyboardEvent) => {
     if (e.key === "Escape" && panel.classList.contains("dna-open")) closePanel()
   }

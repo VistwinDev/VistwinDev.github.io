@@ -34,6 +34,10 @@ document.addEventListener("nav", () => {
     drawer.classList.add("dna-open")
     backdrop.classList.add("dna-open")
     document.body.style.overflow = "hidden"
+    // Ensure explorer section is expanded when drawer opens
+    for (const explorer of document.getElementsByClassName("explorer")) {
+      explorer.classList.remove("collapsed")
+    }
     for (const btn of document.getElementsByClassName("dna-hamburger")) {
       btn.setAttribute("aria-expanded", "true")
     }
@@ -80,6 +84,15 @@ document.addEventListener("nav", () => {
   }
   document.addEventListener("keydown", handleKeyDown)
   window.addCleanup(() => document.removeEventListener("keydown", handleKeyDown))
+
+  // Clicking any navigation link inside the drawer closes it (SPA + normal links)
+  const handleDrawerNav = (e: MouseEvent) => {
+    if ((e.target as HTMLElement).closest("a[href]") && drawer?.classList.contains("dna-open")) {
+      closeDrawer()
+    }
+  }
+  drawer?.addEventListener("click", handleDrawerNav)
+  window.addCleanup(() => drawer?.removeEventListener("click", handleDrawerNav))
 
   // ── Search button → trigger Quartz search overlay ────────────────────────
 
