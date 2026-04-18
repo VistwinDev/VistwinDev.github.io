@@ -1,5 +1,7 @@
 # visustwin.ai.oracle — Extension 細節卡
 
+> **Tier: T1** — 合併 → ConsoleModule（與 dev.repl 共用 console 輸出 UI）
+
 ## 功能與 UI 結構
 
 AI 建築顧問。使用 Anthropic Claude Haiku 4.5（或 Ollama 本地模型）搭配 Tool Use，以自然語言回答 BIM 品質、碳足跡、EEWH 認證等問題。UI 是一個 Siri 風格動態球（ai_orb.py）+ 聊天對話欄（ui_window.py）。Tool registry 把其他 12 個插件包裝成 LLM 可呼叫的工具。

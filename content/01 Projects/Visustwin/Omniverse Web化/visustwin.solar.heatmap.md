@@ -1,5 +1,7 @@
 # visustwin.solar.heatmap — Extension 細節卡
 
+> **Tier: T0** — 核心保留 — 獨立 Solar 模組，優先 port（demo_preset → Massing Pipeline）
+
 ## 功能與 UI 結構
 
 每戶太陽得熱分析。模型為 3 棟 × 最多 30 層 × 每層 4 戶（NE/SE/SW/NW）。從 carb.settings 讀取 sunlight.studio 的太陽位置（或直接呼叫 sun_calculator.py），計算直射 + 散射 + 地面反射的照射度。提供 LIVE（瞬時 W）和 DAILY（積分 Wh）兩種模式，並在 USD Stage 建立 3D 顏色熱圖。

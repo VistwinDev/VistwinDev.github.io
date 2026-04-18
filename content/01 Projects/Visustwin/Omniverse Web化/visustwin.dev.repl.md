@@ -1,5 +1,7 @@
 # visustwin.dev.repl — Extension 細節卡
 
+> **Tier: T1** — 合併 → ConsoleModule（web 端改走 Kit WS Bridge 取代 file IPC；從 Impossible 重新分類為 Medium）
+
 ## 功能與 UI 結構
 
 Claude ↔ Kit 檔案式 REPL。監聽 `_repl/cmd.py` 的 mtime 變化（每 30 幀輪詢），偵測到新指令後在 Kit Python context 執行，並將 stdout/stderr 輸出寫入 `_repl/result.txt`。這讓 Claude（外部）可以在 Kit 內部執行任意 Python 程式碼，存取完整的 `omni.*`、`carb.*`、`pxr.*` API。

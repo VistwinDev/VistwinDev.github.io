@@ -1,5 +1,7 @@
 # visustwin.exhibition.board — Extension 細節卡
 
+> **Tier: T1** — 合併 → PresentationModule（RTX 看板；ui_window.py 有 _draw_placeholder 但主結構完整）
+
 ## 功能與 UI 結構
 
 第二螢幕展覽看板。左側嵌入 Omniverse Viewport（RTX 渲染），右側顯示可切換的資訊面板（MQTT/OSC/WindTunnel/REPL 狀態）。具備「移動到獨立 OS 視窗」功能（使用 Windows `ctypes.windll.user32`），讓 Kit 主視窗與展覽看板可分開顯示在不同螢幕。

@@ -1,5 +1,7 @@
 # visustwin.solar.report — Extension 細節卡
 
+> **Tier: T1** — 合併 → SolarAnalysisModule（docstring 明說「Mirror of wind.analysis for the solar side」）
+
 ## 功能與 UI 結構
 
 太陽熱能分析報告。依賴 visustwin.solar.heatmap 的計算引擎，提供可設定的報告生成：選擇預設（small/medium/large）、模式（LIVE/DAILY）、玻璃率、樓層高度、地面網格解析度，生成 5 張 matplotlib 圖表（地面熱輻射圖、陰影小時數、舒適度地圖、各戶得熱 3D、方位角分析），以及 JSON summary + CSV 匯出。彈出獨立 ReportWindow。

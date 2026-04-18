@@ -1,5 +1,7 @@
 # visustwin.sunlight.studio — Extension 細節卡
 
+> **Tier: T0** — 核心保留 — 獨立 Sunlight 模組，NOAA 算法唯一正確來源
+
 ## 功能與 UI 結構
 
 全域陽光控制中樞。城市選擇（含台北等 N 座城市）、日期選擇、24 小時時間滑桿，實時計算真實太陽位置（NOAA 演算法），驅動 USD Stage 中 `/World/VisustwinSun` 的 `UsdLux.DistantLight` 方向與強度，控制整個場景的全域照明（Hydra/RTX 光追）。其他插件（solar.heatmap、light.compass）透過 carb.settings 讀取太陽位置。

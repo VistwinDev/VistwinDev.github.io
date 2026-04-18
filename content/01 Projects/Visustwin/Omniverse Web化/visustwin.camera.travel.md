@@ -1,5 +1,7 @@
 # visustwin.camera.travel — Extension 細節卡
 
+> **Tier: T1** — 合併 → PresentationModule（與 exhibition.board 共用展示工作流）
+
 ## 功能與 UI 結構
 
 攝影機飛行控制面板。自動掃描 USD Stage 中所有 `UsdGeom.Camera` prim，提供下拉選單一鍵觸發平滑飛行動畫（SLERP 插值，90 幀 ≈ 1.5 秒）。若場景無攝影機，自動建立 4 個預設位置（Lobby/Living/Kitchen/Master）。

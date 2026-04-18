@@ -1,5 +1,7 @@
 # visustwin.elements.core — Extension 細節卡
 
+> **Tier: T4** — 存封 — ZoneRegistry 共享匯流排幾乎未被整合使用（只有 T4 的 moisture.health 依賴它）；web 端改 Zustand store
+
 ## 功能與 UI 結構
 
 共用 Zone 資料匯流。作為 **singleton 資料服務**，讓 Air/Sun/Water 分析插件共享建築 Zone 模型（sunlight.studio 寫入日照數據、warp.windtunnel 寫入風速數據、moisture.health 讀取計算）。透過 Carb Event Bus 廣播 zone 更新事件。UI 是一個簡單的 Zone 瀏覽器（列出所有 zone 名稱和最新數據）。

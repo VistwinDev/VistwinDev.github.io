@@ -8,22 +8,32 @@
 
 ## 執行摘要
 
-**18 個 Visustwin Kit extension** 可分為三類：
-- **Already Done（已被現有 web 資產取代）**：2 個（mqtt.bridge → welltek-twin，osc.controller → WebController）
-- **Easy/Medium（純計算 / 純 UI，無 Kit runtime 依賴）**：9 個（可直接移植 TypeScript + React）
-- **Hard（依賴 USD Stage 寫入 / RTX Viewport / GPU）**：7 個（需 Kit 保留或 WebRTC 橋接）
+**18 個 Visustwin Kit extension**，重新以實際狀態分為五類（T0–T4）：
 
-整併後：**整併只發生在上游（幾何來源）層**，下游模擬模組全部維持獨立。核心輸出為 1 個 Massing Pipeline 基礎層 + 13 個獨立下游 module。
+| 分類 | 數量 | 說明 |
+|---|:---:|---|
+| **T0 — 核心保留** | 6 | 成熟功能、獨立身份、優先 port |
+| **T1 — 合併模組** | 7 | 工作流相連，web 端合併為 5 個 Feature Module |
+| **T2 — 已被取代** | 2 | welltek-twin / WebController 已做掉，Kit 端退役 |
+| **T3 — 刪除** | 1 | `light.compass`：太陽方位舊插件，複製 sunlight.studio 算法，無獨立價值 |
+| **T4 — 存封 stub** | 2 | `moisture.health`（skeleton）、`elements.core`（未整合基建）|
 
-**整併核心原則**（2026-04-19 更新）：
-> 只在**上游共用幾何來源**那一層做整併（`demo_preset.py` + BIM 簡化 + geometry cache）；
-> 下游 CFD / 熱力圖 / 日照 / PMV / 碳排 / BIM Inspector 各自**獨立**，原因：solver 本質不同、UI 需求不同、iterate 週期不同。
+**整併後：18 Kit ext → 7 Web Feature Modules**
 
-**最大驚喜發現**：
-1. `visustwin.warp.windtunnel` 的 solver.py 使用 **numpy（CPU）**，不是 Warp GPU——風場計算可直接移植 TypeScript
-2. 所有「純計算」模組（PMV、太陽位置、碳排、照射度）加起來約 **1500 LoC Python**，可在 1 週內全部移植 TypeScript
-3. `visustwin.mqtt.bridge` 和 `visustwin.osc.controller` 幾乎**已被現有 web 資產完全取代**
-4. `solar.heatmap/demo_preset.py` 和 `windtunnel/solver.py PRESETS` 重複定義相同建築配置（連原始碼都有 `!! KEEP IN SYNC !!` 警告）——這是 **Massing Pipeline 的明確需求**
+```
+Dashboard · WindSimModule · SolarAnalysisModule · BIMReviewModule
+ConsoleModule · PresentationModule · SafetyMonitor
+```
+
+**整併原則**（T0 層）：幾何來源上游整合進 Massing Pipeline；T1 層按工作流三條件合併（同工作流 + 共用資料來源 + 相似 UI 骨架同時成立）。
+
+**關鍵發現**：
+1. `warp.windtunnel` solver.py 用 **numpy（CPU）**，不是 Warp GPU——可直接移植 TypeScript RK4
+2. `light.compass/solar.py` 完整複製 `sunlight.studio/sun_calculator.py`（太陽方位舊插件，T3 刪除）
+3. `moisture.health` docstring 明寫 `Phase 1 (skeleton)`，risk map tab 是 placeholder（T4）
+4. `mqtt.bridge` / `osc.controller` 已被 welltek-twin / WebController 取代（T2）
+
+→ 詳細分類依據：[[Omniverse Web化 分類清單]]
 
 ---
 
@@ -31,67 +41,83 @@
 
 | Extension | 功能摘要 | 技術依賴（非 web 部分）| Web 難度 | 工作量 | 整併去向 |
 |---|---|---|:---:|:---:|---|
-| [[Omniverse Web化/visustwin.ai.oracle\|ai.oracle]] | Claude LLM 建築顧問 + 工具編排 | _INSTANCE pattern 呼叫其他 ext | Medium | M | AIOracleModule |
-| [[Omniverse Web化/visustwin.bim.inspector\|bim.inspector]] | USD Stage BIM 完整度掃描 + 碰撞偵測 | pxr USD 遍歷 + displayColor 寫入 | Medium | M | 獨立 module（幾何簡化 → [[Omniverse Web化/Web化 Massing Pipeline\|Massing Pipeline]]） |
-| [[Omniverse Web化/visustwin.camera.travel\|camera.travel]] | USD 攝影機 SLERP 飛行動畫 | UsdGeom.Camera + viewport API | Hard | S/M | PresentationModule |
-| [[Omniverse Web化/visustwin.dashboard\|dashboard]] | Extension 總覽 / 開關 + theme.py | omni.kit.app ExtensionManager | Easy | S | → App Shell |
-| [[Omniverse Web化/visustwin.dev.repl\|dev.repl]] | File-based Python REPL（開發工具）| Kit Python exec context | Impossible | — | Kit-only（不移植） |
-| [[Omniverse Web化/visustwin.elements.core\|elements.core]] | 跨插件 Zone 資料 singleton | carb.events pub-sub | Easy | S | → Zustand store lib |
-| [[Omniverse Web化/visustwin.esg.tracker\|esg.tracker]] | 具現化碳足跡 + EEWH/LEED 認證 | pxr USD 材質掃描 + 體積計算 | Medium | M | 獨立 module（下游，吃 Massing Pipeline 材質 tag） |
-| [[Omniverse Web化/visustwin.exhibition.board\|exhibition.board]] | 第二螢幕展覽看板 + 嵌入 Viewport | omni.kit.viewport（RTX 渲染） | Hard | L | PresentationModule（WebRTC） |
-| [[Omniverse Web化/visustwin.light.compass\|light.compass]] | 36 方向照度玫瑰圖 + 太陽軌跡弧 | USD 3D prim 動畫 | Medium | S | 獨立 module（下游） |
-| [[Omniverse Web化/visustwin.moisture.health\|moisture.health]] | PMV/PPD 熱舒適 + 材質濕度風險 | 無（純 Python math） | Easy | S | 獨立 module（下游） |
-| [[Omniverse Web化/visustwin.mqtt.bridge\|mqtt.bridge]] | Welltek WebSocket → Carb event bus | websocket-client（非 Kit-specific）| Easy | **0** | ✅ welltek-twin 已取代 |
-| [[Omniverse Web化/visustwin.osc.controller\|osc.controller]] | OSC UDP → USD scene 動作分發 | pxr USD 操作 + omni.timeline | Easy | **0** | ✅ WebController 已取代 |
-| [[Omniverse Web化/visustwin.solar.heatmap\|solar.heatmap]] | 3 棟×N 層×4 戶太陽得熱計算 | carb.settings + USD scene 熱圖 | Easy/Med | M | 獨立 module（demo_preset → [[Omniverse Web化/Web化 Massing Pipeline\|Massing Pipeline]]） |
-| [[Omniverse Web化/visustwin.solar.report\|solar.report]] | 5 張 matplotlib 圖表 + CSV/JSON 匯出 | matplotlib（非 Kit-specific）| Easy | M | 獨立 module（下游） |
-| [[Omniverse Web化/visustwin.sunlight.studio\|sunlight.studio]] | NOAA 太陽位置 + UsdLux 場景照明 | UsdLux.DistantLight + RTX | Medium | S | 獨立 module（下游，提供太陽位置給其他模組） |
-| [[Omniverse Web化/visustwin.vision.detector\|vision.detector]] | YOLO WS client + Viewport 偵測 overlay | omni.ui overlay | Medium | M | SafetyModule |
-| [[Omniverse Web化/visustwin.warp.windtunnel\|warp.windtunnel]] | 位勢流風場（**numpy**）+ 3D 粒子 | USD BasisCurves + Warp dep | Medium | L | 獨立 module（PRESETS dict → [[Omniverse Web化/Web化 Massing Pipeline\|Massing Pipeline]]） |
-| [[Omniverse Web化/visustwin.wind.analysis\|wind.analysis]] | 風場報告 + Davenport 舒適度評估 | 依賴 windtunnel solver | Easy | M | 獨立 module（下游） |
+| [[Omniverse Web化/visustwin.ai.oracle\|ai.oracle]] | Claude LLM 建築顧問 + 工具編排 | _INSTANCE pattern 呼叫其他 ext | Medium | M | **T1** → ConsoleModule |
+| [[Omniverse Web化/visustwin.bim.inspector\|bim.inspector]] | USD Stage BIM 完整度掃描 + 碰撞偵測 | pxr USD 遍歷 + displayColor 寫入 | Medium | M | **T0** 獨立（幾何簡化 → [[Omniverse Web化/Web化 Massing Pipeline\|Massing Pipeline]]） |
+| [[Omniverse Web化/visustwin.camera.travel\|camera.travel]] | USD 攝影機 SLERP 飛行動畫 | UsdGeom.Camera + viewport API | Hard | S/M | **T1** → PresentationModule |
+| [[Omniverse Web化/visustwin.dashboard\|dashboard]] | Extension 總覽 / 開關 + theme.py | omni.kit.app ExtensionManager | Easy | S | **T0** → App Shell |
+| [[Omniverse Web化/visustwin.dev.repl\|dev.repl]] | File-based Python REPL（開發工具）| Kit Python exec context | Medium | S | **T1** → ConsoleModule（Kit WS Bridge 取代 file IPC） |
+| [[Omniverse Web化/visustwin.elements.core\|elements.core]] | 跨插件 Zone 資料 singleton | carb.events pub-sub | Easy | — | **T4** 存封（web 端改 Zustand store，zone registry 幾乎未整合） |
+| [[Omniverse Web化/visustwin.esg.tracker\|esg.tracker]] | 具現化碳足跡 + EEWH/LEED 認證 | pxr USD 材質掃描 + 體積計算 | Medium | M | **T1** → BIMReviewModule |
+| [[Omniverse Web化/visustwin.exhibition.board\|exhibition.board]] | 第二螢幕展覽看板 + 嵌入 Viewport | omni.kit.viewport（RTX 渲染） | Hard | L | **T1** → PresentationModule（WebRTC） |
+| [[Omniverse Web化/visustwin.light.compass\|light.compass]] | 36 方向照度玫瑰圖 + 太陽軌跡弧 | USD 3D prim 動畫 | — | — | **T3 刪除**（複製 sunlight.studio 太陽位置算法，3D 裝飾無獨立價值） |
+| [[Omniverse Web化/visustwin.moisture.health\|moisture.health]] | PMV/PPD 熱舒適 + 材質濕度風險 | 無（純 Python math） | Easy | — | **T4** 存封（skeleton，risk map 是 placeholder，docstring 明寫 Phase 1） |
+| [[Omniverse Web化/visustwin.mqtt.bridge\|mqtt.bridge]] | Welltek WebSocket → Carb event bus | websocket-client（非 Kit-specific）| Easy | **0** | **T2** ✅ welltek-twin 已取代，退役 |
+| [[Omniverse Web化/visustwin.osc.controller\|osc.controller]] | OSC UDP → USD scene 動作分發 | pxr USD 操作 + omni.timeline | Easy | **0** | **T2** ✅ WebController 已取代，退役 |
+| [[Omniverse Web化/visustwin.solar.heatmap\|solar.heatmap]] | 3 棟×N 層×4 戶太陽得熱計算 | carb.settings + USD scene 熱圖 | Easy/Med | M | **T0** 獨立（demo_preset → [[Omniverse Web化/Web化 Massing Pipeline\|Massing Pipeline]]） |
+| [[Omniverse Web化/visustwin.solar.report\|solar.report]] | 5 張 matplotlib 圖表 + CSV/JSON 匯出 | matplotlib（非 Kit-specific）| Easy | M | **T1** → SolarAnalysisModule |
+| [[Omniverse Web化/visustwin.sunlight.studio\|sunlight.studio]] | NOAA 太陽位置 + UsdLux 場景照明 | UsdLux.DistantLight + RTX | Medium | S | **T0** 獨立（提供太陽位置；sunlight 算法是唯一正確來源） |
+| [[Omniverse Web化/visustwin.vision.detector\|vision.detector]] | YOLO WS client + Viewport 偵測 overlay | omni.ui overlay | Medium | M | **T0** → SafetyMonitor（程式碼完整，待攝影機設定） |
+| [[Omniverse Web化/visustwin.warp.windtunnel\|warp.windtunnel]] | 位勢流風場（**numpy**）+ 3D 粒子 | USD BasisCurves + Warp dep | Medium | L | **T0** 獨立（PRESETS dict → [[Omniverse Web化/Web化 Massing Pipeline\|Massing Pipeline]]） |
+| [[Omniverse Web化/visustwin.wind.analysis\|wind.analysis]] | 風場報告 + Davenport 舒適度評估 | 依賴 windtunnel solver | Easy | M | **T1** → WindSimModule |
 
 ---
 
-## 整併矩陣
+## 五類分級（T0–T4）
 
-> **核心原則：整併只發生在上游（幾何來源）；下游模擬模組全部獨立**
+> 完整分級依據、LoC、git 歷史、stub 標記見 [[Omniverse Web化 分類清單]]
+
+```
+T0 核心保留 (6)
+  dashboard · warp.windtunnel · solar.heatmap · sunlight.studio
+  bim.inspector · vision.detector
+
+T1 合併 (7) → 5 個 Feature Module
+  wind.analysis ─────────────▶ WindSimModule     (+ windtunnel T0)
+  solar.report ──────────────▶ SolarAnalysisModule (+ heatmap+sunlight T0)
+  esg.tracker ───────────────▶ BIMReviewModule   (+ bim.inspector T0)
+  ai.oracle + dev.repl ──────▶ ConsoleModule
+  camera.travel + exhibition ▶ PresentationModule
+
+T2 退役 (2)
+  mqtt.bridge ───────────────▶ ✅ welltek-twin 已做
+  osc.controller ────────────▶ ✅ WebController 已做
+
+T3 刪除 (1)
+  light.compass ─────────────▶ 🗑 太陽方位舊插件，複製 sunlight.studio 算法
+
+T4 存封 (2)
+  moisture.health ───────────▶ 📦 Phase 1 skeleton，risk map 為 placeholder
+  elements.core ─────────────▶ 📦 zone registry 未整合，web 端 Zustand 取代
+```
+
+## 整併矩陣
 
 ```
 Kit Extensions (18)              Web 輸出
 ──────────────────────────────────────────────────────────────────
 
-【上游整併 — Massing Pipeline 基礎層】
+【Phase 0 清理 — 不帶進 web】
+light.compass ──────────────────▶ 🗑 刪除（T3）
+mqtt.bridge ────────────────────▶ 🔕 退役（T2，welltek-twin）
+osc.controller ─────────────────▶ 🔕 退役（T2，WebController）
+moisture.health ────────────────▶ 📦 存封（T4，skeleton）
+elements.core ──────────────────▶ 📦 存封（T4，→ Zustand）
+
+【Massing Pipeline 基礎層】
 demo_preset.py (solar.heatmap) ┐
 PRESETS dict (windtunnel)      ├──▶ Massing Pipeline
-bim 幾何簡化 (bim.inspector)   ┘    (test-preset adapter + bim-adapter)
-                                    ↓ 統一 BuildingMass[] 輸出給所有下游
+bim 幾何簡化 (bim.inspector)   ┘    (testPresetAdapter + bimAdapter)
+                                    ↓ 統一 BuildingMass[] 給所有下游
 
-【App Shell】
-dashboard ──────────────────────▶ App Shell（路由 + 導覽）
-theme.py ───────────────────────▶ (CSS Variables / Tailwind token)
-elements.core ──────────────────▶ lib/zoneStore.ts（共用 state）
-
-【下游獨立模組 — 全部保持獨立】
-warp.windtunnel ────────────────▶ CFD WindTunnel（讀 massingStore）
-wind.analysis ──────────────────▶ Wind Analysis（讀 massingStore）
-solar.heatmap ──────────────────▶ Solar Heatmap（讀 massingStore）
-solar.report ───────────────────▶ Solar Report（讀 massingStore）
-sunlight.studio ────────────────▶ Sunlight Studio（提供太陽位置）
-light.compass ──────────────────▶ Light Compass（讀 sunlight + MQTT）
-moisture.health ────────────────▶ PMV Comfort（讀 zoneStore + MQTT）
-bim.inspector ──────────────────▶ BIM Inspector（viewer，掃描→JSON）
-esg.tracker ────────────────────▶ Carbon Tracker（讀 massingStore）
-vision.detector ────────────────▶ Safety Monitor
-ai.oracle ──────────────────────▶ AI Oracle（tool calls via bridge）
-camera.travel ──────────────────▶ Camera Control
-exhibition.board ───────────────▶ Exhibition Board（WebRTC）
-
-【已被現有資產取代】
-mqtt.bridge ────────────────────▶ ✅ welltek-twin（已做）
-osc.controller ─────────────────▶ ✅ WebController（已做）
-
-【不移植】
-dev.repl ───────────────────────▶ Kit-only 開發工具
+【7 Web Feature Modules】
+dashboard ──────────────────────▶ 1. Dashboard（App Shell + routing）
+warp.windtunnel + wind.analysis ▶ 2. WindSimModule
+solar.heatmap + sunlight.studio ┐
++ solar.report                  ├──▶ 3. SolarAnalysisModule
+bim.inspector + esg.tracker ────▶ 4. BIMReviewModule
+ai.oracle + dev.repl ───────────▶ 5. ConsoleModule（Kit WS Bridge）
+camera.travel + exhibition.board▶ 6. PresentationModule（WebRTC opt.）
+vision.detector ────────────────▶ 7. SafetyMonitor
 ```
 
 ---
@@ -132,6 +158,16 @@ Web（新 / 現有資產）
 ---
 
 ## 整備 Roadmap
+
+### Phase 0（清理優先）：T2 退役 + T3 刪除 + T4 存封
+
+| 任務 | 對象 | 行動 |
+|---|---|---|
+| T3 刪除 | `light.compass` | 從 `visustwin-extensions/exts/` 移除；確認 `sunlight.studio/sun_calculator.py` 已含所有計算 |
+| T2 退役 | `mqtt.bridge` | 在 extension.toml 加 `[deprecation]`；kit apps cfg 移除載入 |
+| T2 退役 | `osc.controller` | 同上；確認 WebController 完整覆蓋所有 OSC route |
+| T4 存封 | `moisture.health` | 備份 `comfort.py`（PMV 計算）→ 抽出進 SolarAnalysisModule 熱舒適分頁 |
+| T4 存封 | `elements.core` | 不 port，ZoneRegistry 概念改寫為 `zoneStore.ts` |
 
 ### Phase 1（0-4 週）：計算核心 + Massing Pipeline 基礎
 
@@ -222,8 +258,9 @@ Web（新 / 現有資產）
 - [[Omniverse Web化/visustwin.warp.windtunnel|Warp WindTunnel]] — numpy 風場，Medium，L
 - [[Omniverse Web化/visustwin.wind.analysis|Wind Analysis]] — 風場報告，Easy，M
 
-### 規劃文件（3 份）
+### 規劃文件（4 份）
 
-- [[Omniverse Web化/Web化 整併提案|整併提案]] — Massing Pipeline + 獨立下游 module 結構（已修正）
+- [[Omniverse Web化 分類清單]] — **T0-T4 五類分級**：LoC、git 歷史、stub 標記、歸類理由（本次新增）
+- [[Omniverse Web化/Web化 整併提案|整併提案]] — T1 五個 Feature Module 合併提案（WindSim/Solar/BIM/Console/Presentation）
 - [[Omniverse Web化/Web化 架構選項|架構選項]] — 方案 A/B/C 比較 + 推薦
 - [[Omniverse Web化/Web化 Massing Pipeline|Massing Pipeline]] — 上游共用幾何層設計：adapter 介面、輸出 schema、下游消費方式

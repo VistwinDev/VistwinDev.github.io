@@ -1,5 +1,7 @@
 # visustwin.warp.windtunnel — Extension 細節卡
 
+> **Tier: T0** — 核心保留 — 獨立 CFD 模組，優先 port（PRESETS → Massing Pipeline）
+
 ## 功能與 UI 結構
 
 建築群 3D 風場 Sandbox。位勢流解析解（Potential Flow）+ curl noise 擾動，計算多棟建築之間的流線軌跡，以 1200–6000 個粒子 + 彩色流線 prim 在 USD Scene 中即時視覺化。支援建築尺寸/位置/風向/亂流強度等參數即時調整。提供 `sample_velocity_grid()` 和 `sample_velocity_section()` 接口供 wind.analysis 使用。

@@ -1,5 +1,7 @@
 # visustwin.bim.inspector — Extension 細節卡
 
+> **Tier: T0** — 核心保留 — 獨立模組，優先 port（幾何簡化邏輯 → Massing Pipeline）
+
 ## 功能與 UI 結構
 
 BIM 完整度掃描器。遍歷 USD Stage，對每個 Mesh/Xform prim 評分（GREEN/YELLOW/RED），偵測 AABB 碰撞，估算 LOD 等級，生成 CSV/PDF 報告。UI 是一個帶有掃描結果表格、統計圖和碰撞清單的面板。設計採用 visustwin.dashboard.theme 共用主題。

@@ -1,5 +1,7 @@
 # visustwin.dashboard — Extension 細節卡
 
+> **Tier: T0** — 核心保留 — App Shell 基礎，優先 port
+
 ## 功能與 UI 結構
 
 Extension 總覽與開關面板。顯示全部 17 個 visustwin 插件（依分類分組），可即時 enable/disable。同時是 **共用設計系統（theme.py）** 的提供者。Extension 啟動時自動開啟，並透過 `omni.kit.app.get_extension_manager()` 監聽插件狀態變化以重繪 UI。

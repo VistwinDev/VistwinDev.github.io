@@ -1,5 +1,7 @@
 # visustwin.moisture.health — Extension 細節卡
 
+> **Tier: T4** — 存封 — docstring 明寫「Phase 1 (skeleton)」，Risk Map tab 是 placeholder；PMV 計算抽出進 SolarAnalysisModule 即可
+
 ## 功能與 UI 結構
 
 建築濕度健康分析與人體舒適度評估。實作 ISO 7730 簡化版 PMV/PPD 模型（基於溫度/濕度/氣流速），評估室內熱舒適等級。包含材質吸濕性資料庫（檢查結露和黴菌風險），讀取 elements.core Zone 資料取得各房間的陽光/風速輸入。

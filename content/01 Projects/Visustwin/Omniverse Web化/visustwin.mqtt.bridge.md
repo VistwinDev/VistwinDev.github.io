@@ -1,5 +1,7 @@
 # visustwin.mqtt.bridge — Extension 細節卡
 
+> **Tier: T2** — 已被取代 — welltek-twin 已完整實作 MQTT IoT dashboard，Kit 端退役
+
 ## 功能與 UI 結構
 
 Welltek IoT 數據橋接器。連接 welltek-twin Node.js WS 服務器（`ws://localhost:3001`），接收 JSON 格式設備數據（plug/env/ac/hrv 四種類型），計算 Wellness Index，透過 Carb Event Bus 廣播給其他插件使用。UI 是一個連線狀態面板，顯示各設備最新讀數。

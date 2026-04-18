@@ -1,5 +1,7 @@
 # visustwin.light.compass — Extension 細節卡
 
+> **Tier: T3 — 刪除** — 太陽方位舊插件。compass/solar.py 完整複製 sunlight.studio/sun_calculator.py 算法；3D 羅盤裝飾無獨立 port 價值
+
 ## 功能與 UI 結構
 
 方位照度視覺化。在 USD Stage 中建立 36 方向照度玫瑰圖（3D 弧形圖）和太陽軌跡弧線，顯示各方位的實際照度分佈。接收 Carb Event Bus 上的 `visustwin.mqtt.message` 事件，可疊加 Welltek 真實感測器照度數據。透過 frame subscription 進行即時動畫更新。

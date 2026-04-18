@@ -1,5 +1,7 @@
 # visustwin.osc.controller — Extension 細節卡
 
+> **Tier: T2** — 已被取代 — WebController（React + OSC Bridge）已完整實作所有控制路由，Kit 端退役
+
 ## 功能與 UI 結構
 
 OSC UDP 接收器與場景控制分發器。監聽 UDP port 8001，接收 OSC 指令並對應到 USD Scene 動作：攝影機飛行、房間可見性切換、日夜照明 blend、Timeline 播放、120 年生命週期 scrubber、攝影機序列巡遊。UI 是一個連線狀態面板顯示最後收到的 OSC 訊息。

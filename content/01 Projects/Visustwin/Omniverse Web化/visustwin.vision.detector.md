@@ -1,5 +1,7 @@
 # visustwin.vision.detector — Extension 細節卡
 
+> **Tier: T0** — 核心保留 — 程式碼完整，待攝影機設定後即可部署
+
 ## 功能與 UI 結構
 
 AI 安全偵測視覺化。連接 visustwin-vision YOLO 伺服器（WebSocket `ws://localhost:8765`），接收即時偵測結果（camera_id、bounding boxes、class labels、confidence），在 Omniverse Viewport 上疊加偵測框與警報。透過 Carb Event Bus 廣播偵測事件給其他插件。

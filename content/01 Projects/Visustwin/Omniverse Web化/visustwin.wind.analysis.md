@@ -1,5 +1,7 @@
 # visustwin.wind.analysis — Extension 細節卡
 
+> **Tier: T1** — 合併 → WindSimModule（windtunnel 的 report side，同一 CFD 資料流）
+
 ## 功能與 UI 結構
 
 風場分析報告與行人舒適度評估。依賴 visustwin.warp.windtunnel 的求解器，生成 5 張 matplotlib 圖表（風速圖、放大倍率圖、舒適度地圖、壓力地圖、向量場），並進行 Davenport / ISO 行人舒適度標準評估（1-7 級）。提供可設定的求解器參數、建築配置，彈出獨立 ReportWindow。與 solar.report 架構完全對稱。

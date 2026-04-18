@@ -1,5 +1,7 @@
 # visustwin.esg.tracker — Extension 細節卡
 
+> **Tier: T1** — 合併 → BIMReviewModule（bim.inspector 是唯一資料來源）
+
 ## 功能與 UI 結構
 
 ESG 碳足跡計算器與認證評核。掃描 USD Stage 中的材質名稱，比對內建碳排放資料庫（ICE Database v3 / 台灣 ABRI），計算各構件體積 × 密度 × 碳排因子的具現化碳量。提供 EEWH / LEED 認證門檻評分。可生成 CSV / PDF 報告，視覺化碳熱圖（USD displayColor）。
