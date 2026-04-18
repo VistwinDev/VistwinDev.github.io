@@ -29,6 +29,8 @@ jobs:
         run: npm ci
       - name: Build Quartz
         run: npx quartz build
+      - name: Build AI search index
+        run: node scripts/build-search-index.mjs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
