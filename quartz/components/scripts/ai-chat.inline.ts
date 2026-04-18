@@ -44,12 +44,12 @@ float fbm(vec2 p){
 }
 void main(){
   vec2 p=(gl_FragCoord.xy-0.5*u_res.xy)/min(u_res.x,u_res.y);
-  float t=u_time*0.022;
+  float t=u_time*0.045;
 
-  // Large-scale flow: small multiplier = big blobs
+  // Medium-large blobs
   vec2 flow=vec2(
-    fbm(p*0.22+vec2(t,0.0)),
-    fbm(p*0.22+vec2(0.0,t)+7.3)
+    fbm(p*0.38+vec2(t,0.0)),
+    fbm(p*0.38+vec2(0.0,t)+7.3)
   );
 
   // Mouse ripple radiating outward from cursor
@@ -60,8 +60,8 @@ void main(){
   flow+=ripple*normalize(p-mp+0.001)*0.45;
 
   vec2 q=p+flow*0.55;
-  float n=fbm(q*0.28+t*0.85);
-  n+=0.25*fbm(q*0.55-t*0.4);
+  float n=fbm(q*0.45+t*0.85);
+  n+=0.25*fbm(q*0.85-t*0.4);
   n=smoothstep(-0.85,0.85,n);
 
   float nb=pow(clamp(n,0.0,1.0),u_bias);
@@ -106,7 +106,7 @@ void main(){
     const light = document.documentElement.getAttribute("saved-theme") === "light"
     return light
       ? { colA: [0.90, 0.95, 0.90], colB: [0.40, 0.72, 0.08], bias: 0.75, opacity: "0.35", blend: "multiply" }
-      : { colA: [0.01, 0.02, 0.025], colB: [0.30, 0.58, 0.01], bias: 2.8,  opacity: "0.45", blend: "lighten"  }
+      : { colA: [0.01, 0.02, 0.025], colB: [0.30, 0.58, 0.01], bias: 2.0,  opacity: "0.45", blend: "lighten"  }
   }
   let theme = palette()
   const applyTheme = () => {

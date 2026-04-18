@@ -17,11 +17,11 @@ HomeShader.css = `
   width: 100%;
   height: 100%;
   pointer-events: none;
-  opacity: 0.22;
+  opacity: 0.10;
   mix-blend-mode: screen;
 }
 :root[saved-theme="light"] #dna-home-shader {
-  opacity: 0.08;
+  opacity: 0.12;
   mix-blend-mode: multiply;
 }
 `
