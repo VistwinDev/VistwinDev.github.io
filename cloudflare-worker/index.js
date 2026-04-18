@@ -32,9 +32,9 @@ export default {
     if (!checkRate(ip))
       return new Response("Rate limit exceeded. Try again in a minute.", { status: 429, headers: CORS })
 
-    let query, chunks
+    let query, chunks, mode
     try {
-      ;({ query, chunks } = await request.json())
+      ;({ query, chunks, mode } = await request.json())
     } catch {
       return new Response("Invalid JSON", { status: 400, headers: CORS })
     }
@@ -46,10 +46,22 @@ export default {
       .map((c, i) => `[${i + 1}] **${c.title}**\n${c.text}`)
       .join("\n\n---\n\n")
 
+    const modeInstructions = mode === "manager"
+      ? `You are in MANAGER mode. Be concise and executive.
+- Lead with a 1-2 sentence TL;DR
+- Use bullet points for key takeaways
+- Highlight action items or decisions if relevant
+- Skip academic detail; focus on what matters and why`
+      : `You are in RESEARCHER mode. Be thorough and analytical.
+- Explore connections between ideas
+- Use Markdown headings (##) to structure longer answers
+- Provide context and background
+- Note nuances, caveats, or open questions`
+
     const systemPrompt = context
       ? `You are a knowledge assistant for a personal Obsidian vault published as a digital garden.
-Answer the user's question using ONLY the notes provided below. Be concise.
-If you cite a note, use [N] notation matching the context numbers.
+${modeInstructions}
+Cite sources with [N] notation matching the context numbers.
 If the context doesn't contain relevant information, say so honestly.
 
 Context notes:
@@ -63,10 +75,10 @@ ${context}`
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "llama-3.3-70b-versatile",
+        model: "deepseek-r1-distill-llama-70b",
         stream: true,
-        max_tokens: 600,
-        temperature: 0.3,
+        max_tokens: 1500,
+        temperature: 0.6,
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: query },

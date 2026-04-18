@@ -36,7 +36,7 @@ export default ((opts: AiChatOptions) => {
             <div class="dna-ai-header-name">Knowledge Assistant</div>
             <div class="dna-ai-header-status">
               <span class="live-dot" aria-hidden="true" />
-              <span>Powered by Groq · Llama 3.3</span>
+              <span>Powered by Groq · DeepSeek-R1</span>
             </div>
           </div>
           <button id="dna-ai-close" class="dna-ai-close" aria-label="Close">
@@ -44,6 +44,18 @@ export default ((opts: AiChatOptions) => {
               <line x1="1" y1="1" x2="11" y2="11"/>
               <line x1="11" y1="1" x2="1" y2="11"/>
             </svg>
+          </button>
+        </div>
+
+        {/* Mode toggle */}
+        <div class="dna-ai-mode-bar">
+          <button class="dna-ai-mode-btn dna-ai-mode-btn--active" data-mode="researcher" aria-pressed="true">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            研究者
+          </button>
+          <button class="dna-ai-mode-btn" data-mode="manager" aria-pressed="false">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            管理者
           </button>
         </div>
 
@@ -244,6 +256,51 @@ export default ((opts: AiChatOptions) => {
   background: rgba(255,255,255,0.07);
 }
 :root[saved-theme="light"] .dna-ai-close:hover { background: rgba(0,0,0,0.06); }
+
+/* ── Mode toggle bar ─────────────────────────────────────────────────── */
+.dna-ai-mode-bar {
+  display: flex;
+  gap: 0.375rem;
+  padding: 0.625rem 0.875rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+  background: rgba(0,0,0,0.12);
+}
+:root[saved-theme="light"] .dna-ai-mode-bar {
+  border-bottom-color: rgba(0,0,0,0.07);
+  background: rgba(0,0,0,0.03);
+}
+.dna-ai-mode-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--codeFont);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: var(--gray);
+  transition: color 150ms, background 150ms, border-color 150ms, box-shadow 150ms;
+  outline: none;
+}
+.dna-ai-mode-btn:hover {
+  color: var(--dark);
+  background: rgba(255,255,255,0.06);
+}
+:root[saved-theme="light"] .dna-ai-mode-btn:hover { background: rgba(0,0,0,0.05); }
+
+.dna-ai-mode-btn--active {
+  color: #76b900 !important;
+  background: rgba(118, 185, 0, 0.13) !important;
+  border-color: rgba(118, 185, 0, 0.35) !important;
+  box-shadow: 0 0 10px rgba(118, 185, 0, 0.12);
+}
 
 /* ── Messages ─────────────────────────────────────────────────────────── */
 .dna-ai-messages {

@@ -68,6 +68,20 @@ document.addEventListener("nav", () => {
   let bm25: BM25 | null = null
   let isStreaming = false
   let abortCtrl: AbortController | null = null
+  let currentMode: "researcher" | "manager" = "researcher"
+
+  // ── Mode toggle ────────────────────────────────────────────────────────────
+  for (const btn of document.querySelectorAll<HTMLButtonElement>(".dna-ai-mode-btn")) {
+    btn.addEventListener("click", () => {
+      currentMode = (btn.dataset.mode ?? "researcher") as "researcher" | "manager"
+      for (const b of document.querySelectorAll<HTMLButtonElement>(".dna-ai-mode-btn")) {
+        const active = b.dataset.mode === currentMode
+        b.classList.toggle("dna-ai-mode-btn--active", active)
+        b.setAttribute("aria-pressed", String(active))
+      }
+    })
+    window.addCleanup(() => btn.removeEventListener("click", () => {}))
+  }
 
   // ── Panel open/close ───────────────────────────────────────────────────────
 
@@ -135,6 +149,35 @@ document.addEventListener("nav", () => {
     wrap.appendChild(row)
   }
 
+  // ── Markdown renderer (minimal, no deps) ──────────────────────────────────
+
+  const renderMd = (raw: string): string => {
+    // Strip DeepSeek-R1 <think>...</think> reasoning blocks
+    let s = raw.replace(/<think>[\s\S]*?<\/think>/g, "").trimStart()
+    // Escape HTML
+    s = s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    // Bold **text**
+    s = s.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    // Italic *text*
+    s = s.replace(/\*(.+?)\*/g, "<em>$1</em>")
+    // Headings ### ## #
+    s = s.replace(/^### (.+)$/gm, "<h3>$1</h3>")
+    s = s.replace(/^## (.+)$/gm, "<h2>$1</h2>")
+    s = s.replace(/^# (.+)$/gm, "<h1>$1</h1>")
+    // Bullet lines
+    s = s.replace(/^[-*] (.+)$/gm, "<li>$1</li>")
+    s = s.replace(/(<li>.*<\/li>)/s, "<ul>$1</ul>")
+    // Paragraphs (double newline)
+    s = s.replace(/\n{2,}/g, "</p><p>")
+    s = `<p>${s}</p>`
+    // Clean up empty <p> tags around block elements
+    s = s.replace(/<p>(<h[123]>)/g, "$1").replace(/(<\/h[123]>)<\/p>/g, "$1")
+    s = s.replace(/<p>(<ul>)/g, "$1").replace(/(<\/ul>)<\/p>/g, "$1")
+    // Single newlines → <br>
+    s = s.replace(/\n/g, "<br>")
+    return s
+  }
+
   // ── Send ───────────────────────────────────────────────────────────────────
 
   const send = async () => {
@@ -152,13 +195,13 @@ document.addEventListener("nav", () => {
 
     try {
       await ensureIndex()
-      const topChunks = bm25!.search(query, 5)
+      const topChunks = bm25!.search(query, 8)
 
       abortCtrl = new AbortController()
       const res = await fetch(workerUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query, chunks: topChunks }),
+        body: JSON.stringify({ query, chunks: topChunks, mode: currentMode }),
         signal: abortCtrl.signal,
       })
 
@@ -186,14 +229,16 @@ document.addEventListener("nav", () => {
             const token = JSON.parse(data).choices?.[0]?.delta?.content
             if (token) {
               full += token
-              textEl.textContent = full
+              // Show raw text while streaming (think tags still arriving)
+              const visible = full.replace(/<think>[\s\S]*?<\/think>/g, "").replace(/<think>[\s\S]*/g, "")
+              textEl.textContent = visible
               msgContainer.scrollTop = msgContainer.scrollHeight
             }
           } catch {}
         }
       }
 
-      textEl.textContent = full || "(no response)"
+      textEl.innerHTML = renderMd(full) || "(no response)"
       appendSources(aiWrap, topChunks)
     } catch (err: unknown) {
       const isAbort = err instanceof Error && err.name === "AbortError"
