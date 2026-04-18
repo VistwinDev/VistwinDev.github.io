@@ -323,20 +323,23 @@ document.addEventListener("nav", () => {
 
   const populateModels = (mode: string) => {
     if (!modelToggles) return
-    modelToggles.innerHTML = ""
     const list = MODELS[mode] ?? []
-    list.forEach((m, i) => {
+    const defaultModel = list[0]?.value ?? ""
+    currentModel = defaultModel
+    modelToggles.innerHTML = ""
+    for (const m of list) {
       const btn = document.createElement("button")
-      btn.className = "dna-ai-model-btn" + (i === 0 ? " dna-ai-model-btn--active" : "")
+      btn.className = "dna-ai-model-btn" + (m.value === defaultModel ? " dna-ai-model-btn--active" : "")
       btn.dataset.model = m.value
       btn.title = m.label
-      const [name, hint] = m.label.split("·").map((s) => s.trim())
+      // Split label on · separator
+      const parts = m.label.split("·")
       const nameEl = document.createElement("span")
       nameEl.className = "dna-ai-model-name"
-      nameEl.textContent = name
+      nameEl.textContent = (parts[0] ?? "").trim()
       const hintEl = document.createElement("span")
       hintEl.className = "dna-ai-model-hint"
-      hintEl.textContent = hint ?? ""
+      hintEl.textContent = (parts[1] ?? "").trim()
       btn.appendChild(nameEl)
       btn.appendChild(hintEl)
       btn.addEventListener("click", () => {
@@ -345,8 +348,7 @@ document.addEventListener("nav", () => {
           b.classList.toggle("dna-ai-model-btn--active", b.dataset.model === currentModel)
       })
       modelToggles.appendChild(btn)
-    })
-    currentModel = list[0]?.value ?? currentModel
+    }
   }
   populateModels("researcher")
 
