@@ -75,7 +75,7 @@ ${context}`
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "deepseek-r1-distill-llama-70b",
+        model: "llama-3.3-70b-versatile",
         stream: true,
         max_tokens: 1500,
         temperature: 0.6,

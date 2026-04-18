@@ -36,7 +36,7 @@ export default ((opts: AiChatOptions) => {
             <div class="dna-ai-header-name">Knowledge Assistant</div>
             <div class="dna-ai-header-status">
               <span class="live-dot" aria-hidden="true" />
-              <span>Powered by Groq · DeepSeek-R1</span>
+              <span>Powered by Groq · Llama 3.3</span>
             </div>
           </div>
           <button id="dna-ai-close" class="dna-ai-close" aria-label="Close">
