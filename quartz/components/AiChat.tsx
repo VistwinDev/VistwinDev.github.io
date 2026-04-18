@@ -62,6 +62,15 @@ export default ((opts: AiChatOptions) => {
           </button>
         </div>
 
+        {/* Model selector */}
+        <div class="dna-ai-model-bar">
+          <svg class="dna-ai-model-icon" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg>
+          <select id="dna-ai-model-select" class="dna-ai-model-select" aria-label="選擇模型">
+            {/* options populated by JS */}
+          </select>
+          <svg class="dna-ai-model-chevron" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+
         {/* Messages */}
         <div id="dna-ai-messages" class="dna-ai-messages">
           <div class="dna-ai-msg dna-ai-msg--assistant">
@@ -487,6 +496,59 @@ export default ((opts: AiChatOptions) => {
 /* light/dark palette + opacity handled by JS (applyTheme in ai-chat.inline.ts) */
 /* All panel content must sit above the canvas */
 .dna-ai-panel > *:not(.dna-ai-canvas) { position: relative; z-index: 1; }
+
+/* ── Model selector bar ───────────────────────────────────────────────── */
+.dna-ai-model-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.875rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+  background: rgba(0,0,0,0.08);
+}
+:root[saved-theme="light"] .dna-ai-model-bar {
+  border-bottom-color: rgba(0,0,0,0.07);
+  background: rgba(0,0,0,0.02);
+}
+.dna-ai-model-icon {
+  color: var(--gray);
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+.dna-ai-model-chevron {
+  color: var(--gray);
+  opacity: 0.45;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+.dna-ai-model-select {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: var(--codeFont);
+  font-size: 9.5px;
+  letter-spacing: 0.03em;
+  color: var(--gray);
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0.15rem 0;
+  line-height: 1.3;
+}
+.dna-ai-model-select:focus { color: var(--dark); }
+.dna-ai-model-select option {
+  font-size: 12px;
+  background: #111;
+  color: #ddd;
+  padding: 4px 8px;
+}
+:root[saved-theme="light"] .dna-ai-model-select option {
+  background: #fff;
+  color: #111;
+}
 
 /* ── Resize handles ───────────────────────────────────────────────────── */
 .dna-ai-resize-top,

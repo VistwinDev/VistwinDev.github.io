@@ -32,9 +32,9 @@ export default {
     if (!checkRate(ip))
       return new Response("Rate limit exceeded. Try again in a minute.", { status: 429, headers: CORS })
 
-    let query, chunks, mode
+    let query, chunks, mode, model
     try {
-      ;({ query, chunks, mode } = await request.json())
+      ;({ query, chunks, mode, model } = await request.json())
     } catch {
       return new Response("Invalid JSON", { status: 400, headers: CORS })
     }
@@ -75,7 +75,7 @@ ${context}`
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: mode === "manager" ? "llama-3.1-8b-instant" : "llama-3.3-70b-versatile",
+        model: model || (mode === "manager" ? "llama-3.1-8b-instant" : "llama-3.3-70b-versatile"),
         stream: true,
         max_tokens: mode === "manager" ? 600 : 1500,
         temperature: mode === "manager" ? 0.3 : 0.6,

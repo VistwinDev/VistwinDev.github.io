@@ -243,6 +243,21 @@ document.addEventListener("nav", () => {
   let abortCtrl: AbortController | null = null
   let currentMode: "researcher" | "manager" = "researcher"
 
+  // ── Model catalogue ────────────────────────────────────────────────────────
+  const MODELS: Record<string, { value: string; label: string }[]> = {
+    researcher: [
+      { value: "llama-3.3-70b-versatile",  label: "Llama 3.3 70B  ·  深度分析 / 長文研究（預設）" },
+      { value: "llama-3.1-70b-versatile",  label: "Llama 3.1 70B  ·  多語言 / 邏輯推理" },
+      { value: "gemma2-9b-it",             label: "Gemma 2 9B     ·  Google 模型 / 快速研究" },
+    ],
+    manager: [
+      { value: "llama-3.1-8b-instant",     label: "Llama 3.1 8B Instant  ·  超快速摘要（預設）" },
+      { value: "gemma2-9b-it",             label: "Gemma 2 9B            ·  結構化輸出" },
+      { value: "llama-3.3-70b-versatile",  label: "Llama 3.3 70B         ·  高品質摘要" },
+    ],
+  }
+  let currentModel = MODELS.researcher[0].value
+
   // ── Restore saved panel size ───────────────────────────────────────────────
   const savedPanelW = localStorage.getItem("dna-ai-panel-width")
   const savedPanelH = localStorage.getItem("dna-ai-panel-height")
@@ -303,6 +318,27 @@ document.addEventListener("nav", () => {
   if (leftHandle) makeDragger(leftHandle, "x")
   if (topHandle)  makeDragger(topHandle,  "y")
 
+  // ── Model selector ─────────────────────────────────────────────────────────
+  const modelSelect = document.getElementById("dna-ai-model-select") as HTMLSelectElement | null
+
+  const populateModels = (mode: string) => {
+    if (!modelSelect) return
+    modelSelect.innerHTML = ""
+    for (const m of MODELS[mode] ?? []) {
+      const opt = document.createElement("option")
+      opt.value = m.value
+      opt.textContent = m.label
+      modelSelect.appendChild(opt)
+    }
+    currentModel = modelSelect.value
+  }
+  populateModels("researcher")
+
+  modelSelect?.addEventListener("change", () => {
+    currentModel = modelSelect.value
+  })
+  window.addCleanup(() => modelSelect?.removeEventListener("change", () => {}))
+
   // ── Mode toggle ────────────────────────────────────────────────────────────
   for (const btn of document.querySelectorAll<HTMLButtonElement>(".dna-ai-mode-btn")) {
     btn.addEventListener("click", () => {
@@ -312,6 +348,7 @@ document.addEventListener("nav", () => {
         b.classList.toggle("dna-ai-mode-btn--active", active)
         b.setAttribute("aria-pressed", String(active))
       }
+      populateModels(currentMode)
     })
     window.addCleanup(() => btn.removeEventListener("click", () => {}))
   }
@@ -439,7 +476,7 @@ document.addEventListener("nav", () => {
       const res = await fetch(workerUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query, chunks: topChunks, mode: currentMode }),
+        body: JSON.stringify({ query, chunks: topChunks, mode: currentMode, model: currentModel }),
         signal: abortCtrl.signal,
       })
 
