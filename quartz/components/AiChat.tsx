@@ -62,14 +62,8 @@ export default ((opts: AiChatOptions) => {
           </button>
         </div>
 
-        {/* Model selector */}
-        <div class="dna-ai-model-bar">
-          <svg class="dna-ai-model-icon" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg>
-          <select id="dna-ai-model-select" class="dna-ai-model-select" aria-label="選擇模型">
-            {/* options populated by JS */}
-          </select>
-          <svg class="dna-ai-model-chevron" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+        {/* Model toggles — populated by JS */}
+        <div id="dna-ai-model-toggles" class="dna-ai-model-toggles" />
 
         {/* Messages */}
         <div id="dna-ai-messages" class="dna-ai-messages">
@@ -475,10 +469,26 @@ export default ((opts: AiChatOptions) => {
 .dna-ai-send:active { transform: scale(0.94); }
 .dna-ai-send:disabled { opacity: 0.35; cursor: not-allowed; transform: none; box-shadow: none; }
 
-/* Mobile */
-@media (max-width: 480px) {
-  #dna-ai-chat { left: 1rem; right: 1rem; width: auto; }
-  .dna-ai-panel { width: 100% !important; right: 0; border-radius: 20px; }
+/* Mobile / tablet */
+@media (max-width: 640px) {
+  #dna-ai-chat {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 1rem;
+    width: auto;
+  }
+  .dna-ai-panel {
+    /* Cover screen height but cap so it never overflows above the fold */
+    width: 100% !important;
+    height: min(520px, calc(100dvh - 5rem)) !important;
+    right: 0;
+    border-radius: 20px 20px 16px 16px;
+    /* When soft keyboard opens, dvh shrinks → panel shrinks too (no blank space) */
+  }
+  .dna-ai-input {
+    /* Prevent iOS zoom on focus (font must be ≥16px) */
+    font-size: 16px;
+  }
 }
 
 /* ── Shader canvas background ─────────────────────────────────────────── */
@@ -497,57 +507,63 @@ export default ((opts: AiChatOptions) => {
 /* All panel content must sit above the canvas */
 .dna-ai-panel > *:not(.dna-ai-canvas) { position: relative; z-index: 1; }
 
-/* ── Model selector bar ───────────────────────────────────────────────── */
-.dna-ai-model-bar {
+/* ── Model toggles ────────────────────────────────────────────────────── */
+.dna-ai-model-toggles {
   display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.875rem;
+  gap: 0.3rem;
+  padding: 0.45rem 0.75rem;
   border-bottom: 1px solid rgba(255,255,255,0.07);
   flex-shrink: 0;
   background: rgba(0,0,0,0.08);
 }
-:root[saved-theme="light"] .dna-ai-model-bar {
+:root[saved-theme="light"] .dna-ai-model-toggles {
   border-bottom-color: rgba(0,0,0,0.07);
   background: rgba(0,0,0,0.02);
 }
-.dna-ai-model-icon {
-  color: var(--gray);
-  opacity: 0.6;
-  flex-shrink: 0;
-}
-.dna-ai-model-chevron {
-  color: var(--gray);
-  opacity: 0.45;
-  flex-shrink: 0;
-  pointer-events: none;
-}
-.dna-ai-model-select {
+.dna-ai-model-btn {
   flex: 1;
-  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 0.28rem 0.25rem;
+  border-radius: 7px;
+  border: 1px solid rgba(255,255,255,0.07);
   background: transparent;
-  border: none;
-  outline: none;
   cursor: pointer;
+  outline: none;
+  transition: color 150ms, background 150ms, border-color 150ms;
+  line-height: 1.2;
+}
+.dna-ai-model-btn:hover {
+  background: rgba(255,255,255,0.05);
+}
+:root[saved-theme="light"] .dna-ai-model-btn:hover {
+  background: rgba(0,0,0,0.05);
+}
+.dna-ai-model-btn--active {
+  color: #76b900 !important;
+  background: rgba(118,185,0,0.1) !important;
+  border-color: rgba(118,185,0,0.3) !important;
+}
+.dna-ai-model-name {
   font-family: var(--codeFont);
-  font-size: 9.5px;
-  letter-spacing: 0.03em;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--dark);
+}
+.dna-ai-model-btn--active .dna-ai-model-name { color: #76b900; }
+.dna-ai-model-hint {
+  font-family: var(--codeFont);
+  font-size: 8px;
+  letter-spacing: 0.02em;
   color: var(--gray);
-  appearance: none;
-  -webkit-appearance: none;
-  padding: 0.15rem 0;
-  line-height: 1.3;
-}
-.dna-ai-model-select:focus { color: var(--dark); }
-.dna-ai-model-select option {
-  font-size: 12px;
-  background: #111;
-  color: #ddd;
-  padding: 4px 8px;
-}
-:root[saved-theme="light"] .dna-ai-model-select option {
-  background: #fff;
-  color: #111;
+  opacity: 0.7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 /* ── Resize handles ───────────────────────────────────────────────────── */

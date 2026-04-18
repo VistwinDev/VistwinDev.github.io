@@ -318,26 +318,37 @@ document.addEventListener("nav", () => {
   if (leftHandle) makeDragger(leftHandle, "x")
   if (topHandle)  makeDragger(topHandle,  "y")
 
-  // ── Model selector ─────────────────────────────────────────────────────────
-  const modelSelect = document.getElementById("dna-ai-model-select") as HTMLSelectElement | null
+  // ── Model toggles ──────────────────────────────────────────────────────────
+  const modelToggles = document.getElementById("dna-ai-model-toggles") as HTMLElement | null
 
   const populateModels = (mode: string) => {
-    if (!modelSelect) return
-    modelSelect.innerHTML = ""
-    for (const m of MODELS[mode] ?? []) {
-      const opt = document.createElement("option")
-      opt.value = m.value
-      opt.textContent = m.label
-      modelSelect.appendChild(opt)
-    }
-    currentModel = modelSelect.value
+    if (!modelToggles) return
+    modelToggles.innerHTML = ""
+    const list = MODELS[mode] ?? []
+    list.forEach((m, i) => {
+      const btn = document.createElement("button")
+      btn.className = "dna-ai-model-btn" + (i === 0 ? " dna-ai-model-btn--active" : "")
+      btn.dataset.model = m.value
+      btn.title = m.label
+      const [name, hint] = m.label.split("·").map((s) => s.trim())
+      const nameEl = document.createElement("span")
+      nameEl.className = "dna-ai-model-name"
+      nameEl.textContent = name
+      const hintEl = document.createElement("span")
+      hintEl.className = "dna-ai-model-hint"
+      hintEl.textContent = hint ?? ""
+      btn.appendChild(nameEl)
+      btn.appendChild(hintEl)
+      btn.addEventListener("click", () => {
+        currentModel = m.value
+        for (const b of modelToggles.querySelectorAll<HTMLButtonElement>(".dna-ai-model-btn"))
+          b.classList.toggle("dna-ai-model-btn--active", b.dataset.model === currentModel)
+      })
+      modelToggles.appendChild(btn)
+    })
+    currentModel = list[0]?.value ?? currentModel
   }
   populateModels("researcher")
-
-  modelSelect?.addEventListener("change", () => {
-    currentModel = modelSelect.value
-  })
-  window.addCleanup(() => modelSelect?.removeEventListener("change", () => {}))
 
   // ── Mode toggle ────────────────────────────────────────────────────────────
   for (const btn of document.querySelectorAll<HTMLButtonElement>(".dna-ai-mode-btn")) {
@@ -371,7 +382,9 @@ document.addEventListener("nav", () => {
     abortCtrl?.abort()
   }
 
-  fab.addEventListener("click", openPanel)
+  fab.addEventListener("click", () => {
+    panel.classList.contains("dna-open") ? closePanel() : openPanel()
+  })
   closeBtn.addEventListener("click", closePanel)
   window.addCleanup(() => {
     fab.removeEventListener("click", openPanel)
