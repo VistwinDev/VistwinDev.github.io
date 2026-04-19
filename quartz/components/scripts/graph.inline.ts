@@ -344,6 +344,8 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     "--dark",
     "--darkgray",
     "--bodyFont",
+    "--graph-link-idle",
+    "--graph-link-active",
   ] as const
   const computedStyleMap = cssVars.reduce(
     (acc, key) => {
@@ -455,7 +457,9 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
         alpha = l.active ? 1 : 0.2
       }
 
-      l.color = l.active ? computedStyleMap["--gray"] : computedStyleMap["--lightgray"]
+      l.color = l.active
+        ? computedStyleMap["--graph-link-active"]
+        : computedStyleMap["--graph-link-idle"]
       tweenGroup.add(new Tweened<LinkRenderData>(l).to({ alpha }, 200))
     }
 
@@ -643,7 +647,7 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     const linkRenderDatum: LinkRenderData = {
       simulationData: l,
       gfx,
-      color: computedStyleMap["--lightgray"],
+      color: computedStyleMap["--graph-link-idle"],
       alpha: 1,
       active: false,
     }

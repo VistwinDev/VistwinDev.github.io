@@ -627,6 +627,18 @@ th { border-bottom: 1px solid var(--secondary); }
   }
 }
 
+// ── Graph link theming ───────────────────────────────────────────────────────
+// Light mode needs dark link strokes for contrast against the light canvas;
+// dark mode keeps the subdued gray that matches the rest of the UI.
+:root {
+  --graph-link-idle:   var(--lightgray);
+  --graph-link-active: var(--gray);
+}
+:root[saved-theme="light"] {
+  --graph-link-idle:   #3f3f46; // zinc-700
+  --graph-link-active: #18181b; // zinc-900
+}
+
 // ── Graph settings panel (right side, always visible on desktop) ─────────────
 
 #graph-settings-right {
