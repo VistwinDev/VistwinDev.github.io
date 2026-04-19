@@ -301,9 +301,14 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
   let linkWidth = isFullPage ? 2 : 1
   let nodeSizeMult = 1
   let shaderParams: ShaderParams = defaultShaderParams()
-  // Load saved graph settings from localStorage
+  // Settings are persisted per-theme so light and dark can be tuned independently.
+  const currentTheme = document.documentElement.getAttribute("saved-theme") === "light" ? "light" : "dark"
+  const settingsStorageKey = `dna-graph-forces-${currentTheme}`
+  // Load saved graph settings from localStorage (falls back to legacy key on first load)
   try {
-    const saved = JSON.parse(localStorage.getItem("dna-graph-forces") ?? "{}")
+    const themedRaw = localStorage.getItem(settingsStorageKey)
+    const legacyRaw = localStorage.getItem("dna-graph-forces")
+    const saved = JSON.parse(themedRaw ?? legacyRaw ?? "{}")
     if (saved.repelForce != null) repelForce = +saved.repelForce
     if (saved.centerForce != null) centerForce = +saved.centerForce
     if (saved.linkDistance != null) linkDistance = +saved.linkDistance
@@ -1000,7 +1005,7 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     wireColor("gs-shColorB", "colorB")
 
     document.getElementById("graph-settings-save")!.addEventListener("click", () => {
-      localStorage.setItem("dna-graph-forces", JSON.stringify({
+      localStorage.setItem(settingsStorageKey, JSON.stringify({
         repelForce, centerForce, linkDistance, linkStrength,
         fontSize, opacityScale, linkWidth, nodeSizeMult,
         shader: shaderParams,
