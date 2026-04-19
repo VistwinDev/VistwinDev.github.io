@@ -897,12 +897,26 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     document.body.appendChild(settingsEl)
 
     // Mobile toggle (hidden on desktop via CSS)
-    document.getElementById("graph-settings-mobile-toggle")!.addEventListener("click", () => {
-      const panel = document.getElementById("graph-settings-panel")!
-      const btn = document.getElementById("graph-settings-mobile-toggle") as HTMLButtonElement
-      const open = panel.classList.toggle("mobile-open")
+    const setPanelOpen = (open: boolean) => {
+      const panel = document.getElementById("graph-settings-panel")
+      const btn = document.getElementById("graph-settings-mobile-toggle") as HTMLButtonElement | null
+      if (!panel || !btn) return
+      panel.classList.toggle("mobile-open", open)
       btn.textContent = open ? "設定 ▴" : "設定 ▾"
+    }
+    document.getElementById("graph-settings-mobile-toggle")!.addEventListener("click", (e) => {
+      e.stopPropagation()
+      const panel = document.getElementById("graph-settings-panel")!
+      setPanelOpen(!panel.classList.contains("mobile-open"))
     })
+    // Clicks inside the panel shouldn't close it
+    document.getElementById("graph-settings-panel")!.addEventListener("click", (e) => {
+      e.stopPropagation()
+    })
+    // Tap anywhere else on the page closes the panel
+    const closePanelOnOutsideTap = () => setPanelOpen(false)
+    document.addEventListener("click", closePanelOnOutsideTap)
+    window.addCleanup(() => document.removeEventListener("click", closePanelOnOutsideTap))
 
     const wireSlider = (id: string, onInput: (v: number) => void) => {
       const input = document.getElementById(id) as HTMLInputElement | null
