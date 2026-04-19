@@ -553,15 +553,8 @@ th { border-bottom: 1px solid var(--secondary); }
     max-width: calc(100vw - 1rem);
     .graph-ui-title { font-size: 1rem; }
     .graph-ui-stats { font-size: 0.7rem; }
-    .graph-ui-legend {
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 0.25rem 0.6rem;
-      padding: 0.5rem 0.6rem;
-      margin-top: 0.3rem;
-    }
-    .graph-ui-legend-item { font-size: 0.65rem; }
-    .graph-ui-hint { display: none; } // free up vertical space on small screens
+    .graph-ui-legend { display: none; } // hide legend on mobile to free vertical space
+    .graph-ui-hint { display: none; }
   }
 }
 
