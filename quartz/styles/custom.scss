@@ -628,11 +628,11 @@ th { border-bottom: 1px solid var(--secondary); }
 }
 
 // ── Graph link theming ───────────────────────────────────────────────────────
-// Light mode needs dark link strokes for contrast against the light canvas;
-// dark mode keeps the subdued gray that matches the rest of the UI.
+// Light mode needs dark strokes against the pale canvas;
+// dark mode needs light strokes against the near-black canvas.
 :root {
-  --graph-link-idle:   var(--lightgray);
-  --graph-link-active: var(--gray);
+  --graph-link-idle:   #a1a1aa; // zinc-400 — readable on dark bg
+  --graph-link-active: #fafafa; // near white
 }
 :root[saved-theme="light"] {
   --graph-link-idle:   #3f3f46; // zinc-700
