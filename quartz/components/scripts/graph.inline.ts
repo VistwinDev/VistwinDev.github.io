@@ -360,18 +360,17 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     {} as Record<(typeof cssVars)[number], string>,
   )
 
-  // Theme-aware: in light mode Meta is near-black; in dark mode it's near-white
   const isLightTheme = document.documentElement.getAttribute("saved-theme") === "light"
-  const metaColor = isLightTheme ? "#18181b" : "#ffffff"
 
-  // PARA folder color palette — mirrors Obsidian graph.json colorGroups
+  // Folder color palette — aligned with Obsidian graph view groups.
+  // Slugs use hyphens (e.g. "00 System" → "00-System").
   const folderColors: [string, string][] = [
-    ["00-Meta",      metaColor],  // theme-aware: near-black in light, near-white in dark
-    ["01-Projects",  "#60a5fa"], // blue-400
-    ["02-Areas",     "#34d399"], // emerald-400
-    ["03-Products",  "#a78bfa"], // violet-400
-    ["04-Resources", "#fbbf24"], // amber-400
-    ["05-Archive",   "#9ca3af"], // gray-400
+    ["00-System",    "#a1a1aa"], // zinc-400  — 灰
+    ["01-Projects",  "#fb923c"], // orange-400 — 橘
+    ["02-Products",  "#60a5fa"], // blue-400   — 藍
+    ["03-Company",   "#a78bfa"], // violet-400 — 紫
+    ["04-Knowledge", "#34d399"], // emerald-400 — 綠
+    ["99-Archive",   "#52525b"], // zinc-600   — 深灰
   ]
 
   function getFolderColor(id: string): string | null {
@@ -793,12 +792,12 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
       <div class="graph-ui-title">Knowledge Graph</div>
       <div class="graph-ui-stats">${nodeCount} nodes · ${linkCount} links</div>
       <div class="graph-ui-legend">
-        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:${metaColor};box-shadow:0 0 0 1px var(--lightgray)"></span>Meta</div>
-        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#60a5fa"></span>Projects</div>
-        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#34d399"></span>Areas</div>
-        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#a78bfa"></span>Products</div>
-        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#fbbf24"></span>Resources</div>
-        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#9ca3af"></span>Archive</div>
+        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#a1a1aa;box-shadow:0 0 0 1px var(--lightgray)"></span>System</div>
+        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#fb923c"></span>Projects</div>
+        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#60a5fa"></span>Products</div>
+        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#a78bfa"></span>Company</div>
+        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#34d399"></span>Knowledge</div>
+        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#52525b"></span>Archive</div>
         <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#ec4899"></span>Tags</div>
       </div>
       <div class="graph-ui-hint">Scroll to zoom · Drag to pan · Click node to open</div>
