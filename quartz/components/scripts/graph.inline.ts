@@ -96,6 +96,37 @@ function hexToRgb01(hex: string): [number, number, number] {
   const n = parseInt(m[1], 16)
   return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255]
 }
+// Normalize arbitrary color strings (hex, #rgb, rgb(), rgba()) to #rrggbb for <input type=color>.
+function cssVarHex(raw: string): string {
+  const s = (raw ?? "").trim()
+  if (!s) return "#000000"
+  let m = /^#?([0-9a-f]{3})$/i.exec(s)
+  if (m) {
+    const [r, g, b] = m[1].split("").map((c) => c + c)
+    return `#${r}${g}${b}`.toLowerCase()
+  }
+  m = /^#?([0-9a-f]{6})$/i.exec(s)
+  if (m) return `#${m[1].toLowerCase()}`
+  m = /rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)/i.exec(s)
+  if (m) {
+    const hx = (v: string) => Math.max(0, Math.min(255, Math.round(parseFloat(v)))).toString(16).padStart(2, "0")
+    return `#${hx(m[1])}${hx(m[2])}${hx(m[3])}`
+  }
+  return "#000000"
+}
+// Grayscale helpers: slider (0–255) ↔ #xxxxxx gray hex. Uses luminance to seed from colored inputs.
+function hexToGray(hex: string): number {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex)
+  if (!m) return 128
+  const n = parseInt(m[1], 16)
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255
+  return Math.round(0.299 * r + 0.587 * g + 0.114 * b)
+}
+function grayToHex(v: number): string {
+  const g = Math.max(0, Math.min(255, Math.round(v)))
+  const h = g.toString(16).padStart(2, "0")
+  return `#${h}${h}${h}`
+}
 
 function initBgShader(canvas: HTMLCanvasElement, initial: ShaderParams = defaultShaderParams()) {
   const gl = canvas.getContext("webgl", { antialias: false, alpha: false })
@@ -301,6 +332,10 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
   let linkWidth = isFullPage ? 2 : 1
   let nodeSizeMult = 1
   let shaderParams: ShaderParams = defaultShaderParams()
+  // Colors are read from CSS vars by default; overridable per-theme via settings panel.
+  let textColorOverride: string | null = null
+  let linkIdleOverride: string | null = null
+  let linkActiveOverride: string | null = null
   // Settings are persisted per-theme so light and dark can be tuned independently.
   const currentTheme = document.documentElement.getAttribute("saved-theme") === "light" ? "light" : "dark"
   const settingsStorageKey = `dna-graph-forces-${currentTheme}`
@@ -327,6 +362,11 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
         }
       }
     }
+    const normalizeHex = (v: unknown): string | null =>
+      typeof v === "string" && /^#?[0-9a-f]{6}$/i.test(v) ? (v.startsWith("#") ? v : "#" + v) : null
+    textColorOverride = normalizeHex(saved.textColor)
+    linkIdleOverride = normalizeHex(saved.linkIdle)
+    linkActiveOverride = normalizeHex(saved.linkActive)
   } catch {}
 
   // we virtualize the simulation and use pixi to actually render it
@@ -462,8 +502,8 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
       }
 
       l.color = l.active
-        ? computedStyleMap["--graph-link-active"]
-        : computedStyleMap["--graph-link-idle"]
+        ? (linkActiveOverride ?? computedStyleMap["--graph-link-active"])
+        : (linkIdleOverride ?? computedStyleMap["--graph-link-idle"])
       tweenGroup.add(new Tweened<LinkRenderData>(l).to({ alpha }, 200))
     }
 
@@ -595,7 +635,7 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
       anchor: { x: 0.5, y: 1.2 },
       style: {
         fontSize: fontSize * 15,
-        fill: computedStyleMap["--dark"],
+        fill: textColorOverride ?? computedStyleMap["--dark"],
         fontFamily: computedStyleMap["--bodyFont"],
       },
       resolution: window.devicePixelRatio * 4,
@@ -651,7 +691,7 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     const linkRenderDatum: LinkRenderData = {
       simulationData: l,
       gfx,
-      color: computedStyleMap["--graph-link-idle"],
+      color: linkIdleOverride ?? computedStyleMap["--graph-link-idle"],
       alpha: 1,
       active: false,
     }
@@ -899,6 +939,24 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
             <span class="graph-settings-value" id="gs-shColorB-val">${shaderParams.colorB}</span>
           </label>
         </div>
+        <div class="graph-settings-section">
+          <div class="graph-settings-section-title">節點文字 / 連接線灰階</div>
+          <label class="graph-settings-row">
+            <span class="graph-settings-label">節點文字</span>
+            <input type="range" id="gs-textGray" min="0" max="255" step="1" value="${hexToGray(textColorOverride ?? cssVarHex(computedStyleMap["--dark"]))}">
+            <span class="graph-settings-value" id="gs-textGray-val">${grayToHex(hexToGray(textColorOverride ?? cssVarHex(computedStyleMap["--dark"])))}</span>
+          </label>
+          <label class="graph-settings-row">
+            <span class="graph-settings-label">連接線預設</span>
+            <input type="range" id="gs-linkIdleGray" min="0" max="255" step="1" value="${hexToGray(linkIdleOverride ?? cssVarHex(computedStyleMap["--graph-link-idle"]))}">
+            <span class="graph-settings-value" id="gs-linkIdleGray-val">${grayToHex(hexToGray(linkIdleOverride ?? cssVarHex(computedStyleMap["--graph-link-idle"])))}</span>
+          </label>
+          <label class="graph-settings-row">
+            <span class="graph-settings-label">連接線 hover</span>
+            <input type="range" id="gs-linkActiveGray" min="0" max="255" step="1" value="${hexToGray(linkActiveOverride ?? cssVarHex(computedStyleMap["--graph-link-active"]))}">
+            <span class="graph-settings-value" id="gs-linkActiveGray-val">${grayToHex(hexToGray(linkActiveOverride ?? cssVarHex(computedStyleMap["--graph-link-active"])))}</span>
+          </label>
+        </div>
         <button class="graph-settings-save" id="graph-settings-save">Save</button>
       </div>
     `
@@ -1003,11 +1061,46 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     wireColor("gs-shColorA", "colorA")
     wireColor("gs-shColorB", "colorB")
 
+    // Grayscale sliders for node text + link colors
+    const wireGray = (
+      id: string,
+      apply: (hex: string) => void,
+      setOverride: (hex: string) => void,
+    ) => {
+      const input = document.getElementById(id) as HTMLInputElement | null
+      const valEl = document.getElementById(id + "-val")
+      if (!input) return
+      input.addEventListener("input", () => {
+        const hex = grayToHex(parseInt(input.value, 10))
+        if (valEl) valEl.textContent = hex
+        setOverride(hex)
+        apply(hex)
+      })
+    }
+    wireGray(
+      "gs-textGray",
+      (hex) => { for (const n of nodeRenderData) n.label.style.fill = hex },
+      (hex) => { textColorOverride = hex },
+    )
+    wireGray(
+      "gs-linkIdleGray",
+      () => renderLinks(),
+      (hex) => { linkIdleOverride = hex },
+    )
+    wireGray(
+      "gs-linkActiveGray",
+      () => renderLinks(),
+      (hex) => { linkActiveOverride = hex },
+    )
+
     document.getElementById("graph-settings-save")!.addEventListener("click", () => {
       localStorage.setItem(settingsStorageKey, JSON.stringify({
         repelForce, centerForce, linkDistance, linkStrength,
         fontSize, opacityScale, linkWidth, nodeSizeMult,
         shader: shaderParams,
+        textColor: textColorOverride,
+        linkIdle: linkIdleOverride,
+        linkActive: linkActiveOverride,
       }))
       const btn = document.getElementById("graph-settings-save") as HTMLButtonElement
       btn.textContent = "已儲存 ✓"
