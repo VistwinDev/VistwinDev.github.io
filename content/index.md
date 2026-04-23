@@ -7,10 +7,11 @@ created: 2026-04-18
 
 → [[Vault Home]]
 
-## PARA
+## 結構
 
-- [[01 Projects MOC|01 📌 Projects]]
-- [[02 Areas MOC|02 🎯 Areas]]
-- [[03 Products MOC|03 🚀 Products]]
-- [[04 Resources MOC|04 📚 Resources]]
-- [[05 Archive MOC|05 🗄 Archive]]
+- 00 ⚙️ [[00 System]]
+- 01 📌 [[01 Projects]]
+- 02 💼 [[02 Products]]
+- 03 🏛️ [[03 Company]]
+- 04 🧠 [[04 Knowledge]]
+- 99 🗄️ [[99 Archive]]
