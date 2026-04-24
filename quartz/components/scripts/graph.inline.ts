@@ -403,15 +403,49 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
   const isLightTheme = document.documentElement.getAttribute("saved-theme") === "light"
 
   // Folder color palette — mirrors Obsidian graph view groups (lime → violet).
-  // Slugs use hyphens (e.g. "00 System" → "00-System").
-  const folderColors: [string, string][] = [
-    ["00-System",    "#a3e635"], // lime-400   — 黃綠
-    ["01-Projects",  "#4ade80"], // green-400  — 綠
-    ["02-Products",  "#2dd4bf"], // teal-400   — 青綠
-    ["03-Company",   "#38bdf8"], // sky-400    — 淺藍
-    ["04-Knowledge", "#3b82f6"], // blue-500   — 藍
-    ["99-Archive",   "#8b5cf6"], // violet-500 — 紫
+  // FOLDER_DEFS keeps labels + defaults so the Reset button can restore them.
+  const FOLDER_DEFS: { prefix: string; label: string; def: string }[] = [
+    { prefix: "00-System",    label: "System",    def: "#a3e635" }, // lime-400
+    { prefix: "01-Projects",  label: "Projects",  def: "#4ade80" }, // green-400
+    { prefix: "02-Products",  label: "Products",  def: "#2dd4bf" }, // teal-400
+    { prefix: "03-Company",   label: "Company",   def: "#38bdf8" }, // sky-400
+    { prefix: "04-Knowledge", label: "Knowledge", def: "#3b82f6" }, // blue-500
+    { prefix: "99-Archive",   label: "Archive",   def: "#8b5cf6" }, // violet-500
   ]
+  const DEFAULT_TAG_COLOR = "#ec4899"
+
+  // Active palette (mutable — color picker updates these entries in place,
+  // then calls updateNodeColors() to repaint the pixi graph).
+  const folderColors: [string, string][] = FOLDER_DEFS.map(
+    (f) => [f.prefix, f.def] as [string, string],
+  )
+  let TAG_COLOR = DEFAULT_TAG_COLOR
+
+  // Load saved per-theme color overrides.
+  const colorsStorageKey = `dna-graph-colors-${currentTheme}`
+  const isHex6 = (s: unknown): s is string =>
+    typeof s === "string" && /^#[0-9a-f]{6}$/i.test(s)
+  try {
+    const raw = localStorage.getItem(colorsStorageKey)
+    if (raw) {
+      const saved = JSON.parse(raw)
+      if (Array.isArray(saved.folders)) {
+        for (let i = 0; i < folderColors.length; i++) {
+          if (isHex6(saved.folders[i])) folderColors[i][1] = saved.folders[i]
+        }
+      }
+      if (isHex6(saved.tag)) TAG_COLOR = saved.tag
+    }
+  } catch {}
+
+  function persistColors() {
+    try {
+      localStorage.setItem(
+        colorsStorageKey,
+        JSON.stringify({ folders: folderColors.map((f) => f[1]), tag: TAG_COLOR }),
+      )
+    } catch {}
+  }
 
   function getFolderColor(id: string): string | null {
     for (const [prefix, col] of folderColors) {
@@ -423,9 +457,6 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     }
     return null
   }
-
-  // Obsidian-matching tag color (pink, solid)
-  const TAG_COLOR = "#ec4899"
 
   // calculate color
   const color = (d: NodeData) => {
@@ -832,13 +863,9 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
       <div class="graph-ui-title">Knowledge Graph</div>
       <div class="graph-ui-stats">${nodeCount} nodes · ${linkCount} links</div>
       <div class="graph-ui-legend">
-        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#a3e635"></span>System</div>
-        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#4ade80"></span>Projects</div>
-        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#2dd4bf"></span>Products</div>
-        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#38bdf8"></span>Company</div>
-        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#3b82f6"></span>Knowledge</div>
-        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#8b5cf6"></span>Archive</div>
-        <div class="graph-ui-legend-item"><span class="graph-ui-dot" style="background:#ec4899"></span>Tags</div>
+        ${FOLDER_DEFS.map((f, i) => `
+        <div class="graph-ui-legend-item"><span class="graph-ui-dot" id="graph-ui-dot-${i}" style="background:${folderColors[i][1]}"></span>${f.label}</div>`).join("")}
+        <div class="graph-ui-legend-item"><span class="graph-ui-dot" id="graph-ui-dot-tag" style="background:${TAG_COLOR}"></span>Tags</div>
       </div>
       <div class="graph-ui-hint">Scroll to zoom · Drag to pan · Click node to open</div>
     `
@@ -956,6 +983,21 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
             <input type="range" id="gs-linkActiveGray" min="0" max="255" step="1" value="${hexToGray(linkActiveOverride ?? cssVarHex(computedStyleMap["--graph-link-active"]))}">
             <span class="graph-settings-value" id="gs-linkActiveGray-val">${grayToHex(hexToGray(linkActiveOverride ?? cssVarHex(computedStyleMap["--graph-link-active"])))}</span>
           </label>
+        </div>
+        <div class="graph-settings-section">
+          <div class="graph-settings-section-title">節點顏色</div>
+          ${FOLDER_DEFS.map((f, i) => `
+          <label class="graph-settings-row graph-settings-row-color">
+            <span class="graph-settings-label">${f.label}</span>
+            <input type="color" id="gs-nc-${i}" value="${folderColors[i][1]}">
+            <span class="graph-settings-value" id="gs-nc-${i}-val">${folderColors[i][1]}</span>
+          </label>`).join("")}
+          <label class="graph-settings-row graph-settings-row-color">
+            <span class="graph-settings-label">Tags</span>
+            <input type="color" id="gs-nc-tag" value="${TAG_COLOR}">
+            <span class="graph-settings-value" id="gs-nc-tag-val">${TAG_COLOR}</span>
+          </label>
+          <button class="graph-settings-save" id="graph-node-colors-reset" style="margin-top:8px;">重置節點顏色</button>
         </div>
         <button class="graph-settings-save" id="graph-settings-save">Save</button>
       </div>
@@ -1092,6 +1134,72 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
       () => renderLinks(),
       (hex) => { linkActiveOverride = hex },
     )
+
+    // Repaint every node's pixi Graphics with the current palette.
+    function updateNodeColors() {
+      for (const n of nodeRenderData) {
+        const c = color(n.simulationData)
+        n.color = c
+        const r = nodeRadius(n.simulationData)
+        n.gfx.clear().circle(0, 0, r).fill({ color: c })
+      }
+    }
+
+    // Keep the left legend dots in sync with the active palette.
+    function updateLegendDot(index: number, colorHex: string) {
+      const dot = document.getElementById(`graph-ui-dot-${index}`)
+      if (dot) dot.style.background = colorHex
+    }
+    function updateLegendTagDot(colorHex: string) {
+      const dot = document.getElementById("graph-ui-dot-tag")
+      if (dot) dot.style.background = colorHex
+    }
+
+    const wireNodeColor = (index: number) => {
+      const input = document.getElementById(`gs-nc-${index}`) as HTMLInputElement | null
+      const valEl = document.getElementById(`gs-nc-${index}-val`)
+      if (!input) return
+      input.addEventListener("input", () => {
+        folderColors[index][1] = input.value
+        if (valEl) valEl.textContent = input.value
+        updateLegendDot(index, input.value)
+        updateNodeColors()
+        persistColors()
+      })
+    }
+    for (let i = 0; i < FOLDER_DEFS.length; i++) wireNodeColor(i)
+
+    const tagInput = document.getElementById("gs-nc-tag") as HTMLInputElement | null
+    const tagValEl = document.getElementById("gs-nc-tag-val")
+    tagInput?.addEventListener("input", () => {
+      TAG_COLOR = tagInput.value
+      if (tagValEl) tagValEl.textContent = tagInput.value
+      updateLegendTagDot(tagInput.value)
+      updateNodeColors()
+      persistColors()
+    })
+
+    document.getElementById("graph-node-colors-reset")?.addEventListener("click", (e) => {
+      e.preventDefault()
+      for (let i = 0; i < FOLDER_DEFS.length; i++) {
+        folderColors[i][1] = FOLDER_DEFS[i].def
+        const inp = document.getElementById(`gs-nc-${i}`) as HTMLInputElement | null
+        const val = document.getElementById(`gs-nc-${i}-val`)
+        if (inp) inp.value = FOLDER_DEFS[i].def
+        if (val) val.textContent = FOLDER_DEFS[i].def
+        updateLegendDot(i, FOLDER_DEFS[i].def)
+      }
+      TAG_COLOR = DEFAULT_TAG_COLOR
+      if (tagInput) tagInput.value = DEFAULT_TAG_COLOR
+      if (tagValEl) tagValEl.textContent = DEFAULT_TAG_COLOR
+      updateLegendTagDot(DEFAULT_TAG_COLOR)
+      updateNodeColors()
+      try { localStorage.removeItem(colorsStorageKey) } catch {}
+      const btn = document.getElementById("graph-node-colors-reset") as HTMLButtonElement
+      const prev = btn.textContent
+      btn.textContent = "已重置 ✓"
+      setTimeout(() => { btn.textContent = prev ?? "重置節點顏色" }, 1200)
+    })
 
     document.getElementById("graph-settings-save")!.addEventListener("click", () => {
       localStorage.setItem(settingsStorageKey, JSON.stringify({
