@@ -412,7 +412,7 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     { prefix: "04-Knowledge", label: "Knowledge", def: "#3b82f6" }, // blue-500
     { prefix: "99-Archive",   label: "Archive",   def: "#8b5cf6" }, // violet-500
   ]
-  const DEFAULT_TAG_COLOR = "#ec4899"
+  const DEFAULT_TAG_COLOR = "#9ca3af"
 
   // Active palette (mutable — color picker updates these entries in place,
   // then calls updateNodeColors() to repaint the pixi graph).
