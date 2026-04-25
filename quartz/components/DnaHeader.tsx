@@ -3,7 +3,7 @@ import dnaHeaderScript from "./scripts/dna-header.inline"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 
 const DnaHeader: QuartzComponent = ({ cfg }: QuartzComponentProps) => {
-  const title = (cfg?.pageTitle ?? "metaarchetech").toUpperCase()
+  const title = (cfg?.pageTitle ?? "VisTwin").toUpperCase()
 
   return (
     <div class="dna-pill-header" aria-label="Site header">
