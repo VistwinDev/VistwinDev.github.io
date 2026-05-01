@@ -2,7 +2,38 @@
 const _userPref = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"
 document.documentElement.setAttribute("saved-theme", localStorage.getItem("theme") ?? _userPref)
 
+// ── Relative time updater (last-update pill) ─────────────────────────────
+// Module-level so the timer survives SPA nav events.
+const formatRelative = (iso: string): string => {
+  const diffMs = Date.now() - new Date(iso).getTime()
+  if (Number.isNaN(diffMs) || diffMs < 0) return "just now"
+  const sec = Math.floor(diffMs / 1000)
+  if (sec < 45) return "just now"
+  const min = Math.floor(sec / 60)
+  if (min < 60) return `${min}m ago`
+  const hr = Math.floor(min / 60)
+  if (hr < 24) return `${hr}h ago`
+  const day = Math.floor(hr / 24)
+  if (day < 30) return `${day}d ago`
+  const mo = Math.floor(day / 30)
+  return `${mo}mo ago`
+}
+
+const refreshLastUpdate = () => {
+  for (const el of document.getElementsByClassName("dna-last-update")) {
+    const ts = (el as HTMLElement).dataset.timestamp
+    if (ts) el.textContent = formatRelative(ts)
+  }
+}
+
+// Periodic refresh — set once and let it run for the SPA lifetime.
+if (!(window as any).__dnaLastUpdateTimer) {
+  ;(window as any).__dnaLastUpdateTimer = setInterval(refreshLastUpdate, 30_000)
+}
+
 document.addEventListener("nav", () => {
+  refreshLastUpdate()
+
   // ── Theme toggle ─────────────────────────────────────────────────────────
 
   const emitThemeChange = (theme: "light" | "dark") => {

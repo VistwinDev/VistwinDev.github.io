@@ -2,6 +2,10 @@
 import dnaHeaderScript from "./scripts/dna-header.inline"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 
+// Captured once when the module loads at build time — represents site build time,
+// which is also the last time vault content was synced (build is triggered by sync).
+const BUILD_TIME_ISO = new Date().toISOString()
+
 const DnaHeader: QuartzComponent = ({ cfg }: QuartzComponentProps) => {
   const title = (cfg?.pageTitle ?? "VisTwin").toUpperCase()
 
@@ -33,6 +37,13 @@ const DnaHeader: QuartzComponent = ({ cfg }: QuartzComponentProps) => {
               <line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
           </button>
+          <span
+            class="dna-last-update"
+            data-timestamp={BUILD_TIME_ISO}
+            title={`Last updated: ${BUILD_TIME_ISO}`}
+          >
+            just now
+          </span>
           <span class="live-dot" aria-hidden="true" />
           <button class="dna-theme-toggle darkmode" aria-label="Toggle theme">
             <svg class="dna-sun-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -144,6 +155,20 @@ DnaHeader.css = `
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.dna-last-update {
+  font-family: var(--codeFont);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--c-text-muted, #71717a);
+  white-space: nowrap;
+  padding: 0 0.25rem;
+  user-select: none;
+}
+
+@media (max-width: 600px) {
+  .dna-last-update { display: none; }
 }
 
 .dna-search-btn,
