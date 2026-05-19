@@ -1,176 +1,3 @@
-// ── WebGL Soft Flow shader background ──────────────────────────────────────
-const initShader = (canvas: HTMLCanvasElement) => {
-  const gl = canvas.getContext("webgl", { antialias: false, premultipliedAlpha: false, alpha: false })
-  if (!gl) return null
-
-  const VERT = `attribute vec2 a;void main(){gl_Position=vec4(a,0.0,1.0);}`
-  const FRAG = `
-precision highp float;
-uniform vec2  u_res;
-uniform float u_time;
-uniform vec2  u_mouse;
-uniform float u_mstr;
-uniform vec3  u_colA;
-uniform vec3  u_colB;
-uniform float u_bias;
-
-vec3 mod289v3(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
-vec2 mod289v2(vec2 x){return x-floor(x*(1.0/289.0))*289.0;}
-vec3 permute(vec3 x){return mod289v3(((x*34.0)+1.0)*x);}
-float snoise(vec2 v){
-  const vec4 C=vec4(0.211324865405187,0.366025403784439,-0.577350269189626,0.024390243902439);
-  vec2 i=floor(v+dot(v,C.yy));
-  vec2 x0=v-i+dot(i,C.xx);
-  vec2 i1=(x0.x>x0.y)?vec2(1.0,0.0):vec2(0.0,1.0);
-  vec4 x12=x0.xyxy+C.xxzz;x12.xy-=i1;
-  i=mod289v2(i);
-  vec3 p=permute(permute(i.y+vec3(0.0,i1.y,1.0))+i.x+vec3(0.0,i1.x,1.0));
-  vec3 m=max(0.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.0);
-  m=m*m;m=m*m;
-  vec3 x2=2.0*fract(p*C.www)-1.0;
-  vec3 h=abs(x2)-0.5;
-  vec3 ox=floor(x2+0.5);
-  vec3 a0=x2-ox;
-  m*=1.79284291400159-0.85373472095314*(a0*a0+h*h);
-  vec3 g;
-  g.x=a0.x*x0.x+h.x*x0.y;
-  g.yz=a0.yz*x12.xz+h.yz*x12.yw;
-  return 130.0*dot(m,g);
-}
-float fbm(vec2 p){
-  float v=0.0,a=0.5;
-  for(int i=0;i<4;i++){v+=a*snoise(p);p*=2.03;a*=0.5;}
-  return v;
-}
-void main(){
-  vec2 p=(gl_FragCoord.xy-0.5*u_res.xy)/min(u_res.x,u_res.y);
-  float t=u_time*0.045;
-
-  // Medium-large blobs
-  vec2 flow=vec2(
-    fbm(p*0.38+vec2(t,0.0)),
-    fbm(p*0.38+vec2(0.0,t)+7.3)
-  );
-
-  // Mouse ripple radiating outward from cursor
-  vec2 aspect=vec2(u_res.x/min(u_res.x,u_res.y), u_res.y/min(u_res.x,u_res.y));
-  vec2 mp=(u_mouse-0.5)*aspect;
-  float dM=length(p-mp);
-  float ripple=sin(dM*9.0-u_time*5.5)*exp(-dM*2.8)*u_mstr;
-  flow+=ripple*normalize(p-mp+0.001)*0.45;
-
-  vec2 q=p+flow*0.55;
-  float n=fbm(q*0.45+t*0.85);
-  n+=0.25*fbm(q*0.85-t*0.4);
-  n=smoothstep(-0.85,0.85,n);
-
-  float nb=pow(clamp(n,0.0,1.0),u_bias);
-  vec3 col=mix(u_colA,u_colB,nb);
-
-  // Subtle glow at mouse position
-  col+=vec3(0.0,0.12,0.0)*exp(-dM*3.5)*u_mstr;
-
-  col*=1.0-0.28*length(p);
-  col=pow(max(col,0.0),vec3(0.85));
-  gl_FragColor=vec4(col,1.0);
-}`
-
-  const compile = (type: number, src: string) => {
-    const s = gl.createShader(type)!
-    gl.shaderSource(s, src); gl.compileShader(s)
-    return s
-  }
-  const prog = gl.createProgram()!
-  gl.attachShader(prog, compile(gl.VERTEX_SHADER, VERT))
-  gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG))
-  gl.linkProgram(prog)
-
-  const buf = gl.createBuffer()!
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf)
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW)
-
-  const loc = {
-    a:     gl.getAttribLocation(prog, "a"),
-    res:   gl.getUniformLocation(prog, "u_res"),
-    time:  gl.getUniformLocation(prog, "u_time"),
-    mouse: gl.getUniformLocation(prog, "u_mouse"),
-    mstr:  gl.getUniformLocation(prog, "u_mstr"),
-    colA:  gl.getUniformLocation(prog, "u_colA"),
-    colB:  gl.getUniformLocation(prog, "u_colB"),
-    bias:  gl.getUniformLocation(prog, "u_bias"),
-  }
-
-  // Theme-aware palette — called on init and on themechange
-  type Theme = { colA: number[], colB: number[], bias: number, opacity: string, blend: string }
-  const palette = (): Theme => {
-    const light = document.documentElement.getAttribute("saved-theme") === "light"
-    return light
-      ? { colA: [0.90, 0.95, 0.90], colB: [0.40, 0.72, 0.08], bias: 0.75, opacity: "0.35", blend: "multiply" }
-      : { colA: [0.01, 0.02, 0.025], colB: [0.30, 0.58, 0.01], bias: 2.0,  opacity: "0.45", blend: "lighten"  }
-  }
-  let theme = palette()
-  const applyTheme = () => {
-    theme = palette()
-    canvas.style.opacity = theme.opacity
-    canvas.style.mixBlendMode = theme.blend
-  }
-  applyTheme()
-  document.addEventListener("themechange", applyTheme)
-
-  const start = performance.now()
-  let rafId = 0
-  // Mouse state
-  let mx = -1, my = -1, mstrTarget = 0, mstr = 0
-
-  const onMouseMove = (e: PointerEvent) => {
-    const r = canvas.getBoundingClientRect()
-    mx = (e.clientX - r.left) / r.width
-    my = 1.0 - (e.clientY - r.top) / r.height
-    mstrTarget = 1
-  }
-  const onMouseLeave = () => { mstrTarget = 0 }
-  canvas.parentElement?.addEventListener("pointermove", onMouseMove)
-  canvas.parentElement?.addEventListener("pointerleave", onMouseLeave)
-
-  const resize = () => {
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
-    const w = Math.floor(canvas.offsetWidth * dpr)
-    const h = Math.floor(canvas.offsetHeight * dpr)
-    if (canvas.width !== w || canvas.height !== h) {
-      canvas.width = w; canvas.height = h
-    }
-  }
-
-  const render = (now: number) => {
-    resize()
-    mstr += (mstrTarget - mstr) * 0.06   // smooth ramp
-    gl.viewport(0, 0, canvas.width, canvas.height)
-    gl.useProgram(prog)
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf)
-    gl.enableVertexAttribArray(loc.a)
-    gl.vertexAttribPointer(loc.a, 2, gl.FLOAT, false, 0, 0)
-    gl.uniform2f(loc.res, canvas.width, canvas.height)
-    gl.uniform1f(loc.time, (now - start) / 1000)
-    gl.uniform2f(loc.mouse, mx, my)
-    gl.uniform1f(loc.mstr, mstr)
-    gl.uniform3f(loc.colA, theme.colA[0], theme.colA[1], theme.colA[2])
-    gl.uniform3f(loc.colB, theme.colB[0], theme.colB[1], theme.colB[2])
-    gl.uniform1f(loc.bias, theme.bias)
-    gl.drawArrays(gl.TRIANGLES, 0, 3)
-    rafId = requestAnimationFrame(render)
-  }
-
-  return {
-    start: () => { if (!rafId) rafId = requestAnimationFrame(render) },
-    stop:  () => {
-      cancelAnimationFrame(rafId); rafId = 0
-      canvas.parentElement?.removeEventListener("pointermove", onMouseMove)
-      canvas.parentElement?.removeEventListener("pointerleave", onMouseLeave)
-      document.removeEventListener("themechange", applyTheme)
-    },
-  }
-}
-
 interface Chunk {
   text: string
   slug: string
@@ -405,21 +232,15 @@ document.addEventListener("nav", () => {
     window.addCleanup(() => btn.removeEventListener("click", () => {}))
   }
 
-  // ── Shader background ─────────────────────────────────────────────────────
-  const shaderCanvas = document.getElementById("dna-ai-canvas") as HTMLCanvasElement | null
-  const shader = shaderCanvas ? initShader(shaderCanvas) : null
-
   // ── Panel open/close ───────────────────────────────────────────────────────
 
   const openPanel = () => {
     panel.classList.add("dna-open")
     input.focus()
-    shader?.start()
     ensureIndex().catch(() => {})
   }
   const closePanel = () => {
     panel.classList.remove("dna-open")
-    shader?.stop()
     abortCtrl?.abort()
   }
 

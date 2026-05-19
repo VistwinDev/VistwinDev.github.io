@@ -68,34 +68,6 @@ type TweenNode = {
   stop: () => void
 }
 
-type ShaderParams = {
-  speed: number     // time multiplier (flow animation rate)
-  scale: number     // spatial scale of the noise field (smaller = more zoomed out)
-  flow: number      // strength of domain-warp displacement
-  vignette: number  // edge darkening amount (0 = off)
-  bias: number      // gradient contrast — low = more colorA, high = more colorB
-  opacity: number   // overall canvas opacity (how much the shader shows over the page)
-  colorA: string    // background tint (low end of gradient), #rrggbb
-  colorB: string    // foreground tint (high end of gradient), #rrggbb
-}
-const SHADER_DEFAULTS_BY_THEME = {
-  light: { colorA: "#ebf0eb", colorB: "#8cc71f", bias: 0.6, opacity: 0.28 },
-  dark:  { colorA: "#030405", colorB: "#2e5c03", bias: 2.2, opacity: 0.55 },
-}
-type Theme = "light" | "dark"
-function currentTheme(): Theme {
-  return document.documentElement.getAttribute("saved-theme") === "light" ? "light" : "dark"
-}
-function defaultShaderParams(theme: Theme = currentTheme()): ShaderParams {
-  const t = SHADER_DEFAULTS_BY_THEME[theme]
-  return { speed: 0.04, scale: 1.1, flow: 0.55, vignette: 0.32, ...t }
-}
-function hexToRgb01(hex: string): [number, number, number] {
-  const m = /^#?([0-9a-f]{6})$/i.exec(hex)
-  if (!m) return [0, 0, 0]
-  const n = parseInt(m[1], 16)
-  return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255]
-}
 // Normalize arbitrary color strings (hex, #rgb, rgb(), rgba()) to #rrggbb for <input type=color>.
 function cssVarHex(raw: string): string {
   const s = (raw ?? "").trim()
@@ -126,109 +98,6 @@ function grayToHex(v: number): string {
   const g = Math.max(0, Math.min(255, Math.round(v)))
   const h = g.toString(16).padStart(2, "0")
   return `#${h}${h}${h}`
-}
-
-function initBgShader(canvas: HTMLCanvasElement, initial: ShaderParams = defaultShaderParams()) {
-  const gl = canvas.getContext("webgl", { antialias: false, alpha: false })
-  if (!gl) return null
-  const VERT = `attribute vec2 a;void main(){gl_Position=vec4(a,0.0,1.0);}`
-  const FRAG = `
-precision highp float;
-uniform vec2 u_res; uniform float u_time;
-uniform vec3 u_colA; uniform vec3 u_colB; uniform float u_bias;
-uniform float u_speed; uniform float u_scale; uniform float u_flow; uniform float u_vignette;
-vec3 m3(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
-vec2 m2(vec2 x){return x-floor(x*(1.0/289.0))*289.0;}
-vec3 pm(vec3 x){return m3(((x*34.0)+1.0)*x);}
-float sn(vec2 v){
-  const vec4 C=vec4(0.211324865405187,0.366025403784439,-0.577350269189626,0.024390243902439);
-  vec2 i=floor(v+dot(v,C.yy)); vec2 x0=v-i+dot(i,C.xx);
-  vec2 i1=(x0.x>x0.y)?vec2(1,0):vec2(0,1);
-  vec4 x12=x0.xyxy+C.xxzz; x12.xy-=i1; i=m2(i);
-  vec3 p=pm(pm(i.y+vec3(0,i1.y,1))+i.x+vec3(0,i1.x,1));
-  vec3 m=max(0.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.0);
-  m*=m; m*=m;
-  vec3 x2=2.0*fract(p*C.www)-1.0; vec3 h=abs(x2)-0.5; vec3 ox=floor(x2+0.5); vec3 a0=x2-ox;
-  m*=1.79284291400159-0.85373472095314*(a0*a0+h*h);
-  vec3 g; g.x=a0.x*x0.x+h.x*x0.y; g.yz=a0.yz*x12.xz+h.yz*x12.yw;
-  return 130.0*dot(m,g);
-}
-float fbm(vec2 p){float v=0.0,a=0.5;for(int i=0;i<4;i++){v+=a*sn(p);p*=2.03;a*=0.5;}return v;}
-void main(){
-  vec2 p=(gl_FragCoord.xy-0.5*u_res)/min(u_res.x,u_res.y);
-  float t=u_time*u_speed;
-  vec2 flow=vec2(fbm(p*u_scale+vec2(t,0)),fbm(p*u_scale+vec2(0,t)+5.1));
-  vec2 q=p+flow*u_flow;
-  float n=fbm(q*(u_scale*1.18)+t*0.9); n+=0.3*fbm(q*(u_scale*2.0)-t*0.5);
-  n=smoothstep(-0.85,0.85,n);
-  vec3 col=mix(u_colA,u_colB,pow(clamp(n,0.0,1.0),u_bias));
-  col*=1.0-u_vignette*length(p);
-  col=pow(max(col,0.0),vec3(0.88));
-  gl_FragColor=vec4(col,1.0);
-}`
-  const mk = (type: number, src: string) => {
-    const s = gl.createShader(type)!; gl.shaderSource(s, src); gl.compileShader(s); return s
-  }
-  const prog = gl.createProgram()!
-  gl.attachShader(prog, mk(gl.VERTEX_SHADER, VERT))
-  gl.attachShader(prog, mk(gl.FRAGMENT_SHADER, FRAG))
-  gl.linkProgram(prog)
-  const buf = gl.createBuffer()!
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf)
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW)
-  const loc = {
-    a: gl.getAttribLocation(prog, "a"),
-    res: gl.getUniformLocation(prog, "u_res"),
-    time: gl.getUniformLocation(prog, "u_time"),
-    colA: gl.getUniformLocation(prog, "u_colA"),
-    colB: gl.getUniformLocation(prog, "u_colB"),
-    bias: gl.getUniformLocation(prog, "u_bias"),
-    speed: gl.getUniformLocation(prog, "u_speed"),
-    scale: gl.getUniformLocation(prog, "u_scale"),
-    flow: gl.getUniformLocation(prog, "u_flow"),
-    vignette: gl.getUniformLocation(prog, "u_vignette"),
-  }
-  const params: ShaderParams = { ...initial }
-  // Seed canvas opacity from params so the UI control is the single source of truth.
-  canvas.style.opacity = String(params.opacity)
-  const start = performance.now()
-  let rafId = 0
-  const resize = () => {
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
-    const w = Math.floor(canvas.offsetWidth * dpr), h = Math.floor(canvas.offsetHeight * dpr)
-    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h }
-  }
-  const render = (now: number) => {
-    resize()
-    gl.viewport(0, 0, canvas.width, canvas.height)
-    gl.useProgram(prog)
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf)
-    gl.enableVertexAttribArray(loc.a)
-    gl.vertexAttribPointer(loc.a, 2, gl.FLOAT, false, 0, 0)
-    gl.uniform2f(loc.res, canvas.width, canvas.height)
-    gl.uniform1f(loc.time, (now - start) / 1000)
-    const ca = hexToRgb01(params.colorA), cb = hexToRgb01(params.colorB)
-    gl.uniform3f(loc.colA, ca[0], ca[1], ca[2])
-    gl.uniform3f(loc.colB, cb[0], cb[1], cb[2])
-    gl.uniform1f(loc.bias, params.bias)
-    gl.uniform1f(loc.speed, params.speed)
-    gl.uniform1f(loc.scale, params.scale)
-    gl.uniform1f(loc.flow, params.flow)
-    gl.uniform1f(loc.vignette, params.vignette)
-    gl.drawArrays(gl.TRIANGLES, 0, 3)
-    rafId = requestAnimationFrame(render)
-  }
-  return {
-    start: () => { if (!rafId) rafId = requestAnimationFrame(render) },
-    stop: () => {
-      cancelAnimationFrame(rafId); rafId = 0
-    },
-    setParam: <K extends keyof ShaderParams>(key: K, value: ShaderParams[K]) => {
-      params[key] = value
-      if (key === "opacity") canvas.style.opacity = String(value)
-    },
-    getParams: () => ({ ...params }),
-  }
 }
 
 async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
@@ -331,7 +200,6 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
   let linkStrength = 1
   let linkWidth = isFullPage ? 2 : 1
   let nodeSizeMult = 1
-  let shaderParams: ShaderParams = defaultShaderParams()
   // Colors are read from CSS vars by default; overridable per-theme via settings panel.
   let textColorOverride: string | null = null
   let linkIdleOverride: string | null = null
@@ -352,16 +220,6 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     if (saved.opacityScale != null) opacityScale = +saved.opacityScale
     if (saved.linkWidth != null) linkWidth = +saved.linkWidth
     if (saved.nodeSizeMult != null) nodeSizeMult = +saved.nodeSizeMult
-    if (saved.shader && typeof saved.shader === "object") {
-      for (const k of ["speed", "scale", "flow", "vignette", "bias", "opacity"] as const) {
-        if (saved.shader[k] != null) shaderParams[k] = +saved.shader[k]
-      }
-      for (const k of ["colorA", "colorB"] as const) {
-        if (typeof saved.shader[k] === "string" && /^#?[0-9a-f]{6}$/i.test(saved.shader[k])) {
-          shaderParams[k] = saved.shader[k].startsWith("#") ? saved.shader[k] : "#" + saved.shader[k]
-        }
-      }
-    }
     const normalizeHex = (v: unknown): string | null =>
       typeof v === "string" && /^#?[0-9a-f]{6}$/i.test(v) ? (v.startsWith("#") ? v : "#" + v) : null
     textColorOverride = normalizeHex(saved.textColor)
@@ -399,8 +257,6 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     },
     {} as Record<(typeof cssVars)[number], string>,
   )
-
-  const isLightTheme = document.documentElement.getAttribute("saved-theme") === "light"
 
   // Folder color palette — mirrors Obsidian graph view groups (lime → violet).
   // FOLDER_DEFS keeps labels + defaults so the Reset button can restore them.
@@ -831,21 +687,9 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
   }
 
   // ── Full-page /graph UI (left info + right settings) ────────────────────────
-  let bgShader: ReturnType<typeof initBgShader> = null
-
   if (isFullPage) {
     document.getElementById("graph-ui")?.remove()
     document.getElementById("graph-settings-right")?.remove()
-    document.getElementById("graph-bg-canvas")?.remove()
-
-    // Shader background canvas
-    const bgCanvas = document.createElement("canvas")
-    bgCanvas.id = "graph-bg-canvas"
-    // Opacity is owned by shader params (updated via setParam); blend mode is theme-driven.
-    bgCanvas.style.cssText = `position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;mix-blend-mode:${isLightTheme ? "multiply" : "lighten"};`
-    document.body.insertBefore(bgCanvas, document.body.firstChild)
-    bgShader = initBgShader(bgCanvas, shaderParams)
-    bgShader?.start()
 
     const nodeCount = graphData.nodes.filter((n) => !n.id.startsWith("tags/")).length
     const linkCount = graphData.links.length
@@ -921,49 +765,6 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
             <span class="graph-settings-label">連接線距離</span>
             <input type="range" id="gs-linkDistance" min="10" max="300" step="5" value="${Math.round(linkDistance)}">
             <span class="graph-settings-value" id="gs-linkDistance-val">${Math.round(linkDistance)}</span>
-          </label>
-        </div>
-        <div class="graph-settings-section">
-          <div class="graph-settings-section-title">流體背景</div>
-          <label class="graph-settings-row">
-            <span class="graph-settings-label">流動速度</span>
-            <input type="range" id="gs-shSpeed" min="0" max="0.2" step="0.005" value="${shaderParams.speed.toFixed(3)}">
-            <span class="graph-settings-value" id="gs-shSpeed-val">${shaderParams.speed.toFixed(3)}</span>
-          </label>
-          <label class="graph-settings-row">
-            <span class="graph-settings-label">紋理尺度</span>
-            <input type="range" id="gs-shScale" min="0.3" max="3" step="0.05" value="${shaderParams.scale.toFixed(2)}">
-            <span class="graph-settings-value" id="gs-shScale-val">${shaderParams.scale.toFixed(2)}</span>
-          </label>
-          <label class="graph-settings-row">
-            <span class="graph-settings-label">流體扭曲</span>
-            <input type="range" id="gs-shFlow" min="0" max="1.5" step="0.05" value="${shaderParams.flow.toFixed(2)}">
-            <span class="graph-settings-value" id="gs-shFlow-val">${shaderParams.flow.toFixed(2)}</span>
-          </label>
-          <label class="graph-settings-row">
-            <span class="graph-settings-label">邊緣漸暗</span>
-            <input type="range" id="gs-shVignette" min="0" max="0.8" step="0.02" value="${shaderParams.vignette.toFixed(2)}">
-            <span class="graph-settings-value" id="gs-shVignette-val">${shaderParams.vignette.toFixed(2)}</span>
-          </label>
-          <label class="graph-settings-row">
-            <span class="graph-settings-label">不透明度</span>
-            <input type="range" id="gs-shOpacity" min="0" max="1" step="0.02" value="${shaderParams.opacity.toFixed(2)}">
-            <span class="graph-settings-value" id="gs-shOpacity-val">${shaderParams.opacity.toFixed(2)}</span>
-          </label>
-          <label class="graph-settings-row">
-            <span class="graph-settings-label">對比</span>
-            <input type="range" id="gs-shBias" min="0.1" max="5" step="0.05" value="${shaderParams.bias.toFixed(2)}">
-            <span class="graph-settings-value" id="gs-shBias-val">${shaderParams.bias.toFixed(2)}</span>
-          </label>
-          <label class="graph-settings-row graph-settings-row-color">
-            <span class="graph-settings-label">背景色 A</span>
-            <input type="color" id="gs-shColorA" value="${shaderParams.colorA}">
-            <span class="graph-settings-value" id="gs-shColorA-val">${shaderParams.colorA}</span>
-          </label>
-          <label class="graph-settings-row graph-settings-row-color">
-            <span class="graph-settings-label">背景色 B</span>
-            <input type="color" id="gs-shColorB" value="${shaderParams.colorB}">
-            <span class="graph-settings-value" id="gs-shColorB-val">${shaderParams.colorB}</span>
           </label>
         </div>
         <div class="graph-settings-section">
@@ -1082,27 +883,6 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
       simulation.alpha(0.3).restart()
     })
 
-    // Shader / flow background
-    wireSlider("gs-shSpeed",    (v) => { shaderParams.speed = v;    bgShader?.setParam("speed", v) })
-    wireSlider("gs-shScale",    (v) => { shaderParams.scale = v;    bgShader?.setParam("scale", v) })
-    wireSlider("gs-shFlow",     (v) => { shaderParams.flow = v;     bgShader?.setParam("flow", v) })
-    wireSlider("gs-shVignette", (v) => { shaderParams.vignette = v; bgShader?.setParam("vignette", v) })
-    wireSlider("gs-shOpacity",  (v) => { shaderParams.opacity = v;  bgShader?.setParam("opacity", v) })
-    wireSlider("gs-shBias",     (v) => { shaderParams.bias = v;     bgShader?.setParam("bias", v) })
-
-    const wireColor = (id: string, key: "colorA" | "colorB") => {
-      const input = document.getElementById(id) as HTMLInputElement | null
-      const valEl = document.getElementById(id + "-val")
-      if (!input) return
-      input.addEventListener("input", () => {
-        shaderParams[key] = input.value
-        bgShader?.setParam(key, input.value)
-        if (valEl) valEl.textContent = input.value
-      })
-    }
-    wireColor("gs-shColorA", "colorA")
-    wireColor("gs-shColorB", "colorB")
-
     // Grayscale sliders for node text + link colors
     const wireGray = (
       id: string,
@@ -1205,7 +985,6 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
       localStorage.setItem(settingsStorageKey, JSON.stringify({
         repelForce, centerForce, linkDistance, linkStrength,
         fontSize, opacityScale, linkWidth, nodeSizeMult,
-        shader: shaderParams,
         textColor: textColorOverride,
         linkIdle: linkIdleOverride,
         linkActive: linkActiveOverride,
@@ -1222,8 +1001,6 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
     app.destroy()
     document.getElementById("graph-ui")?.remove()
     document.getElementById("graph-settings-right")?.remove()
-    document.getElementById("graph-bg-canvas")?.remove()
-    bgShader?.stop()
   }
 }
 
