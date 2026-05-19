@@ -37,28 +37,9 @@
   100% { box-shadow: 0 0 0 0   rgba(118, 185, 0, 0); }
 }
 
-// ── DNA: Signal ambient glow (dark only) ─────────────────────────────────────
-
-:root[saved-theme="dark"] body::before,
-body::before {
-  content: "";
-  position: fixed;
-  top: -15%;
-  left: -10%;
-  width: 55vw;
-  height: 55vw;
-  background: radial-gradient(ellipse at center, rgba(118, 185, 0, 0.065) 0%, transparent 65%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-:root[saved-theme="light"] body::before {
-  display: none;
-}
-
 ::selection {
-  background: #76b900 !important;
-  color: #09090b !important;
+  background: var(--darkgray) !important;
+  color: var(--light) !important;
 }
 
 html {
@@ -83,7 +64,7 @@ body {
   letter-spacing: -0.045em !important;
   line-height: 1.12 !important;
   margin: 1.25rem 0 0 !important;
-  color: var(--dark) !important;
+  color: var(--secondary) !important;
 }
 
 // H1 in body: large section opener
@@ -93,7 +74,7 @@ article h1 {
   letter-spacing: -0.035em;
   line-height: 1.2;
   margin-top: 3rem;
-  color: var(--dark);
+  color: var(--secondary);
 }
 
 // H2: section break — adds a bottom rule to signal "chapter"
@@ -105,7 +86,7 @@ article h2 {
   margin-top: 2.75rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--dark);
+  color: var(--secondary);
 }
 :root[saved-theme="light"] article h2 {
   border-bottom-color: rgba(0, 0, 0, 0.08);
@@ -118,7 +99,7 @@ article h3 {
   letter-spacing: -0.01em;
   line-height: 1.4;
   margin-top: 2.25rem;
-  color: var(--darkgray);
+  color: var(--secondary);
 }
 
 // H4 / H5 / H6: HUD label — departs from heading style entirely
@@ -130,7 +111,7 @@ article h6 {
   font-weight: 600 !important;
   letter-spacing: 0.1em !important;
   text-transform: uppercase !important;
-  color: #76b900 !important;
+  color: var(--secondary) !important;
   margin-top: 1.75rem;
 }
 
@@ -149,8 +130,8 @@ pre {
   border-radius: 12px !important;
 }
 code { border-radius: 6px !important; }
-blockquote { border-left: 1px solid var(--secondary) !important; }
-th { border-bottom: 1px solid var(--secondary); }
+blockquote { border-left: 1px solid var(--lightgray) !important; }
+th { border-bottom: 1px solid var(--lightgray); }
 
 // ── DNA: Full-bleed iOS layout ────────────────────────────────────────────────
 //
@@ -219,7 +200,7 @@ th { border-bottom: 1px solid var(--secondary); }
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(118, 185, 0, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
     pointer-events: none;
   }
 
@@ -277,20 +258,6 @@ th { border-bottom: 1px solid var(--secondary); }
     overflow-y: auto;
     gap: 1rem !important;
     flex-direction: column !important;
-    // signal glow
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 20px;
-      background: radial-gradient(
-        ellipse at 60% 20%,
-        rgba(118, 185, 0, 0.07) 0%,
-        transparent 65%
-      );
-      pointer-events: none;
-      z-index: 0;
-    }
     & > *:not(.dna-resize-handle) { position: relative; z-index: 1; }
   }
 
@@ -324,8 +291,12 @@ th { border-bottom: 1px solid var(--secondary); }
   z-index: 1;
 
   &:hover, &:active {
-    background: rgba(118, 185, 0, 0.25);
+    background: rgba(255, 255, 255, 0.18);
   }
+}
+:root[saved-theme="light"] .dna-resize-handle:hover,
+:root[saved-theme="light"] .dna-resize-handle:active {
+  background: rgba(0, 0, 0, 0.15);
 }
 
 // Remove borders from graph/toc/backlinks inside the floating right panel
@@ -347,7 +318,7 @@ th { border-bottom: 1px solid var(--secondary); }
   font-weight: 700 !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
-  color: rgba(118, 185, 0, 0.85) !important;
+  color: var(--gray) !important;
   text-decoration: none !important;
   display: flex !important;
   align-items: center !important;
@@ -358,10 +329,10 @@ th { border-bottom: 1px solid var(--secondary); }
 }
 :root[saved-theme="light"] .sidebar.left .graph-link {
   border-top-color: rgba(0, 0, 0, 0.07) !important;
-  color: rgba(80, 140, 0, 0.9) !important;
+  color: var(--gray) !important;
 }
 .sidebar.left .graph-link:hover {
-  color: #76b900 !important;
+  color: var(--dark) !important;
   opacity: 1 !important;
 }
 
@@ -374,7 +345,7 @@ th { border-bottom: 1px solid var(--secondary); }
   font-weight: 700 !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
-  color: rgba(118, 185, 0, 0.85) !important;
+  color: var(--gray) !important;
   padding: 0 0.1rem 0.5rem !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
   margin-bottom: 0.25rem !important;
@@ -384,7 +355,7 @@ th { border-bottom: 1px solid var(--secondary); }
 }
 :root[saved-theme="light"] .sidebar.left .explorer .title-button {
   border-bottom-color: rgba(0, 0, 0, 0.07) !important;
-  color: rgba(80, 140, 0, 0.9) !important;
+  color: var(--gray) !important;
 }
 
 // Explorer rows — shared base
@@ -427,9 +398,13 @@ th { border-bottom: 1px solid var(--secondary); }
 
 // Active page
 .sidebar.left .explorer li > a.active {
-  background: rgba(118, 185, 0, 0.12) !important;
-  color: #76b900 !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: var(--dark) !important;
   font-weight: 600 !important;
+}
+:root[saved-theme="light"] .sidebar.left .explorer li > a.active {
+  background: rgba(0, 0, 0, 0.07) !important;
+  color: #09090b !important;
 }
 
 :root[saved-theme="light"] .sidebar.left .explorer li > a:hover,
@@ -793,3 +768,91 @@ th { border-bottom: 1px solid var(--secondary); }
   .graph-settings-label { font-size: 0.7rem; }
   .graph-settings-value { font-size: 0.65rem; }
 }
+
+// ── Monochrome UI ────────────────────────────────────────────────────────────
+// Green is reserved for article headings (H1–H4) and the knowledge graph
+// (graph nodes read --secondary/--tertiary off :root via JS — left green there).
+// Everything else — links, lines, UI chrome, gradients — is black/white/gray.
+
+// Headings stay green (re-assert over generic link color)
+.article-title,
+article :is(h1, h2, h3, h4, h5, h6),
+article :is(h1, h2, h3, h4, h5, h6) a {
+  color: var(--secondary) !important;
+}
+
+// Content + nav links → neutral (graph is a <canvas>, unaffected)
+a {
+  color: var(--darkgray);
+  &:hover { color: var(--dark); }
+  &.internal {
+    background-color: rgba(255, 255, 255, 0.06);
+    &.broken { color: var(--gray); }
+  }
+}
+:root[saved-theme="light"] a.internal {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+// Wikilink highlight / inline mark → neutral
+mark,
+.highlight {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: inherit !important;
+}
+:root[saved-theme="light"] mark,
+:root[saved-theme="light"] .highlight {
+  background-color: rgba(0, 0, 0, 0.07) !important;
+}
+
+// Default callout accent → gray (typed callouts keep their own colors)
+.callout { --color: var(--gray) !important; }
+
+// Knowledge-graph sidebar box chrome (border / hover glow) → neutral.
+// The graph canvas itself (nodes/links) is unaffected.
+.graph > .graph-outer {
+  &:hover {
+    border-color: var(--gray) !important;
+    box-shadow: 0 0 18px -6px rgba(0, 0, 0, 0.4) !important;
+    canvas { filter: none !important; }
+  }
+  & > .global-graph-icon:hover {
+    box-shadow: none !important;
+  }
+}
+.graph > .global-graph-outer > .global-graph-container {
+  border-color: var(--lightgray) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35) !important;
+}
+
+// GraphLink button active/hover → neutral
+.graphlink {
+  a:hover, a.active {
+    color: var(--dark) !important;
+    border-color: var(--lightgray) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    box-shadow: none !important;
+  }
+}
+
+// Search: selected result + match highlight → neutral
+.search {
+  & .result-card.focus,
+  & .result-card:hover { background: rgba(255, 255, 255, 0.06) !important; }
+  & .highlight { color: inherit !important; }
+}
+:root[saved-theme="light"] .search .result-card.focus,
+:root[saved-theme="light"] .search .result-card:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+// Misc green borders (code copy, mermaid, etc.) → neutral
+.clipboard-button,
+.expand-button,
+.mermaid-content {
+  &:hover, &:focus-visible { border-color: var(--gray) !important; }
+}
+
+// Scrollbar thumb → neutral
+* { scrollbar-color: var(--gray) transparent; }
+::-webkit-scrollbar-thumb { background: var(--gray) !important; }
