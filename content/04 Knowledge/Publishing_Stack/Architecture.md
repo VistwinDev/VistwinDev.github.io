@@ -28,7 +28,7 @@ related:
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │  [1] Obsidian Vault（本機）                                  │
-│      D:\Visustwin\obsidian\  (junction: ~/Visustwin)         │
+│      <VAULT_ROOT>  (e.g. D:\…\obsidian\ on Windows)          │
 │      Plugin: obsidian-git v2.38.2                             │
 │        • autoSaveInterval  = 5 min                            │
 │        • autoPushInterval  = 5 min                            │
@@ -103,8 +103,8 @@ related:
 ## 1. [1] Obsidian Vault 本機端
 
 ### 1.1 路徑與磁碟佈局
-- vault root: `D:\Visustwin\obsidian\` `[gt: CLAUDE.md L3, working-with-frncs §13]`
-- junction：`C:\Users\<user>\Visustwin\` → `D:\Visustwin\`（家機）`[gt: vault-publish-pipeline SKILL L29]`
+- vault root: `<VAULT_ROOT>` `[gt: CLAUDE.md L3, working-with-frncs §13]`
+- junction：`C:\Users\<user>\<vault-link>\` → `<VAULT_PARENT>`（家機）`[gt: vault-publish-pipeline SKILL L29]`
 
 ### 1.2 Obsidian core 設定
 - `app.json`: `alwaysUpdateLinks=true`, `readableLineLength=false`, `showLineNumber=true` `[gt: .obsidian/app.json]`
@@ -143,7 +143,7 @@ related:
   替代方案：手動 `git commit && push`（太累）、Obsidian Sync（付費 + 不通用）。`[bl]`
 
 ### 1.5 Vault folder 命名約定
-`[gt: ls D:\Visustwin\obsidian\]`
+`[gt: ls <VAULT_ROOT>]`
 
 ```
 00 System/        — Entity_Map / Templates / Workflows / Machines / Meta
@@ -165,7 +165,7 @@ scripts/
 > 數字前綴 = 強制排序 + 語意分區，Quartz 端 Explorer 元件依字母序顯示自然就 work。`[bl 設計理由]`
 
 ### 1.6 `.gitignore`（vault root）
-`[gt: D:\Visustwin\obsidian\.gitignore]`
+`[gt: <VAULT_ROOT>\.gitignore]`
 
 ```gitignore
 .obsidian/workspace.json
@@ -555,7 +555,7 @@ build 成功（rsync + npm ci + quartz build 都過），失敗在最後一步 p
 **處理**：
 - 任何「給下游用的成果」必須 commit + push 完才算完成。
 - 跨 task 接力：上游 task 結束前必 `git push`，下游 task 起手必 `git pull` + read。
-- 主 vault `D:\Visustwin\obsidian\` 與 worktrees 是同一個 `.git/`，但 working tree 是隔離的。
+- 主 vault `<VAULT_ROOT>` 與 worktrees 是同一個 `.git/`，但 working tree 是隔離的。
 
 ### 6.6 rsync `--delete` 把 site-only 檔掃掉（已修）
 `[gt: sync-to-quartz.yml comment + vault-publish-pipeline SKILL §rsync exclude]`
