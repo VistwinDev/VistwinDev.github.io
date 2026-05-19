@@ -23,12 +23,19 @@ interface RenderComponents {
 }
 
 const headerRegex = new RegExp(/h[1-6]/)
+
+// Constant for the whole build process — used to cache-bust contentIndex.json.
+const BUILD_ID = Date.now()
+
 export function pageResources(
   baseDir: FullSlug | RelativeURL,
   staticResources: StaticResources,
 ): StaticResources {
   const contentIndexPath = joinSegments(baseDir, "static/contentIndex.json")
-  const contentIndexScript = `const fetchData = fetch("${contentIndexPath}").then(data => data.json())`
+  // Cache-bust per build: GitHub Pages serves contentIndex.json with a 10min
+  // Cache-Control, so without this the Explorer renders a stale tree (missing
+  // newly synced folders) until the CDN/browser cache expires.
+  const contentIndexScript = `const fetchData = fetch("${contentIndexPath}?v=${BUILD_ID}").then(data => data.json())`
 
   const resources: StaticResources = {
     css: [
