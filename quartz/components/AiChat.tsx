@@ -541,6 +541,12 @@ export default ((opts: AiChatOptions) => {
     /* Smooth lift when soft keyboard appears (JS sets bottom dynamically) */
     transition: bottom 120ms ease;
   }
+  /* Container stretches full width so panel can span the screen; pin FAB to bottom-right. */
+  #dna-ai-fab {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
   .dna-ai-panel {
     /* height: 100dvh tracks visual viewport → shrinks when keyboard opens */
     width: 100% !important;
