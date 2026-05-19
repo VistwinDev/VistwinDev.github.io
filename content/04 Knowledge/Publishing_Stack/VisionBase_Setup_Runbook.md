@@ -4,15 +4,12 @@ status: canonical
 last_updated: 2026-05-20
 audience: lab
 keywords: visionbase, setup, runbook, quartz, fork, github pages, obsidian-git, cloudflare worker, fresh deploy
-related:
-  - "[[Architecture]]"
-  - "[[../../05 Claude Skills/vault-publish-pipeline/SKILL|vault-publish-pipeline]]"
 ---
 
 # VisionBase Publishing Stack — Setup Runbook
 
-> 從零部署一套**結構同 VisTwin** 的 publishing pipeline 到 VisionBase 帳號。
-> 完整架構解釋見 [[Architecture]]。本檔只列「動手做的順序」。
+> 從零部署一套完整的 Obsidian → GitHub → Quartz → Pages publishing pipeline。
+> 本檔列「動手做的順序」，並在尾端附「已知坑」清單預先避開常見地雷。
 
 ## 0. 命名約定（本文檔範例值，VisionBase 可改）
 
@@ -43,7 +40,7 @@ related:
   - Obsidian 桌面 app
 
 ### 0.2 規劃路徑
-決定 vault 放在哪：`<VAULT_PATH>`。建議獨立分區（VisTwin 是 `D:\Visustwin\`），方便日後備份 / 跨機 junction。
+決定 vault 放在哪：`<VAULT_PATH>`。建議獨立分區（避免落在 `C:\Users\…` 系統碟），方便日後備份 / 跨機 junction。
 
 ---
 
@@ -75,7 +72,7 @@ GitHub → Settings → Developer settings → Personal access tokens → Fine-g
 
 **收好 PAT**：之後 vault remote URL 嵌它、`DASHBOARD_PAT` secret 用它。Phase 2.4 也會用。
 
-> ⚠️ VisTwin 真實事件：第一版 PAT 只給 site repo Read，sync workflow 第 6 步 push 才失敗。**Contents 一定要 R/W 兩 repo。**（見 [[Architecture#6.3]]）
+> ⚠️ 常見地雷：若 PAT 只給 site repo Read，sync workflow 第 6 步 push 會失敗（403）。**Contents 一定要 R/W 兩 repo。**
 
 ### 1.4 啟用 Pages on site repo
 ```powershell
@@ -94,17 +91,17 @@ gh api repos/<ORG>/<SITE_REPO>/pages -X POST -f build_type=workflow
 2. 第一次起手做最小設定：
    - Settings → Files & Links → 開 "Always update internal links"
    - Settings → Appearance → 選 dark / accent color
-3. 把 VisTwin vault 的「結構樣板」搬過去（不含內容）：
+3. 建議的 vault 結構樣板（不含內容）：
    ```
-   00 System/         (放 Entity_Map 樣板)
+   00 System/         (entity map / templates / 機器盤點)
    01 Projects/
    02 Products/
    03 Company/
    04 Knowledge/
-   05 Claude Skills/  (照搬 working-with-frncs 然後改寫成 VisionBase 版)
+   05 Claude Skills/  (lab 共用的 Claude skill 集合)
    06 Machines/
    99 Archive/
-   CLAUDE.md          (改成 VisionBase 版 entry point)
+   CLAUDE.md          (VisionBase vault entry point)
    Now.md
    index.md
    ```
@@ -116,7 +113,7 @@ git init -b master
 git config user.name "<ORG>"
 git config user.email "<email>"
 
-# 寫 .gitignore（複製 VisTwin 的版本）
+# 寫 .gitignore
 @'
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
@@ -145,7 +142,7 @@ gh secret set DASHBOARD_PAT --repo <ORG>/<VAULT_REPO> --body "<PAT>"
 gh secret list --repo <ORG>/<VAULT_REPO>
 ```
 
-> `DASHBOARD_PAT` 是 sync-to-quartz.yml 第 2 步 checkout site repo + 第 6 步 push 用的 token，**必須對 `<SITE_REPO>` 有 Contents:R/W**（見 [[Architecture#2.5]]）。
+> `DASHBOARD_PAT` 是 sync-to-quartz.yml 第 2 步 checkout site repo + 第 6 步 push 用的 token，**必須對 `<SITE_REPO>` 有 Contents:R/W**。
 
 ### 2.4 裝 Obsidian Git plugin
 1. Obsidian → Settings → Community plugins → Turn on community plugins
@@ -182,32 +179,32 @@ gh repo fork jackyzha0/quartz --clone=false --org <ORG>
 gh api repos/<ORG>/quartz --method PATCH -f name=<SITE_REPO>
 ```
 
-**B. 抄 VisTwin 客製化版**（推薦給「就要長一樣」的人）：
+**B. 抄一份既有 Quartz 客製化版**（推薦給「已有 reference 部署、想直接 mirror」的人）：
 ```powershell
-# 在 D:\temp\ 或任意工作區
-git clone --depth 1 --branch v4 https://github.com/metaarchetech/metaarchetech.github.io.git visionbase-site
+# 在任意工作區 clone reference repo
+git clone --depth 1 --branch v4 <REFERENCE_QUARTZ_REPO_URL> visionbase-site
 cd visionbase-site
 # 換 remote 指向 VisionBase 的 site repo
 git remote remove origin
 git remote add origin "https://oauth2:<PAT>@github.com/<ORG>/<SITE_REPO>.git"
 git push -u origin v4
 ```
-> ⚠️ 抄 VisTwin 版會把 `.git` history 也帶過去（含 VisTwin 內部 commits）。要乾淨 history：clone 後 `rm -rf .git && git init -b v4` 再 push。
+> ⚠️ 抄既有 repo 會把 `.git` history 也帶過去。要乾淨 history：clone 後 `rm -rf .git && git init -b v4` 再 push。
 
 ### 3.2 客製化 `quartz.config.ts`
 編輯 `<SITE_REPO>` 本機副本的 `quartz.config.ts`：
 
 ```ts
 configuration: {
-  pageTitle: "VisionBase",                       // 從 "VisTwin" 改
-  baseUrl: "<ORG>.github.io",                    // 從 "metaarchetech.github.io" 改
+  pageTitle: "VisionBase",
+  baseUrl: "<ORG>.github.io",
   analytics: { provider: "plausible" },          // 或 "google" / null
   ignorePatterns: ["private", "templates", ".obsidian"],
   defaultDateType: "modified",
   theme: {
     // 配色 / 字型按 VisionBase brand 改
     colors: {
-      lightMode: { ... },                        // 換掉 NVIDIA green
+      lightMode: { ... },                        // 你自己的 brand 配色
       darkMode:  { ... },
     },
     typography: { ... }
@@ -226,12 +223,12 @@ afterBody: [
 
 > phase 5 才會有真實 worker URL，**先留 placeholder**，phase 5 完再回頭改。
 
-### 3.4 客製化元件（DnaHeader / AiChat）
-`quartz/components/DnaHeader.tsx` 內有硬編 `#76b900`（NVIDIA green）—— 用 find+replace 換成 VisionBase brand color。同理 `quartz/styles/_dna-tokens.scss` 也要改。
+### 3.4 客製化元件（custom header / AiChat）
+若 reference repo 內有客製 header 元件（如 `quartz/components/<CustomHeader>.tsx`）與對應 design tokens (`quartz/styles/_dna-tokens.scss` 之類)，內部多半會有硬編 brand 配色（hex code）—— 用 find+replace 換成 VisionBase brand color。
 
-如果不想長一樣的 pill header，可以：
-- 換成標準 `Component.PageTitle()` —— 編輯 `quartz.layout.ts` 把 `Component.DnaHeader()` 換掉
-- 或砍掉 `quartz/components/DnaHeader.tsx` 整個檔
+如果不要 reference repo 帶來的客製 header，可以：
+- 換成標準 `Component.PageTitle()` —— 編輯 `quartz.layout.ts` 把客製 header component 換掉
+- 或砍掉客製 header 元件整個檔
 
 ### 3.5 第一次 build 本機驗
 ```powershell
@@ -269,7 +266,7 @@ git push
 mkdir -p .github/workflows
 ```
 
-把 VisTwin 的 `.github/workflows/sync-to-quartz.yml` 整個檔抄過來，只改一處 `repository:`：
+新建 `.github/workflows/sync-to-quartz.yml`（若有 reference repo，可直接抄一份），確認 `repository:` 指向 VisionBase 的 site repo：
 
 ```yaml
 - name: Checkout Quartz site
@@ -281,19 +278,21 @@ mkdir -p .github/workflows
     path: site
 ```
 
-完整檔內容（已含 phase 2 學到的硬化規則）見 [[Architecture#2.2]]。
+workflow 的完整邏輯：checkout vault → checkout site (用 `DASHBOARD_PAT`) → `rsync -av --delete vault/ site/content/` 帶 exclude 清單 → `setup-node 22` → `npm ci && npx quartz build` (build gate) → commit + push 到 site repo v4 branch。**build gate 用意**：rsync 完成後立刻 quartz build，build fail 整個 job fail，不會 push 壞 content 到 site repo。
 
 ### 4.2 確認 exclude 清單對得起 vault 結構
-sync-to-quartz.yml 的 rsync exclude 清單：
+sync-to-quartz.yml 的 rsync exclude 清單建議：
 ```
 .git .github .gitignore .obsidian .claude .trash .dashboard-fingerprint
 private templates "00 System/Templates"
 graph.md Images .gitkeep
 ```
 
-VisionBase vault 若不同：
-- 有「不想公開」資料夾 → 加進 exclude
-- VisionBase 的 site repo content/ 自維護的 site-only 檔 → 加進 exclude（不然 rsync `--delete` 會清掉）
+前 9 個是 private / system 檔（不該到公開站）；後 3 個（`graph.md` / `Images` / `.gitkeep`）是 site repo 自維護的 site-only 檔（沒 exclude 會被 `--delete` 清掉）。
+
+VisionBase vault 若有：
+- 不想公開的資料夾 → 加進 exclude
+- site repo content/ 自維護的 site-only 檔 → 加進 exclude
 
 ### 4.3 Commit + push
 ```powershell
@@ -316,7 +315,7 @@ gh run view <最新 run id> --repo <ORG>/<VAULT_REPO>
 若失敗：
 - 第 2 步 checkout site fail → `DASHBOARD_PAT` 對 site repo 沒 Contents:R/W
 - 第 5 步 build fail → 通常是 vault content 含 Quartz 不接受的格式（CJK+emoji 檔名 + CustomOgImages → 已在 Architecture §6.4 disable 過）
-- 第 6 步 push fail with 403 → `DASHBOARD_PAT` 只有 Read 沒 Write（VisTwin 真實踩過，[[Architecture#6.3]]）
+- 第 6 步 push fail with 403 → `DASHBOARD_PAT` 只有 Read 沒 Write（**最常見地雷**）
 
 ### 4.5 手動觸發備援
 ```powershell
@@ -350,7 +349,7 @@ wrangler login      # 跳瀏覽器登入 Cloudflare
 
 編輯 `wrangler.toml`：
 ```toml
-name = "<WORKER_NAME>"    # 從 "metaarchetech-ai" 改
+name = "<WORKER_NAME>"
 main = "index.js"
 compatibility_date = "2024-01-01"
 workers_dev = true
@@ -423,7 +422,7 @@ Push → rebuild → site live on custom domain.
 
 ## Phase 7 — Lab 移植 / 多人共用考量
 
-> VisionBase 是 lab，可能不只 Frncs 一人寫。
+> VisionBase 是 lab，可能不只一人寫。
 
 ### 7.1 多人同寫 vault
 - obsidian-git plugin 預設 `syncMethod: merge` —— 兩人同 push 會自動 merge。
@@ -435,7 +434,7 @@ Push → rebuild → site live on custom domain.
 - 大改 push 前一定本機 `npx quartz build` 過。
 
 ### 7.3 跨機 sync vault
-和 VisTwin 一樣靠 obsidian-git auto pull/push。**家機關機 + lab 機開機就會自動 sync**。但要小心：
+靠 obsidian-git auto pull/push 做跨機同步。**家機關機 + lab 機開機就會自動 sync**。但要小心：
 - 兩台機同時改同一檔 → conflict
 - VPN / 公司網路擋 GitHub → push 失敗 → 累積 commits → 重新連線一次 push 大量
 - `.obsidian/workspace.json` 已 ignore（不同機 layout 不同），不會 conflict
@@ -459,36 +458,26 @@ Push → rebuild → site live on custom domain.
 
 ---
 
-## 已知坑（VisTwin 踩過 → VisionBase 預先避開）
-
-完整事件見 [[Architecture#6 真實事件 已知坑]]。摘要：
+## 已知坑
 
 | 坑 | 預防 |
 |---|---|
 | PAT 缺 workflow scope → 改 `.github/workflows/*.yml` push 被拒 | phase 1.3 PAT 一定勾 Workflows R/W |
 | `DASHBOARD_PAT` 對 site repo 只有 Read → sync 第 6 步 push 403 | phase 1.3 PAT 對 `<SITE_REPO>` 也要 Contents R/W |
-| CustomOgImages emitter 遇 CJK+emoji 檔名 build fail | 沿用 VisTwin `quartz.config.ts` 已把該 emitter 註解掉 |
-| rsync `--delete` 把 site-only 檔（graph.md / Images / .gitkeep）掃掉 | sync workflow 已有 exclude（從 VisTwin 抄過來就帶著） |
+| CustomOgImages emitter 遇 CJK+emoji 檔名 build fail | vault 若有 CJK+emoji 檔名，`quartz.config.ts` 把該 emitter 註解掉 |
+| rsync `--delete` 把 site-only 檔（`graph.md` / `Images/` / `.gitkeep`）掃掉 | sync workflow exclude 清單加進這些檔案 |
 | obsidian-git 跨機 auto-sync 導致改 workflow 被 merge 回舊版 | 改 workflow 限在單一機器、commit message 標 `chore(workflow)`、改完立刻看 `gh run list` |
-| 8-worktree 隔離（VisionBase 若也用 Claude Code）→ task 沒 commit 別 task 看不到 | 強制 pre-flight + 完成必 commit + push |
+| 多 worktree 隔離（若用 Claude Code）→ task 沒 commit 別 task 看不到 | 強制 pre-flight + 完成必 commit + push |
 
 ---
 
-## 未確認 / Frncs 待補
+## 未確認 / 待補
 
 `[?]`：
 
 1. **VisionBase 帳號是 GitHub org 還是個人**：影響 `<ORG>` 填法、PAT 是 fine-grained 還是 classic、free org Actions 額度。
-2. **VisionBase Cloudflare 帳號**：是否與 VisTwin 同帳號（`metaarteorg`）共用、新發、還是另開。
-3. **Groq billing**：是 lab 出還是 Francis 個人帳。
+2. **VisionBase Cloudflare 帳號**：新發 or 共用既有帳號。
+3. **Groq billing**：lab 出帳 or 個人帳。
 4. **custom domain**：VisionBase 是否有 `visionbase.com.tw` 或子域、DNS 在哪、誰管。
-5. **內容遷移**：VisionBase vault 起步是空白 or 從 VisTwin 抄一部分。若抄，要先確認哪些屬於 lab、哪些是 VisTwin 主公司不該帶過去（見 [[../../00 System/Entity_Map|Entity_Map]]）。
+5. **內容遷移**：VisionBase vault 起步是空白 or 從既有 vault 抄一部分。若抄，要先確認 lab vs 主公司邊界，避免帶不該公開的內容過來。
 6. **brand 配色 / 字型**：phase 3.2 留 placeholder，等 VisionBase 真實 brand kit 來填。
-
----
-
-## Related
-
-- [[Architecture]] — 為什麼這樣設計（架構正典）
-- [[../../05 Claude Skills/vault-publish-pipeline/SKILL|vault-publish-pipeline]] — 跑起來後的日常操作 / 診斷
-- [[../../00 System/Entity_Map|Entity_Map]] — VisTwin / VisionBase / 寶舖實體邊界（決定哪些內容能跨 vault）
