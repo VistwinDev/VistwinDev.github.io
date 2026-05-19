@@ -2,7 +2,7 @@
 title: "05 Claude Skills"
 tags: [meta, claude, skills, moc]
 created: 2026-05-19
-updated: 2026-05-19
+updated: 2026-05-20
 ---
 
 # 🧩 Claude Skills Index

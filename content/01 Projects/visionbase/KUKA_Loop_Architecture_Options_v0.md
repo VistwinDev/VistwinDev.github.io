@@ -7,6 +7,8 @@ audience: B (執行) + Frncs (拍板)
 purpose: 第一個 KUKA + sensor + Isaac + AI loop 的架構選項菜單
 ---
 
+> **2026-05-19 重新對位**：USD ontology 為**雙軌共用層** — 主線 A (Physical AI world model) + 主線 B (BIM/DT 空間表示)。不獨佔任一條。
+
 # KUKA Loop 架構選項報告 v0
 
 ## 0. 文件定位

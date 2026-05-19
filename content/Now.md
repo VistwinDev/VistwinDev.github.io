@@ -1,31 +1,33 @@
 # Now — 當前焦點
 
-_最後更新: 2026-04-29 22:30_
+_最後更新: 2026-05-20 (daily-weekly-journal skill 重啟節奏)_
 
-## 本週焦點(Sprint [[02 Products/Visustwin/sprints/2026-W18|2026-W18]])
+## 本週焦點(Sprint [[02 Products/Visustwin/sprints/2026-W21|2026-W21]])
 
-### 專案(客戶向)
-- [[01 Projects/visionbase/README|visionbase]] 進駐 — 區網盤點完成、監控站搭建中
+> W18 後斷 3 週(W19–W20 無 daily)。本週起 daily/weekly 由 [[05 Claude Skills/daily-weekly-journal/SKILL|daily-weekly-journal]] skill 維持。
 
-### 產品(自家向)
-- [[01 Projects/visionbase/visionbase-monitor|visionbase-monitor]] Phase 1 收尾(視覺細節微調)
-- [[02 Products/Visustwin/Plugins/ventilation/README|visustwin.ventilation]] extension 已推 GitHub mirror(commit `08e0b61`)
-- vault 自身整補:Plugins 漂移修正 + scrum templates 建立
+### 戰略主線(雙軌平行,見 [[00 System/Entity_Map|Entity Map]])
+- **主線 A Physical AI** — ROS2 + KUKA + NVIDIA Isaac + Omniverse(lab 端執行)
+- **主線 B BIM + Digital Twin** — 與 A 同級,非支線
+
+### 客戶端(非主線)
+- 寶舖 6/6 deliverable — 唯一 P0,透過設計公司外包
+
+### vault / infra(本週)
+- Entity normalization → [[00 System/Entity_Map|Entity Map]] canonical baseline
+- [[05 Claude Skills/vault-publish-pipeline/SKILL|vault-publish-pipeline]] skill — publishing 全鏈盤清
+- daily/weekly 節奏重建
 
 ## 進行中
-- visionbase-monitor 視覺細節微調(卡片 hover / SegmentedToggle / HUD 字體節奏)
-- vault 結構整補(`01 Projects/visionbase/` 已建立 4 篇)
+- daily/weekly 自動化 — scheduled task(cron)待 Dispatch 端派出
 
 ## 等待 / blocked
-- **KUKA 控制器(KRC)接上 visionbase 區網** — 目前 `192.168.0.0/24` 沒看到真控制器,只有旁邊的 Windows 工作站
-- **ACTi / Tapo 攝影機 RTSP 帳密** — vision 頁卡住等帳密
-- **Jantek 4 台 Windows(`0.91-94`)用途** — 待 visionbase 端確認
+- **publishing 鏈 [2] 段**:`DASHBOARD_PAT` 未設,自動 sync-to-quartz 不動,手動 rsync 代跑(見 [[05 Claude Skills/vault-publish-pipeline/SKILL|vault-publish-pipeline]])
+- **GitHub org rename** `metaarchetech` → `vistwin-tech`(Entity Map 行動項,本週內)
 
 ## 近期要啟動
-- visionbase-monitor `/vision` 頁(YOLO 攝影機,等 RTSP 帳密 → 否則先 mock)
-- visionbase-monitor `/kuka` 頁 mock skeleton(三 panel:狀態 / 變數 / 命令日誌)
-- 區網掃描歷史趨勢:寫進 Synology NAS 或本機 SQLite,做上下線時序圖
-- visustwin-extensions 的 README 漂移修正(17 → 19 ext + 補 light.compass / ventilation)
+- daily/weekly 兩個 cron scheduled task 交 Dispatch 派出
+- GitHub org + vault 資料夾 rename(同一波處理)
 
 ## 今日 daily log
-- [[02 Products/Visustwin/sprints/2026-W18/2026-04-29|2026-04-29]]
+- [[02 Products/Visustwin/sprints/2026-W21/2026-05-20|2026-05-20]]

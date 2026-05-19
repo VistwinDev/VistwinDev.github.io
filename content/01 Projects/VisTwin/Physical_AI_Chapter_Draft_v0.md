@@ -6,6 +6,8 @@ target: 並進 BP v5 第 X 章（建議落於 v4 §T 之後、§1 Design 之前�
 length: ~2,100 中文字
 ---
 
+> **2026-05-19 重新對位**：USD ontology 為**雙軌共用層** — 主線 A (Physical AI world model) + 主線 B (BIM/DT 空間表示)。不獨佔任一條。
+
 # 從數位孿生到行動迴圈 — VisTwin 在 Physical AI 時代的座標
 
 *From Digital Twin to Building Intelligence Loop — VisTwin's Coordinate in the Physical AI Era*

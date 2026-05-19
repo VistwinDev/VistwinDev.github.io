@@ -21,7 +21,7 @@ updated: 2026-04-19
 ## 📌 Projects（客戶向專案）
 
 - [[01 Projects/寶鋪 showcase/README|寶鋪 showcase]]
-- [[01 Projects/welltek/README|welltek]]
+- [[01 Projects/寶鋪 showcase/welltek/README|welltek]]
 
 ## 📚 Knowledge（常態知識）
 
@@ -30,6 +30,21 @@ updated: 2026-04-19
 ## 🗄 Legacy（時點歸檔）
 
 - [[99 Archive/2025/README|Legacy / 2025]] — 2025 年度以前的專案、資源、archive
+
+## 🧩 Claude Skills
+
+- [[05 Claude Skills/_index|Claude Skills Index]] — skill 系統索引（每個 skill 一資料夾，內含 SKILL.md）
+- [[05 Claude Skills/working-with-frncs/SKILL|working-with-frncs]] — 跟 Frncs 共事的核心行為準則
+- [[05 Claude Skills/dev-state-overview/SKILL|dev-state-overview]] — 跨機開發狀態總覽（GitHub / git / ports / 車隊）
+- [[05 Claude Skills/vault-publish-pipeline/SKILL|vault-publish-pipeline]] — vault → GitHub → Quartz → Pages 全鏈狀態與斷點診斷
+- [[05 Claude Skills/research-orchestrator/SKILL|research-orchestrator]] — lead-agent + subagent 平行研究編排
+- [[05 Claude Skills/pr-review-expert/SKILL|pr-review-expert]] — PR/MR 結構化 code review
+- [[05 Claude Skills/spec-driven-workflow/SKILL|spec-driven-workflow]] — spec-first 開發流程
+- [[05 Claude Skills/rag-architect/SKILL|rag-architect]] — RAG pipeline 設計與優化
+
+## 🖥 Machines
+
+- [[06 Machines/_fleet-index|Fleet Index]] — 車隊內所有機器（家機 / lab / 學校），heartbeat 每天更新
 
 ## 📐 結構說明
 

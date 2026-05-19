@@ -50,9 +50,6 @@ updated: 2026-04-11
 | **Agile Development** | metaarteorg | 黃綠 `#b3dc6c` | 敏捷開發 |
 | **Urgent Tasks** | metaarteorg | 珊瑚紅 `#d06b64` | 緊急事項 |
 | **Francis** | frncsxu (共享) | 藍紫 `#9a9cff` | **使用者本人 (男性) 的個人行程** |
-| **Sylvie** | 共享 | 淡紫 `#b99aff` | **一位女性的行程**,不是使用者本人 |
-
-⚠️ **語意重點:看到「Francis」= 使用者本人;看到「Sylvie」= 另一位女性。不要搞混。**
 
 ## 🧭 分類偏好 (使用者慣性)
 
@@ -66,7 +63,7 @@ updated: 2026-04-11
 
 ## 🔐 權限注意事項
 
-- Francis 和 Sylvie 兩個共享行事曆目前 Claude 的權限是 **reader (唯讀)**,可查看但**不能**新增/修改/刪除活動
+- Francis 共享行事曆目前 Claude 的權限是 **reader (唯讀)**,可查看但**不能**新增/修改/刪除活動
 - 若需要寫入,需請使用者到 frncsxu@gmail.com 的 Google Calendar 設定,把 metaarteorg 的權限改為「進行變更和管理共用設定」
 
 ## 🔗 已連接的工具
