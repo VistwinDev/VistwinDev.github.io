@@ -1,9 +1,9 @@
 ---
 name: working-with-frncs
-description: 跟 Frncs (VisTwin 一人公司 + 共用研究員) 共事的核心行為準則
+description: 跟 Frncs / Francis Xu (VisTwin 一人公司 + 共用研究員) 共事的核心行為準則。任何 D:\Visustwin\obsidian session 起手必讀。Trigger keywords：frncs, francis, working with user, vault session, obsidian session, 共事原則, 行為準則。
 audience: lab
 status: active
-keywords: meta, behavior, principles, frncs
+keywords: meta, behavior, principles, frncs, francis
 created: 2026-05-19
 last_review: 2026-05-19
 revision_trigger: 寶舖案完成後 / 每 2 個月 / lab 加新人時

@@ -1,6 +1,6 @@
 ---
 name: dev-state-overview
-description: 跨機開發狀態總覽 — GitHub / 本機 git / listening ports / 車隊其他機器
+description: 跨機開發狀態總覽 — GitHub / 本機 git / listening ports / 車隊其他機器。當使用者問 dev state, overview, status, 現況, 哪台機, ahead behind, branch 在哪, fleet 狀態時用。
 keywords: dev state, branch, 哪台機, 換機器, git status, fleet, ahead behind, port
 audience: lab
 status: active
