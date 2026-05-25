@@ -20,6 +20,7 @@ _最後更新: 2026-05-20 (daily-weekly-journal skill 重啟節奏)_
 
 ## 進行中
 - daily/weekly 自動化 — scheduled task(cron)待 Dispatch 端派出
+- Repos 大整理 — 見 [[04 Knowledge/Repos_State/2026-05-25_inventory|2026-05-25 inventory]]（🔴 6, 🟡 5, 🟢 1, 🔵 4）
 
 ## 等待 / blocked
 - **publishing 鏈 [2] 段**:`DASHBOARD_PAT` 未設,自動 sync-to-quartz 不動,手動 rsync 代跑(見 [[05 Claude Skills/vault-publish-pipeline/SKILL|vault-publish-pipeline]])
