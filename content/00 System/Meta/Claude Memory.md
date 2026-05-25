@@ -22,8 +22,6 @@ updated: 2026-04-11
 - **慣用語言:** 繁體中文(台灣)
 - **時區:** Asia/Taipei
 - **稱呼偏好:** Frncs
-- **主要 Google 帳號:** metaarteorg@gmail.com (顯示名 Visustwin)
-- **次要 Google 帳號:** frncsxu@gmail.com (顯示名 Frncs Xu)
 
 ## 🛠 工作環境
 

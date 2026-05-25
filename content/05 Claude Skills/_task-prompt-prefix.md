@@ -25,11 +25,6 @@ last_review: 2026-05-19
 - §17 State 不確定 → 直接問（**用 SendUserMessage，不要 AskUserQuestion / widget**）
 - §18 Memory 系統分工
 
-## 私密規則
-- 法定名 = Francis Xu（**唯一**）
-- vault 任何輸出**禁出現** Sylvie / 小妤
-- GCal connector 不接觸這兩個關鍵字相關 event
-
 ## 報告格式
 - 中文
 - 不列 risk warning
