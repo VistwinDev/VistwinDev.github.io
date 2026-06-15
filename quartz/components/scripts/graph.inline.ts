@@ -261,12 +261,14 @@ async function renderGraph(graph: HTMLElement, fullSlug: FullSlug) {
   // Folder color palette — mirrors Obsidian graph view groups (lime → violet).
   // FOLDER_DEFS keeps labels + defaults so the Reset button can restore them.
   const FOLDER_DEFS: { prefix: string; label: string; def: string }[] = [
-    { prefix: "00-System",    label: "System",    def: "#a3e635" }, // lime-400
-    { prefix: "01-Projects",  label: "Projects",  def: "#4ade80" }, // green-400
-    { prefix: "02-Products",  label: "Products",  def: "#2dd4bf" }, // teal-400
-    { prefix: "03-Company",   label: "Company",   def: "#38bdf8" }, // sky-400
-    { prefix: "04-Knowledge", label: "Knowledge", def: "#3b82f6" }, // blue-500
-    { prefix: "99-Archive",   label: "Archive",   def: "#8b5cf6" }, // violet-500
+    { prefix: "00-系統", label: "系統 System",    def: "#a3e635" }, // lime-400
+    { prefix: "01-專案", label: "專案 Projects",  def: "#4ade80" }, // green-400
+    { prefix: "02-產品", label: "產品 Products",  def: "#2dd4bf" }, // teal-400
+    { prefix: "03-公司", label: "公司 Company",   def: "#38bdf8" }, // sky-400
+    { prefix: "04-知識", label: "知識 Knowledge", def: "#3b82f6" }, // blue-500
+    { prefix: "05-技能", label: "技能 Skills",    def: "#818cf8" }, // indigo-400
+    { prefix: "06-機台", label: "機台 Machines",  def: "#c084fc" }, // purple-400
+    { prefix: "99-封存", label: "封存 Archive",   def: "#8b5cf6" }, // violet-500
   ]
   const DEFAULT_TAG_COLOR = "#9ca3af"
 

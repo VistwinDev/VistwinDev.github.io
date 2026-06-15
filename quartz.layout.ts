@@ -12,7 +12,7 @@ export const sharedPageComponents: SharedLayout = {
   ],
   footer: Component.Footer({
     links: {
-      GitHub: "https://github.com/metaarchetech/metaarchetech.github.io",
+      GitHub: "https://github.com/VistwinDev/VistwinDev.github.io",
     },
   }),
 }
