@@ -1,19 +1,9 @@
 ---
-tags: [home, moc]
-created: 2026-04-18
+title: VisTwin
 ---
 
-# MetaArche
+# VisTwin
 
-→ [[Vault Home]]
+VisTwin 公司數位花園（Quartz）。內容建置中。
 
-## 結構
-
-- 00 ⚙️ [[00 System]]
-- 01 📌 [[01 Projects]]
-- 02 💼 [[02 Products]]
-- 03 🏛️ [[03 Company]]
-- 04 🧠 [[04 Knowledge]]
-- 05 🧩 [[05 Claude Skills/_index|05 Claude Skills]]
-- 06 🖥️ [[06 Machines/_fleet-index|06 Machines]]
-- 99 🗄️ [[99 Archive]]
+> 此站由 Quartz v4 建置，部署於 GitHub Pages。內容將從 VisTwin 公司 vault（vistwin-vault）同步發佈。
