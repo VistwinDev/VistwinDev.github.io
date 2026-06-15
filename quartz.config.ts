@@ -17,7 +17,7 @@ const config: QuartzConfig = {
     },
     locale: "en-US",
     baseUrl: "vistwindev.github.io",
-    ignorePatterns: ["private", "templates", ".obsidian"],
+    ignorePatterns: ["private", "templates", "**/Templates/**", "**/Templates", ".obsidian", "**/scripts/**", "**/logs/**"],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
