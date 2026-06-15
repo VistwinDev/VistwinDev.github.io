@@ -1,9 +1,10 @@
 ---
+title: VisTwin
 tags: [home, moc]
 created: 2026-04-18
 ---
 
-# MetaArche
+# VisTwin
 
 → [[Vault Home]]
 
