@@ -1,6 +1,6 @@
 ---
 title: Entity Map
-last_updated: 2026-05-25
+last_updated: 2026-06-18
 status: canonical
 ---
 
@@ -18,8 +18,9 @@ status: canonical
 - **產品**：VisTwin（公司名與產品名同源）
 - **GitHub orgs**：
   - `VistwinDev`（工程 org，2026-05-24 建立）— vault、extensions、showcase 等工程 repo 主場
-  - `VistwinProject`（客戶/商務 org，2026-05-24 建立）— 客戶交付 / 商務專案
+  - `VistwinProject`（客戶/商務 org，2026-05-24 建立）— 客戶交付 / 商務專案（寶鋪知行案 8 repo 在此）
   - 舊 `metaarchetech` user account 暫保留，repos 逐個遷
+  - 📁 全 repo 鏡像清單見 vault 內 `04 Github/`（不公開，`scripts/sync-github-repos.mjs` 生成）；寶鋪各區對照見 [[01 專案/寶鋪 showcase/build-status]]
 - **商標**：**先暫緩**，等募資 / 收入到位再決定；同步監看是否有第三方搶註動作
 - **戰略主線（雙軌平行）**：
   1. **Physical AI** — ROS2 + KUKA 大型機械手臂 + NVIDIA Isaac + Omniverse

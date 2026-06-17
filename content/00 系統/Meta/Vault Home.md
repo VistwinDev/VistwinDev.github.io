@@ -28,6 +28,10 @@ updated: 2026-06-18
 
 - 公司營運檔案 — 登記 / 商標 / 財務 / 合約（提煉自 [[Entity_Map]]）；此區不 sync 到公開站
 
+## 🐙 04 Github（repo 鏡像，🔒 私有不公開）
+
+- GitHub repo 鏡像 — VistwinProject（寶鋪交付）＋ VistwinDev（工程）；`scripts/sync-github-repos.mjs` 生成，不 sync 到公開站
+
 ## 🧠 98 資料（技術冷藏）
 
 - [[98 資料/Lived/README|Lived 知識]] — Ontology、Gaussian Splatting、Omniverse、XR、AI frameworks

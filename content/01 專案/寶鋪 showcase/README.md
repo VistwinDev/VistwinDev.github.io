@@ -9,6 +9,10 @@ created: 2026-04-18
 
 > 建築5.0 智慧靈魂 — 與寶舖建設、WELLTEK、NVIDIA Omniverse 合作的數位孿生展示專案。
 
+## 實作進度
+
+- [[01 專案/寶鋪 showcase/build-status|實作進度（repo × 展區）]] — 各區程式碼蓋到哪、剩什麼（A/B/F/G 四區 + 1 廢案）
+
 ## 簡報內容
 
 - [[OTA120_v6_draft|OTA120 v6 草稿（8頁·內容驅動結構）]]

@@ -6,6 +6,8 @@ tags: [meta, github, infrastructure]
 
 # GitHub Overview
 
+> ⚠️ **Legacy（org 遷移前）**：本頁是舊 `metaarchetech` user 帳號 repo 全圖。當前 org（VistwinProject / VistwinDev）的 repo 鏡像見 vault 內 `04 Github/`；org 邊界見 [[Entity_Map]]。此頁僅供考古。
+
 > Hub for everything `metaarchetech` 持有的 GitHub repo + 必要的上游 fork。  
 > 讓 Obsidian 內就能看到全貌、跳到對應筆記。  
 > 帳號 `metaarchetech` 是 **User**(不是 organization),12 個 owned repo:2 public + 10 private。
