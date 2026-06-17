@@ -5,14 +5,13 @@ updated: 2026-06-18
 tags: [OTA120, baopu, build-status, github, nfc]
 related:
   - "[[01 專案/寶鋪 showcase/README]]"
-  - "[[04 Github/README]]"
   - "[[00 系統/Entity_Map]]"
 ---
 
 # 寶鋪 showcase · 實作進度
 
 > 各展區的**程式碼實作**現況。規格/分鏡見各 zone 筆記；本檔只追「repo 蓋到哪、剩什麼」。
-> repo 鏡像（metadata + commits + README）見 [[04 Github/README|04 Github]]。
+> repo 鏡像（metadata + commits + README）見 vault 內 `04 Github/`（🔒 不公開）。
 > 來源：VistwinProject org（客戶/商務，全私有），2026-06-18 盤點。
 
 ## ⚠️ 架構演進：monorepo → 拆分 repo
@@ -23,7 +22,7 @@ related:
 |---|---|
 | `B-F-NFC` 內 `/b/*` route | `B-TV`、`B-Table` 兩個獨立 repo |
 | `B-F-NFC` 內 `/f/*` route | `F-wall`、`F-table`、`F-Ipad` 三個獨立 repo |
-| — | 舊 `B-F-NFC` → 已改名 [[04 Github/VistwinProject/BF-NFC-abandoned\|BF-NFC-abandoned]]（⚪ 廢案，考古用） |
+| — | 舊 `B-F-NFC` → 已改名 [BF-NFC-abandoned](https://github.com/VistwinProject/BF-NFC-abandoned)（⚪ 廢案，考古用） |
 
 > 📌 **待校正**：[[01 專案/寶鋪 showcase/zones/F-AI大腦控制塔]]、[[01 專案/寶鋪 showcase/zones/B-感應光寓]] 內所有 `VistwinProject/B-F-NFC` 連結都指向已廢 repo，未重寫（避免一次動太多）。要校正再說。
 
@@ -31,14 +30,14 @@ related:
 
 | 區 | 展面 | repo | 技術 | commits | 最近 push | 狀態 |
 |---|---|---|---|---|---|---|
-| **A** 數據之門 | 視覺辨識 | [[04 Github/VistwinProject/A-Touchdesigner\|A-Touchdesigner]] | TouchDesigner + YOLO · Python | 4 | 06-10 | 🟢 雙 pipeline 完成 |
-| **B** 感應光寓 | 牆面電視 | [[04 Github/VistwinProject/B-TV\|B-TV]] | React + three.js | 6 | 06-10 | 🟢 完成度高 |
-| **B** 感應光寓 | 桌面投影 | [[04 Github/VistwinProject/B-Table\|B-Table]] | React + NFC | 6 | 06-10 | 🟢 完成 |
-| **F** AI 大腦控制塔 | 牆面投影 | [[04 Github/VistwinProject/F-wall\|F-wall]] | React · 純 SVG | 4 | 06-10 | 🟢 完成 |
-| **F** AI 大腦控制塔 | 桌面投影（主控） | [[04 Github/VistwinProject/F-table\|F-table]] | React · Node nfc-pcsc | 6 | 06-10 | 🟢 完成 |
-| **F** AI 大腦控制塔 | 平板 | [[04 Github/VistwinProject/F-Ipad\|F-Ipad]] | React · WS | 4 | 06-04 | 🟡 稍早，應穩定 |
-| **G** 逃出危機 | 觸控大電視 | [[04 Github/VistwinProject/G-Escape-from-Crisis\|G-Escape-from-Crisis]] | TypeScript · 純前端 | 2 | 06-01 | 🟡 程式完成，等內容 |
-| ~~B/F~~ | ~~舊 monorepo~~ | [[04 Github/VistwinProject/BF-NFC-abandoned\|BF-NFC-abandoned]] | JS | 1 | 05-27 | ⚪ 廢案 |
+| **A** 數據之門 | 視覺辨識 | [A-Touchdesigner](https://github.com/VistwinProject/A-Touchdesigner) | TouchDesigner + YOLO · Python | 4 | 06-10 | 🟢 雙 pipeline 完成 |
+| **B** 感應光寓 | 牆面電視 | [B-TV](https://github.com/VistwinProject/B-TV) | React + three.js | 6 | 06-10 | 🟢 完成度高 |
+| **B** 感應光寓 | 桌面投影 | [B-Table](https://github.com/VistwinProject/B-Table) | React + NFC | 6 | 06-10 | 🟢 完成 |
+| **F** AI 大腦控制塔 | 牆面投影 | [F-wall](https://github.com/VistwinProject/F-wall) | React · 純 SVG | 4 | 06-10 | 🟢 完成 |
+| **F** AI 大腦控制塔 | 桌面投影（主控） | [F-table](https://github.com/VistwinProject/F-table) | React · Node nfc-pcsc | 6 | 06-10 | 🟢 完成 |
+| **F** AI 大腦控制塔 | 平板 | [F-Ipad](https://github.com/VistwinProject/F-Ipad) | React · WS | 4 | 06-04 | 🟡 稍早，應穩定 |
+| **G** 逃出危機 | 觸控大電視 | [G-Escape-from-Crisis](https://github.com/VistwinProject/G-Escape-from-Crisis) | TypeScript · 純前端 | 2 | 06-01 | 🟡 程式完成，等內容 |
+| ~~B/F~~ | ~~舊 monorepo~~ | [BF-NFC-abandoned](https://github.com/VistwinProject/BF-NFC-abandoned) | JS | 1 | 05-27 | ⚪ 廢案 |
 
 開發者：**changchen0913**（A / B-TV / F-Ipad）+ **frncs**（B-Table / F-table / F-wall）。
 
@@ -66,5 +65,5 @@ related:
 ## Related
 
 - [[01 專案/寶鋪 showcase/README|寶舖 showcase MOC]]
-- [[04 Github/README|04 Github repo 鏡像]]
+- repo 鏡像：vault 內 `04 Github/`（🔒 不公開）
 - zones：[[01 專案/寶鋪 showcase/zones/A-數據之門|A]] · [[01 專案/寶鋪 showcase/zones/B-感應光寓|B]] · [[01 專案/寶鋪 showcase/zones/F-AI大腦控制塔|F]]（G 待補 zone 筆記）
