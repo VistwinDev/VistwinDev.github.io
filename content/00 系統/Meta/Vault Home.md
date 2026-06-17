@@ -24,9 +24,9 @@ updated: 2026-06-18
 - [[02 技術/Design-System/README|Design System]] — DNA 設計系統
 - [[02 技術/Visustwin/Plugins/README|Plugins]] — 外掛總覽
 
-## 🏛️ 03 公司線（營運檔案）
+## 🏛️ 03 公司線（營運檔案，🔒 私有不公開）
 
-- [[03 公司/README|公司營運檔案]] — 登記 / 商標 / 財務 / 合約（提煉自 [[Entity_Map]]）
+- 公司營運檔案 — 登記 / 商標 / 財務 / 合約（提煉自 [[Entity_Map]]）；此區不 sync 到公開站
 
 ## 🧠 98 資料（技術冷藏）
 
