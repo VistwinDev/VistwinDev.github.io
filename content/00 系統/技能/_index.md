@@ -1,8 +1,8 @@
 ---
-title: "05 Claude Skills"
+title: "技能"
 tags: [meta, claude, skills, moc]
 created: 2026-05-19
-updated: 2026-05-20
+updated: 2026-06-18
 ---
 
 # 🧩 Claude Skills Index
@@ -18,7 +18,7 @@ TABLE
   audience,
   status,
   description
-FROM "05 Claude Skills"
+FROM "00 系統/技能"
 WHERE file.name = "SKILL"
 SORT file.mtime DESC
 ```

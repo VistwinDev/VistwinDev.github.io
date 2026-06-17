@@ -15,7 +15,7 @@ updated: 2026-05-19
 TABLE WITHOUT ID
   file.link AS "Skill",
   file.mtime AS "Last Edit"
-FROM "05 Claude Skills"
+FROM "00 系統/技能"
 WHERE file.name = "SKILL"
 SORT file.mtime DESC
 ```
