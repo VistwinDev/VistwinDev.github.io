@@ -183,7 +183,7 @@ TouchDesigner Core (主合成 + state machine + 4 路輸出)
 └── 輸出  →  4× Projector  (Front / Left / Right / Floor,edge-blend + gen-lock,HDMI / SDI)
 ```
 
-- **主 repo**:TouchDesigner project(.toe + cookbook,vault 待開 `02 產品/Baopu/A-touchdesigner/` 收 binary 與設定快照)
+- **主 repo**:TouchDesigner project(.toe + cookbook,vault 待開 `02 技術/Baopu/A-touchdesigner/` 收 binary 與設定快照)
 - **Kit ext**:[`visustwin.vision.detector`](待補 repo link)、[`visustwin.mqtt.bridge`](待補 repo link)
 - **build target**:TouchDesigner Commercial(license $2200/yr/seat)+ Python 3.11 for Kit ext
 - **state 同步**:state machine 完全跑在 TD 內部,無需 cue-server

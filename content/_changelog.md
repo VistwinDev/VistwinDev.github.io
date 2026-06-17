@@ -15,13 +15,13 @@ updated: 2026-05-19
 - `00 系統/Templates/Research_Subagent.md` — subagent prompt template from anthropic-cookbook
 
 ### Skills Added
-- `05 技能/research-orchestrator/SKILL.md` — multi-agent research orchestration (anthropic-cookbook)
-- `05 技能/pr-review-expert/SKILL.md` — structured PR code review (claude-skills/engineering)
-- `05 技能/spec-driven-workflow/SKILL.md` — spec-first development (claude-skills/engineering)
-- `05 技能/rag-architect/SKILL.md` — RAG pipeline design & optimization (claude-skills/engineering)
+- `00 系統/技能/research-orchestrator/SKILL.md` — multi-agent research orchestration (anthropic-cookbook)
+- `00 系統/技能/pr-review-expert/SKILL.md` — structured PR code review (claude-skills/engineering)
+- `00 系統/技能/spec-driven-workflow/SKILL.md` — spec-first development (claude-skills/engineering)
+- `00 系統/技能/rag-architect/SKILL.md` — RAG pipeline design & optimization (claude-skills/engineering)
 
 ### Knowledge Notes Added
-- `04 知識/RAG_Patterns/contextual-embeddings.md` — contextual embeddings for RAG improvement
+- `98 資料/RAG_Patterns/contextual-embeddings.md` — contextual embeddings for RAG improvement
 
 ### Integration Points
 - All 5 new skills include **VisTwin Context** section (寶舖案, FDE deployment, ontology evolution)
@@ -46,11 +46,11 @@ updated: 2026-05-19
 ### Files Updated
 - `00 系統/Templates/Research_Lead_Agent.md` — 中文摘要 added (multi-agent research lead role)
 - `00 系統/Templates/Research_Subagent.md` — 中文摘要 added (research execution agent)
-- `05 技能/research-orchestrator/SKILL.md` — 中文摘要 added (multi-agent orchestration)
-- `05 技能/pr-review-expert/SKILL.md` — 中文摘要 added (structured code review)
-- `05 技能/spec-driven-workflow/SKILL.md` — 中文摘要 added (spec-first development)
-- `05 技能/rag-architect/SKILL.md` — 中文摘要 added (RAG pipeline design)
-- `04 知識/RAG_Patterns/contextual-embeddings.md` — 中文摘要 added (contextual embedding optimization)
+- `00 系統/技能/research-orchestrator/SKILL.md` — 中文摘要 added (multi-agent orchestration)
+- `00 系統/技能/pr-review-expert/SKILL.md` — 中文摘要 added (structured code review)
+- `00 系統/技能/spec-driven-workflow/SKILL.md` — 中文摘要 added (spec-first development)
+- `00 系統/技能/rag-architect/SKILL.md` — 中文摘要 added (RAG pipeline design)
+- `98 資料/RAG_Patterns/contextual-embeddings.md` — 中文摘要 added (contextual embedding optimization)
 
 ### Summary Content Format
 Each file now includes `## 🇹🇼 中文摘要` section right after frontmatter:

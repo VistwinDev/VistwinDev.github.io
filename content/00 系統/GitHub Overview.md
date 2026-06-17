@@ -43,7 +43,7 @@ tags: [meta, github, infrastructure]
 - **最新 commit**:[`0804b02`](https://github.com/metaarchetech/metaarchetech-vault/commit/0804b02) `vault backup: 2026-05-04 18:34:48`(obsidian-git auto)
 - **手動 commit**:[`0d4a4a0`](https://github.com/metaarchetech/metaarchetech-vault/commit/0d4a4a0) disable failing sync-to-quartz workflow
 - **棧**:Obsidian + obsidian-git auto backup(每 5 分鐘)
-- **入口**:[[index|🏠 vault home]] · [[Now]] · [[02 產品/VisTwin/README|VisTwin]]
+- **入口**:[[index|🏠 vault home]] · [[Now]] · [[02 技術/VisTwin/README|VisTwin]]
 - **關係**:所有 repo 的「外部腦」。產品筆記、Sprint、code review、研究 dump 全在這。
 - **CI 狀態**:`update-dashboard.yml` 與 `sync-to-quartz.yml` 兩支 workflow **目前 disabled**(`DASHBOARD_PAT` secret 未設,checkout token 為空)。詳見底部「維護指引」。
 
@@ -52,7 +52,7 @@ tags: [meta, github, infrastructure]
 - **分支**:`master`
 - **最新 commit**:[`748791c`](https://github.com/metaarchetech/visustwin-extensions/commit/748791c) `feat: add ventilation.report + visustwin.fonts; report readability + CJK font support`
 - **棧**:Python 3.12(Kit 內建)、omni.usd / omni.ui、matplotlib、Warp(粒子)、stb_truetype 字型
-- **入口**:[[02 產品/VisTwin/Plugins/README|Plugins MOC]] · [[02 產品/VisTwin/Plugins/code-review-2026-04-30|code review 2026-04-30]]
+- **入口**:[[02 技術/VisTwin/Plugins/README|Plugins MOC]] · [[02 技術/VisTwin/Plugins/code-review-2026-04-30|code review 2026-04-30]]
 - **關係**:由 `kit-app-template` 載入(`source/extensions/` 跟此 repo 內容鏡射)。這 repo 只是 push-mirror,Kit 從 `kit-app-template/source/extensions` 載入。
 - **重要 plugin 群**:AIR(warp.windtunnel / wind.analysis / ventilation / **ventilation.report**)/ SUN(sunlight.studio / solar.heatmap / solar.report)/ WATER & HEALTH(moisture.health)/ DATA(mqtt.bridge / osc.controller)/ SAFETY(vision.detector / bim.inspector)/ ESG / AI / Presentation / Dev / **fonts**(CJK)。
 
@@ -61,7 +61,7 @@ tags: [meta, github, infrastructure]
 - **分支**:`main`
 - **最新 commit**:[`a08c0fb`](https://github.com/metaarchetech/vistwin-plugins-web/commit/a08c0fb) `chore: initial commit`
 - **棧**:Next.js 16 / React 19 / Tailwind v4 / Framer Motion 12 / Phosphor icons
-- **入口**:[[02 產品/Design-System/showcase-ui-inventory|showcase UI inventory]] · [[02 產品/Design-System/frontend-stack-matrix|frontend stack matrix]]
+- **入口**:[[02 技術/Design-System/showcase-ui-inventory|showcase UI inventory]] · [[02 技術/Design-System/frontend-stack-matrix|frontend stack matrix]]
 - **關係**:從 `visustwin-showcase` 抽出來的 plugin demo + Studio Shell 部分。21 個 plugin 各一頁。
 - **拆分理由**:`showcase` 變回純設計 lab,`plugins-web` 專做 plugin 對外簡報用。
 
@@ -70,7 +70,7 @@ tags: [meta, github, infrastructure]
 - **分支**:`main`
 - **最新 commit**:[`4a04f9b`](https://github.com/metaarchetech/visustwin-showcase/commit/4a04f9b) `refactor: extract plugins to visustwin-plugins-web; become pure design lab`
 - **棧**:Next.js 16 / React 19 / Tailwind v4(@theme inline)/ Framer Motion 12 / GlassCard primitive
-- **入口**:[[02 產品/Design-System/showcase-ui-inventory|UI inventory]] · [[02 產品/Design-System/frontend-stack-matrix|stack matrix]] · [[02 產品/Design-System/README|Design-System MOC]]
+- **入口**:[[02 技術/Design-System/showcase-ui-inventory|UI inventory]] · [[02 技術/Design-System/frontend-stack-matrix|stack matrix]] · [[02 技術/Design-System/README|Design-System MOC]]
 - **關係**:`/lab` 是 800 行 design testbed(Foundations / Cards / Pills / Controls / Layout / Motion / Status / Gallery)。`plugins-web` 從這裡抽出來。
 - **獨立 features**:theme switcher / accent picker / density toggles / sticky TOC / cursor-tracked accent halo。
 
@@ -102,7 +102,7 @@ tags: [meta, github, infrastructure]
 - **Visibility**:private · branch `main` · 66 KB
 - **用途**:AI safety monitoring — YOLO + WebSocket + MJPEG streaming server for VisTwin
 - **狀態**:跟 `visustwin.vision.detector` plugin(在 `visustwin-extensions`)互補:此 repo 是後端 streaming server,plugin 是 Kit 端 viewer。
-- **關係**:[[02 產品/VisTwin/Plugins/README|Plugins MOC]] 中 vision.detector 的 server side。
+- **關係**:[[02 技術/VisTwin/Plugins/README|Plugins MOC]] 中 vision.detector 的 server side。
 
 ### 9. vistwinsite
 - **Visibility**:**public** · branch `master`
@@ -185,15 +185,15 @@ tags: [meta, github, infrastructure]
 ## E. 跨 vault 連結
 
 ### 設計系統 / 前端
-- [[02 產品/Design-System/showcase-ui-inventory]] — showcase + plugins-web 的元件清單(741 行)
-- [[02 產品/Design-System/frontend-stack-matrix]] — 前端棧 matrix
-- [[02 產品/Design-System/README|Design-System MOC]]
+- [[02 技術/Design-System/showcase-ui-inventory]] — showcase + plugins-web 的元件清單(741 行)
+- [[02 技術/Design-System/frontend-stack-matrix]] — 前端棧 matrix
+- [[02 技術/Design-System/README|Design-System MOC]]
 
 ### VisTwin 產品
-- [[02 產品/VisTwin/README|VisTwin 產品頁]]
-- [[02 產品/VisTwin/Plugins/README|Plugins MOC]]
-- [[02 產品/VisTwin/Plugins/code-review-2026-04-30]] — 26-file audit(3 High / 9 Medium / ~30 Low)
-- [[02 產品/VisTwin/Plugins/ventilation.report/architecture-research]] — 換氣分析架構研究
+- [[02 技術/VisTwin/README|VisTwin 產品頁]]
+- [[02 技術/VisTwin/Plugins/README|Plugins MOC]]
+- [[02 技術/VisTwin/Plugins/code-review-2026-04-30]] — 26-file audit(3 High / 9 Medium / ~30 Low)
+- [[02 技術/VisTwin/Plugins/ventilation.report/architecture-research]] — 換氣分析架構研究
 
 ### Visionbase(客戶)
 - [[01 專案/visionbase/README|visionbase MOC]]

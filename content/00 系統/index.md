@@ -1,48 +1,20 @@
 ---
 tags: [home, moc]
 created: 2026-04-18
-updated: 2026-04-19
+updated: 2026-06-18
 ---
 
-# MetaArche
+# VisTwin Vault — 系統索引
 
-> Product-centric 工作 vault。
+> 完整導覽見 [[Vault Home]]；本檔只放快速入口。2026-06-18 極簡化：8 區 → 6 區。
 
-## 當前焦點
+## 快速入口
 
-- [[Now]] — 本週焦點
+- [[Now]] — 當前焦點
+- [[Entity_Map]] — 實體邊界（正典）
+- [[00 系統/技能/working-with-frncs/SKILL|working-with-frncs]] — 共事準則（正典）
+- [[00 系統/技能/_index|技能索引]]
 
-## 產品
+## 六區
 
-- [[02 產品/VisTwin/README|VisTwin]]
-- [[02 產品/Design-System/README|Design System]]
-- [[02 產品/Metaarchetech-site/README|VisTwin Site]]
-
-## 專案
-
-- [[01 專案/寶鋪 showcase/README|寶鋪 showcase]]
-- [[01 專案/寶鋪 showcase/welltek/README|welltek]]
-
-## 知識與歷史
-
-- [[04 知識/Lived/README|Knowledge / Lived]]
-- [[99 封存/2025/README|Legacy / 2025]]
-
-## Claude Skills
-
-- [[05 技能/_index|Claude Skills Index]] — skill 系統索引
-- [[05 技能/working-with-frncs/SKILL|working-with-frncs]] — 跟 Frncs 共事的核心行為準則
-- [[05 技能/dev-state-overview/SKILL|dev-state-overview]] — 跨機開發狀態總覽
-- [[05 技能/vault-publish-pipeline/SKILL|vault-publish-pipeline]] — vault → GitHub → Quartz → Pages 全鏈狀態與診斷
-- [[05 技能/research-orchestrator/SKILL|research-orchestrator]] — 多 agent 平行研究編排
-- [[05 技能/pr-review-expert/SKILL|pr-review-expert]] — PR/MR 結構化 code review
-- [[05 技能/spec-driven-workflow/SKILL|spec-driven-workflow]] — spec 先於 code 的開發流程
-- [[05 技能/rag-architect/SKILL|rag-architect]] — RAG pipeline 設計與優化
-
-## Machines
-
-- [[06 機台/_fleet-index|Fleet Index]] — 車隊內所有機器（家機 / lab / 學校）狀態
-
----
-
-→ 完整導覽：[[Vault Home]]
+[[01 專案]] · [[02 技術]] · [[03 公司]] · [[98 資料]] · [[99 封存]] · [[00 系統]]

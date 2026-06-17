@@ -48,4 +48,4 @@ updated: 2026-04-18
 
 ## 返回
 
-- [[02 產品/VisTwin/README|VisTwin]]
+- [[02 技術/VisTwin/README|VisTwin]]

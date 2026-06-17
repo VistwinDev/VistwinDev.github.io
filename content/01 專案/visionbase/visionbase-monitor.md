@@ -63,4 +63,4 @@ Visionbase 區網裝置監控網站。2026-04-29 進駐當日從 0 搭起,Phase 
 ## 返回
 
 - [[01 專案/visionbase/README|Visionbase]]
-- [[02 產品/VisTwin/sprints/2026-W18/2026-04-29|2026-04-29 daily log]]
+- [[02 技術/VisTwin/sprints/2026-W18/2026-04-29|2026-04-29 daily log]]

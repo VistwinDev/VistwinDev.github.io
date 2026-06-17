@@ -32,6 +32,6 @@ updated: 2026-05-19
 
 ## Related
 
-- [[../../05 技能/working-with-frncs/SKILL|working-with-frncs]]
-- [[../../05 技能/_learnings|Skill Learnings]]
+- [[../../00 系統/技能/working-with-frncs/SKILL|working-with-frncs]]
+- [[../../00 系統/技能/_learnings|Skill Learnings]]
 - [[../index|00 System]]

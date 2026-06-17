@@ -1,71 +1,51 @@
 ---
 tags: [moc, home]
 created: 2026-04-11
-updated: 2026-04-19
+updated: 2026-06-18
 ---
 
-# 🏠 MetaArche Vault Home
+# 🏠 VisTwin Vault Home
 
-> Product-centric 工作 vault。以產品與客戶專案為主軸，知識與歷史資料分層支援。
+> 2026-06-18 極簡化：8 區 → 6 區。三條軸 = **專案(01) / 技術(02) / 公司(03)**，加資料冷藏(98) + legacy(99)，機制層(00) 支撐。
 
 ## 🎯 當前焦點
 
 - [[Now]] — 本週焦點、waiting/blocked、近期要啟動
 
-## 🚀 Products（自家產品）
+## 📌 01 專案線（專案管理）
 
-- [[02 產品/VisTwin/README|VisTwin]] — Omniverse 外掛、BIM/ESG 工具鏈、Web 化
-- [[02 產品/Design-System/README|Design System]] — DNA 設計系統
-- [[02 產品/Metaarchetech-site/README|VisTwin Site]]
+- [[01 專案/寶鋪 showcase/README|寶鋪 showcase]] — 客戶 showcase（6/6 deliverable）
+- [[01 專案/Physical_AI/README|Physical AI]] — 主線 A（lab 執行）
+- [[01 專案/visionbase/README|VisionBase]] — lab 物理基地 / KUKA
 
-## 📌 Projects（客戶向專案）
+## 🔧 02 技術線（技術開發）
 
-- [[01 專案/寶鋪 showcase/README|寶鋪 showcase]]
-- [[01 專案/寶鋪 showcase/welltek/README|welltek]]
+- [[02 技術/Visustwin/README|Visustwin 產品]] — Omniverse 外掛、BIM/ESG 工具鏈、Web 化
+- [[02 技術/Design-System/README|Design System]] — DNA 設計系統
+- [[02 技術/Visustwin/Plugins/README|Plugins]] — 外掛總覽
 
-## 📚 Knowledge（常態知識）
+## 🏛️ 03 公司線（營運檔案）
 
-- [[04 知識/Lived/README|Knowledge / Lived]] — Ontology、Gaussian Splatting、Omniverse、XR、AI frameworks
+- [[03 公司/README|公司營運檔案]] — 登記 / 商標 / 財務 / 合約（提煉自 [[Entity_Map]]）
 
-## 🗄 Legacy（時點歸檔）
+## 🧠 98 資料（技術冷藏）
 
-- [[99 封存/2025/README|Legacy / 2025]] — 2025 年度以前的專案、資源、archive
+- [[98 資料/Lived/README|Lived 知識]] — Ontology、Gaussian Splatting、Omniverse、XR、AI frameworks
 
-## 🧩 Claude Skills
+## 🗄 99 封存（legacy 凍結）
 
-- [[05 技能/_index|Claude Skills Index]] — skill 系統索引（每個 skill 一資料夾，內含 SKILL.md）
-- [[05 技能/working-with-frncs/SKILL|working-with-frncs]] — 跟 Frncs 共事的核心行為準則
-- [[05 技能/dev-state-overview/SKILL|dev-state-overview]] — 跨機開發狀態總覽（GitHub / git / ports / 車隊）
-- [[05 技能/vault-publish-pipeline/SKILL|vault-publish-pipeline]] — vault → GitHub → Quartz → Pages 全鏈狀態與斷點診斷
-- [[05 技能/research-orchestrator/SKILL|research-orchestrator]] — lead-agent + subagent 平行研究編排
-- [[05 技能/pr-review-expert/SKILL|pr-review-expert]] — PR/MR 結構化 code review
-- [[05 技能/spec-driven-workflow/SKILL|spec-driven-workflow]] — spec-first 開發流程
-- [[05 技能/rag-architect/SKILL|rag-architect]] — RAG pipeline 設計與優化
+- [[99 封存/2025/README|Legacy 2025]]
+- [[99 封存/Metaarchetech-site/README|Metaarchetech Site]]
 
-## 🖥 Machines
+## ⚙️ 00 系統（機制層）
 
-- [[06 機台/_fleet-index|Fleet Index]] — 車隊內所有機器（家機 / lab / 學校），heartbeat 每天更新
-
-## 📐 結構說明
-
-```
-00 Meta/       vault 本身的設定、首頁、工作流程
-Now.md         當前焦點（本週／近期）
-Products/      自家產品（長期維護）
-Projects/      客戶向專案
-Knowledge/     常態可重用知識（Lived = 活躍使用中）
-Legacy/        時點歸檔（YYYY/ 下分 knowledge/resources/archive）
-Images/        圖片附件
-Inbox/         暫存待整理
-```
-
-本 vault 採 **product-centric** 組織（非 PARA）：
-長期維護的產品（Products/）與當期專案（Projects/）是第一層骨架；
-知識依「還在活躍使用」(Lived) 或「已時點化」(Legacy/YYYY/) 分層。
+- [[Entity_Map]] — 實體邊界（正典）
+- [[00 系統/技能/_index|技能索引]] — skill 系統（每個 skill 一資料夾，內含 SKILL.md）
+- [[00 系統/技能/working-with-frncs/SKILL|working-with-frncs]] — 跟 Frncs 共事的核心行為準則（正典）
 
 ## ✏️ 命名規則
 
 - 檔名：中英文之間用空格，避免底線與全形標點
 - 狀態：用 tag → `#todo` `#doing` `#done` `#blocked`
 - 日期：ISO 格式 `YYYY-MM-DD`
-- 主題資料夾用 `README.md` 作為索引（取代舊的 `XXX MOC.md`）
+- 主題資料夾用 `README.md` 作為索引

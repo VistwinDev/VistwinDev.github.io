@@ -158,4 +158,4 @@ tags: [project/visionbase, knowledge/kuka, sprint/2026-W18]
 
 - [[01 專案/visionbase/README|Visionbase]]
 - [[01 專案/visionbase/visionbase-monitor|visionbase-monitor]]
-- [[04 知識/Lived/Omniverse/Isaac Sim|Isaac Sim]]
+- [[98 資料/Lived/Omniverse/Isaac Sim|Isaac Sim]]
