@@ -14,7 +14,7 @@ updated: 2026-06-18
 
 ## 📌 01 專案線（專案管理）
 
-- [[01 專案/寶鋪 showcase/README|寶鋪 showcase]] — 客戶 showcase（6/6 deliverable）
+- 寶鋪 showcase🔒 — 客戶 showcase（6/6 deliverable，🔒 私有不公開）
 - [[01 專案/Physical_AI/README|Physical AI]] — 主線 A（lab 執行）
 - [[01 專案/visionbase/README|VisionBase]] — lab 物理基地 / KUKA
 
