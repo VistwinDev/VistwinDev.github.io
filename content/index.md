@@ -1,19 +1,15 @@
 ---
-tags: [home, moc]
-created: 2026-04-18
-updated: 2026-06-18
+title: VisTwin
+tags: [home]
+publish: true
 ---
 
-# VisTwin Vault
+# VisTwin
 
-→ [[Vault Home]]
+數位孿生 · Physical AI · BIM / Digital Twin
 
-## 結構（2026-06-18 極簡化：8 區 → 6 區；另加 04 Github repo 鏡像）
+VisTwin Technology 知識庫。
 
-- 00 ⚙️ [[00 系統]] — 機制層（含 [[00 系統/技能/_index|技能]]）
-- 01 📌 [[01 專案]] — **專案線**（專案管理）
-- 02 🔧 [[02 技術]] — **技術線**（技術開發）
-- 03 🏛️ 03 公司 — **公司線**（營運檔案，🔒 私有不公開）
-- 04 🐙 04 Github — **GitHub 鏡像**（兩 org repo 同步，🔒 私有不公開）
-- 98 🧠 [[98 資料]] — 技術資料冷藏
-- 99 🗄️ [[99 封存]] — legacy 凍結
+> 本站採 allowlist 發佈：預設不公開，僅少數標記頁面對外。
+
+內部首頁 → Vault Home（私有，不公開）
