@@ -8,7 +8,7 @@ category: Presentation
 
 # VisTwin Exhibition Board
 
-> 第二螢幕展覽看板 — 嵌入式 Viewport + IoT 夥伴 即時數據
+> 第二螢幕展覽看板 — 嵌入式 Viewport + Welltek 即時數據
 
 提供獨立 OS 視窗，內嵌 Omniverse Viewport 與即時裝置數據，適合展場第二螢幕。
 

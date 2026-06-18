@@ -8,7 +8,7 @@ category: Data Connection
 
 # VisTwin MQTT Bridge
 
-> IoT 夥伴 IoT 裝置數據橋接 — WebSocket 即時接入
+> Welltek IoT 裝置數據橋接 — WebSocket 即時接入
 
 連接 welltek-twin WebSocket server，接收 IoT 裝置即時數據並透過 carb event bus 廣播至其他插件。
 
@@ -44,7 +44,7 @@ Runtime: `connected`, `last_topic`, `last_payload`
 ## Data Flow
 
 ```
-welltek-twin (:3001) → IoT 夥伴WsClient (bg thread) → event bus → subscribers
+welltek-twin (:3001) → WelltekWsClient (bg thread) → event bus → subscribers
 ```
 
 ## Dependencies
@@ -59,14 +59,14 @@ welltek-twin (:3001) → IoT 夥伴WsClient (bg thread) → event bus → subscr
 
 ### 功能與 UI 結構
 
-IoT 夥伴 IoT 數據橋接器。連接 welltek-twin Node.js WS 服務器（`ws://localhost:3001`），接收 JSON 格式設備數據（plug/env/ac/hrv 四種類型），計算 Wellness Index，透過 Carb Event Bus 廣播給其他插件使用。UI 是一個連線狀態面板，顯示各設備最新讀數。
+Welltek IoT 數據橋接器。連接 welltek-twin Node.js WS 服務器（`ws://localhost:3001`），接收 JSON 格式設備數據（plug/env/ac/hrv 四種類型），計算 Wellness Index，透過 Carb Event Bus 廣播給其他插件使用。UI 是一個連線狀態面板，顯示各設備最新讀數。
 
 ### 程式檔案清單
 
 | 檔案 | 職責 |
 |---|---|
 | `extension.py` | IExt lifecycle + 事件廣播 |
-| `ws_client.py` | IoT 夥伴WsClient（WebSocket 背景執行緒） |
+| `ws_client.py` | WelltekWsClient（WebSocket 背景執行緒） |
 | `mqtt_client.py` | 設備數據解析 + Wellness Index 計算 |
 | `ui_window.py` | 連線狀態 + 設備讀數 UI |
 
@@ -74,7 +74,7 @@ IoT 夥伴 IoT 數據橋接器。連接 welltek-twin Node.js WS 服務器（`ws:
 
 ```python
 # ws_client.py — WebSocket 背景執行緒（唯一核心邏輯）
-class IoT 夥伴WsClient:
+class WelltekWsClient:
     def start(self) -> bool:
         self._thread = threading.Thread(target=self._run, daemon=True)
         self._thread.start()

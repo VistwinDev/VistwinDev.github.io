@@ -27,7 +27,7 @@ VisTwin 是一組為 NVIDIA Omniverse Kit 開發的插件集合，專為建築�
 ### Data Connection
 | Extension | Description | Deps |
 |-----------|-------------|------|
-| [[VisTwin MQTT Bridge]] | IoT 夥伴 IoT 裝置數據橋接，WebSocket 接入 | `websocket-client` (auto) |
+| [[VisTwin MQTT Bridge]] | Welltek IoT 裝置數據橋接，WebSocket 接入 | `websocket-client` (auto) |
 | [[VisTwin OSC Controller]] | OSC UDP 接收器，外部觸控面板控制 USD 場景 | (none) |
 
 ### Safety & Monitoring
