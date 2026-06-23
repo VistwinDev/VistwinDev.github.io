@@ -4,6 +4,11 @@ status: active
 priority: P0 (5-10 yr)
 started: 2026-05-19
 keywords: physical-ai, robotic, ros2, kuka, isaac, omniverse, main-line-a
+# ── pm dashboard (vistwin-pm)：數值為初始預估，請自行調整 ──
+pm: true
+owner: Francis
+progress: 10
+area: 主線A
 ---
 
 # Physical AI — VisTwin 主線 A

@@ -6,6 +6,14 @@ project: Physical AI（主線 A）— VisionBase lab 執行端
 author: Frncs（拍板）+ AI（軟體架構）
 purpose: lab Linux 機的軟體架構 + 作業系統 setup checklist。硬體規格與預算不在本檔範圍（使用者已搞定機器）。
 related: ["[[kuka-control-feasibility]]", "[[KUKA_Loop_Architecture_Options_v0]]", "[[Physical_AI_Chapter_Draft_v0]]"]
+# ── pm dashboard (vistwin-pm)：數值為初始預估，請自行調整 ──
+pm: true
+owner: Francis
+priority: P1
+due: 2026-07-15
+progress: 20
+area: 主線A · lab
+sprint: 2026-W21
 ---
 
 # Linux Lab 環境建置計畫

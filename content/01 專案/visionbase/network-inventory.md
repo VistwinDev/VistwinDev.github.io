@@ -1,4 +1,11 @@
 ---
+# ── pm dashboard (vistwin-pm)：數值為初始預估，請自行調整 ──
+pm: true
+status: done
+owner: Francis
+priority: P2
+progress: 100
+area: 主線A · lab
 created: 2026-04-29
 tags: [project/visionbase, sprint/2026-W18, inventory]
 ---
