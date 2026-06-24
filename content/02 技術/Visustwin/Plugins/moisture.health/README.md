@@ -1,3 +1,8 @@
+---
+title: visustwin.moisture.health
+tags: [tech, plugin, visustwin]
+---
+
 # visustwin.moisture.health — Extension 細節卡
 
 > **Tier: T4** — 存封 — docstring 明寫「Phase 1 (skeleton)」，Risk Map tab 是 placeholder；PMV 計算抽出進 SolarAnalysisModule 即可

@@ -1,3 +1,8 @@
+---
+title: visustwin.esg.tracker
+tags: [tech, plugin, visustwin]
+---
+
 # visustwin.esg.tracker — Extension 細節卡
 
 > **Tier: T1** — 合併 → BIMReviewModule（bim.inspector 是唯一資料來源）

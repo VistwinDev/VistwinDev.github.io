@@ -1,3 +1,8 @@
+---
+title: visustwin.ai.oracle
+tags: [tech, plugin, visustwin]
+---
+
 # visustwin.ai.oracle — Extension 細節卡
 
 > **Tier: T1** — 合併 → ConsoleModule（與 dev.repl 共用 console 輸出 UI）

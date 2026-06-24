@@ -1,3 +1,8 @@
+---
+title: visustwin.elements.core
+tags: [tech, plugin, visustwin]
+---
+
 # visustwin.elements.core — Extension 細節卡
 
 > **Tier: T4** — 存封 — ZoneRegistry 共享匯流排幾乎未被整合使用（只有 T4 的 moisture.health 依賴它）；web 端改 Zustand store

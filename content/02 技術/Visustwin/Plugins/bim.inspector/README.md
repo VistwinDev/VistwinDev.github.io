@@ -1,3 +1,8 @@
+---
+title: visustwin.bim.inspector
+tags: [tech, plugin, visustwin]
+---
+
 # visustwin.bim.inspector — Extension 細節卡
 
 > **Tier: T0** — 核心保留 — 獨立模組，優先 port（幾何簡化邏輯 → Massing Pipeline）

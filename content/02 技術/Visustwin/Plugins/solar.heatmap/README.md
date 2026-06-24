@@ -1,3 +1,8 @@
+---
+title: visustwin.solar.heatmap
+tags: [tech, plugin, visustwin]
+---
+
 # visustwin.solar.heatmap — Extension 細節卡
 
 > **Tier: T0** — 核心保留 — 獨立 Solar 模組，優先 port（demo_preset → Massing Pipeline）
