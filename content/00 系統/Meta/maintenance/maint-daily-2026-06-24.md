@@ -1,6 +1,9 @@
 ---
 title: 維護提案 daily 2026-06-24
 type: maintenance-proposal
+created: 2026-06-24
+status: consumed
+tags: [system, meta, maintenance-proposal, daily]
 ---
 
 # 🔍 三庫維護提案 — daily 2026-06-24
@@ -77,7 +80,8 @@ type: maintenance-proposal
 
 
 ---
-## ✅ 核准
-看完上面,要**實際套用**哪些?點這裡開核准表單(勾選後送出才會寫入/commit):
+## ✅ 核准（已結案 — `status: consumed`）
 
-http://localhost:5678/form-waiting/21?signature=bcfe9723e97bdec0b9b76a490b2f478f6d19400a8ddc023a69bfe39286e5d424
+> ⚠️ 本提案已於 2026-06-25 消化:daily-journal 段落已落進 `2026-06-25.md`,本檔已從 Inbox 歸檔至 `Meta/maintenance/`。下方 n8n form-waiting 核准連結為一次性 webhook,已失效,僅留存備查。
+
+~~http://localhost:5678/form-waiting/21?signature=bcfe9723e97bdec0b9b76a490b2f478f6d19400a8ddc023a69bfe39286e5d424~~
