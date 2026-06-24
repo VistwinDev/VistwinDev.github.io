@@ -154,4 +154,4 @@ Web 化後 osc.controller 的職責變成：**Kit 端 RPC server**，不再需�
 
 ---
 
-← [[02 技術/VisTwin/Plugins/README|VisTwin Plugins]]
+← [[02 技術/Visustwin/Plugins/README|VisTwin Plugins]]

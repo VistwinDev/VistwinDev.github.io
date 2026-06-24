@@ -113,4 +113,4 @@ function calcEmbodiedCarbon(volumeM3: number, materialKeyword: string): number {
 ← [[../Omniverse Web化 評估|主評估文件]]
 
 
-← [[02 技術/VisTwin/README|VisTwin]]
+← [[02 技術/Visustwin/README|VisTwin]]

@@ -63,7 +63,7 @@ tags: [project/visionbase, sprint/2026-W18]
 
 ## 相關產品
 
-- [[02 技術/VisTwin/README|VisTwin]] — Omniverse 物理空間數位孿生(visionbase 是物理基地)
+- [[02 技術/Visustwin/README|VisTwin]] — Omniverse 物理空間數位孿生(visionbase 是物理基地)
 
 ## 返回
 

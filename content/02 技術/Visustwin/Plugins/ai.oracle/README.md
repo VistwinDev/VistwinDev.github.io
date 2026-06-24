@@ -95,4 +95,4 @@ class OracleExtension(omni.ext.IExt):
 ← [[../Omniverse Web化 評估|主評估文件]]
 
 
-← [[02 技術/VisTwin/README|VisTwin]]
+← [[02 技術/Visustwin/README|VisTwin]]

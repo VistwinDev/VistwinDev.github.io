@@ -42,4 +42,4 @@ YOLO 新版主專案。展間掃描 HUD 系統的核心視覺感知模組，負�
 
 ## 返回
 
-- [[02 技術/VisTwin/README|VisTwin]]
+- [[02 技術/Visustwin/README|VisTwin]]

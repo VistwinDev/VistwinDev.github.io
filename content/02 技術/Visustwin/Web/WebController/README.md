@@ -47,4 +47,4 @@ OTA 120 年建築生命週期 Archviz 控制器。透過 iPad 瀏覽器遠端操
 
 ## 返回
 
-- [[02 技術/VisTwin/README|VisTwin]]
+- [[02 技術/Visustwin/README|VisTwin]]

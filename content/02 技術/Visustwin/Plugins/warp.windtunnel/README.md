@@ -192,4 +192,4 @@ solver.ts: computeStreamlines(massingStore.buildings, windDir, ...)
 
 ---
 
-← [[02 技術/VisTwin/Plugins/README|VisTwin Plugins]]
+← [[02 技術/Visustwin/Plugins/README|VisTwin Plugins]]

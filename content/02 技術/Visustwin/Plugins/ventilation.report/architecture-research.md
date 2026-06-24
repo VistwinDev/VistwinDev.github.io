@@ -584,6 +584,6 @@ _CATEGORIES = [
 
 ## 返回
 
-- [[02 技術/VisTwin/Plugins/ventilation/README|ventilation(sim 端)]]
-- [[02 技術/VisTwin/Plugins/README|Plugins]]
+- [[02 技術/Visustwin/Plugins/ventilation/README|ventilation(sim 端)]]
+- [[02 技術/Visustwin/Plugins/README|Plugins]]
 - [[02 技術/Visustwin/sprints/2026-W18/2026-04-29|2026-04-29 daily log]]

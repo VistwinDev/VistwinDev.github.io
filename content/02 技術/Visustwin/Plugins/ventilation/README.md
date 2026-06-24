@@ -5,7 +5,7 @@ tags: [product/VisTwin, plugin/ventilation, sprint/2026-W18]
 
 # VisTwin Ventilation
 
-新風 / 冷氣進氣口粒子流場可視化。AIR 系列第三個 ext(在 [[02 技術/VisTwin/Plugins/warp.windtunnel/README|warp.windtunnel]]、[[02 技術/VisTwin/Plugins/wind.analysis/README|wind.analysis]] 之後)。
+新風 / 冷氣進氣口粒子流場可視化。AIR 系列第三個 ext(在 [[02 技術/Visustwin/Plugins/warp.windtunnel/README|warp.windtunnel]]、[[02 技術/Visustwin/Plugins/wind.analysis/README|wind.analysis]] 之後)。
 
 ## 基本資訊
 
@@ -98,5 +98,5 @@ tags: [product/VisTwin, plugin/ventilation, sprint/2026-W18]
 
 ## 返回
 
-- [[02 技術/VisTwin/Plugins/README|Plugins]]
-- [[02 技術/VisTwin/README|VisTwin]]
+- [[02 技術/Visustwin/Plugins/README|Plugins]]
+- [[02 技術/Visustwin/README|VisTwin]]

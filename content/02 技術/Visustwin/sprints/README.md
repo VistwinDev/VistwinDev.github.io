@@ -49,8 +49,8 @@ sprints/
 | 外部系統 | 對應方式 |
 |---|---|
 | GitHub milestone | 一個 sprint 對應一個 milestone(若有開) |
-| [[02 技術/VisTwin/Backlog]] | sprint planning 從 backlog 認領 items 進來 |
-| `decisions/` | sprint 中的非平凡決策另外寫進 [[02 技術/VisTwin/decisions]] |
+| [[02 技術/Visustwin/Backlog]] | sprint planning 從 backlog 認領 items 進來 |
+| `decisions/` | sprint 中的非平凡決策另外寫進 [[02 技術/Visustwin/decisions]] |
 | 跨 repo commit | daily log 底部的 commit 摘要表格集中紀錄,retro 時可彙整 |
 
 ## 不需要硬性遵守的東西
@@ -75,5 +75,5 @@ sprints/
 ## 返回
 
 - [[Now]]
-- [[02 技術/VisTwin/README|VisTwin]]
+- [[02 技術/Visustwin/README|VisTwin]]
 - [[index|首頁]]

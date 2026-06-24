@@ -21,7 +21,7 @@ tags: [product/VisTwin, plugin/light-compass]
 
 ## 用途
 
-在 USD Stage 中繪製太陽軌跡弧線與 36 方向照度玫瑰圖,接收 [[02 技術/VisTwin/Plugins/mqtt.bridge/README|mqtt.bridge]] 廣播的即時感測器照度(lux)。
+在 USD Stage 中繪製太陽軌跡弧線與 36 方向照度玫瑰圖,接收 [[02 技術/Visustwin/Plugins/mqtt.bridge/README|mqtt.bridge]] 廣播的即時感測器照度(lux)。
 
 ## Features
 
@@ -82,19 +82,19 @@ visustwin.light.compass/
 
 - `omni.usd`
 - `omni.kit.uiapp`
-- 訂閱 [[02 技術/VisTwin/Plugins/mqtt.bridge/README|mqtt.bridge]] 的 events
+- 訂閱 [[02 技術/Visustwin/Plugins/mqtt.bridge/README|mqtt.bridge]] 的 events
 
 ## 跟 SUN 系列的關係
 
 | Ext | 角色 | 跟 light.compass 重疊處 |
 |---|---|---|
-| [[02 技術/VisTwin/Plugins/sunlight.studio/README|sunlight.studio]] | 全域陽光控制(NOAA + 城市庫) | 太陽位置計算(已用 NOAA 取代) |
-| [[02 技術/VisTwin/Plugins/solar.heatmap/README|solar.heatmap]] | 每戶得熱熱圖 | 跟玫瑰圖在概念上重疊 |
-| [[02 技術/VisTwin/Plugins/solar.report/README|solar.report]] | matplotlib 報告 | 數值化呈現,跟玫瑰圖互補 |
+| [[02 技術/Visustwin/Plugins/sunlight.studio/README|sunlight.studio]] | 全域陽光控制(NOAA + 城市庫) | 太陽位置計算(已用 NOAA 取代) |
+| [[02 技術/Visustwin/Plugins/solar.heatmap/README|solar.heatmap]] | 每戶得熱熱圖 | 跟玫瑰圖在概念上重疊 |
+| [[02 技術/Visustwin/Plugins/solar.report/README|solar.report]] | matplotlib 報告 | 數值化呈現,跟玫瑰圖互補 |
 
 → 如果未來歸檔,可以把太陽軌跡弧的 utility 拉到 `sunlight.studio`,玫瑰圖獨立成「環境感測 viz」放別處。
 
 ## 返回
 
-- [[02 技術/VisTwin/Plugins/README|Plugins]]
-- [[02 技術/VisTwin/README|VisTwin]]
+- [[02 技術/Visustwin/Plugins/README|Plugins]]
+- [[02 技術/Visustwin/README|VisTwin]]

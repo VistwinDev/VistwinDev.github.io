@@ -42,4 +42,4 @@ Built on NVIDIA Kit SDK 110.0 / Omniverse USD Composer。插件分組：環境�
 
 ## 返回
 
-- [[02 技術/VisTwin/README|VisTwin]]
+- [[02 技術/Visustwin/README|VisTwin]]
