@@ -1,3 +1,8 @@
+---
+title: Foundation Model Distillation Ontology Mapping
+tags: [reference, ai-framework]
+---
+
 [[AI Frameworks]]
 ### 1. **Foundation Model Distillation**
 

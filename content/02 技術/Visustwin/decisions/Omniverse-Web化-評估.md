@@ -1,3 +1,9 @@
+---
+title: Omniverse Web化 評估
+tags: [tech, decision, web化]
+status: 評估
+---
+
 # Omniverse Web化 評估
 
 > 評估日期：2026-04-19 | 評估者：Claude Sonnet 4.6（靜態分析）

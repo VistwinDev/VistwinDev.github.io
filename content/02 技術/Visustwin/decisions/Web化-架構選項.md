@@ -1,3 +1,9 @@
+---
+title: Web化 架構選項比較
+tags: [tech, decision, web化]
+status: 評估
+---
+
 # Web化 架構選項比較
 
 > 三套完整方案，各有不同的整合範圍、開發量和長期維護成本

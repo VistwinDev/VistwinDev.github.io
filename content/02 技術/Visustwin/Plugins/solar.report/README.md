@@ -1,3 +1,8 @@
+---
+title: visustwin.solar.report
+tags: [tech, plugin, visustwin]
+---
+
 # visustwin.solar.report — Extension 細節卡
 
 > **Tier: T1** — 合併 → SolarAnalysisModule（docstring 明說「Mirror of wind.analysis for the solar side」）

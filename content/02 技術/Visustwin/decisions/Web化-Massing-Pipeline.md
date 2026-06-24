@@ -1,3 +1,9 @@
+---
+title: Web化 Massing Pipeline — 設計筆記
+tags: [tech, decision, web化]
+status: 設計
+---
+
 # Web化 Massing Pipeline — 設計筆記
 
 > 原則：**整併只在上游（幾何來源）發生；下游模擬模組全部獨立。**
