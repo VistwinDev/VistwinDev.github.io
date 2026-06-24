@@ -5,7 +5,7 @@ tags: [scrum, sprint/2026-W21]
 
 # Sprint 2026-W21（2026-05-18 ~ 2026-05-24）
 
-> 重啟 sprint 節奏。上一篇 daily 為 [[02 技術/VisTwin/sprints/2026-W18/2026-04-29|2026-04-29]]（W18），W19–W20 兩週無 daily log。本週起 daily 由 [[00 系統/技能/daily-weekly-journal/SKILL|daily-weekly-journal]] skill 維持。
+> 重啟 sprint 節奏。上一篇 daily 為 [[02 技術/Visustwin/sprints/2026-W18/2026-04-29|2026-04-29]]（W18），W19–W20 兩週無 daily log。本週起 daily 由 [[00 系統/技能/daily-weekly-journal/SKILL|daily-weekly-journal]] skill 維持。
 
 ## 本週主線
 
@@ -21,5 +21,5 @@ tags: [scrum, sprint/2026-W21]
 ## 返回
 
 - [[Now]]
-- [[02 技術/VisTwin/sprints/README|sprints scrum 慣例]]
+- [[02 技術/Visustwin/sprints/README|sprints scrum 慣例]]
 - [[index|首頁]]

@@ -126,7 +126,7 @@ tags: [scrum, sprint/2026-W{NN}]
 - [[YYYY-MM-DD]]
 
 ## 返回
-- [[Now]] · [[02 技術/VisTwin/sprints/README|sprints]]
+- [[Now]] · [[02 技術/Visustwin/sprints/README|sprints]]
 ```
 
 ## 整合 scheduled task（Dispatch 端用 scheduled-tasks MCP 派）
@@ -166,6 +166,6 @@ tags: [scrum, sprint/2026-W{NN}]
 - [[../_changelog|Changelog]]
 - [[../working-with-frncs/SKILL|working-with-frncs]] — 行為準則（§2/§7/§8）
 - [[../dev-state-overview/SKILL|dev-state-overview]] — 跨機 git 活動來源
-- [[../../02 技術/VisTwin/sprints/README|sprints scrum 慣例]]
+- [[../../02 技術/Visustwin/sprints/README|sprints scrum 慣例]]
 - [[../../00 系統/Templates/Daily Standup|Daily Standup 模板]]
 - [[../../00 系統/Templates/Weekly Review|Weekly Review 模板]]
