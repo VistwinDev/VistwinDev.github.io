@@ -6,6 +6,11 @@
 > colour, one signal accent, HUD-monospace vocabulary borrowed from
 > industrial control panels.
 
+**Brand & logo**
+- The wordmark, lockups, favicon, and application templates live in
+  [`brand/`](brand/README.md) — outlined SVG (font-independent) + PNG.
+  Read it before placing the logo anywhere.
+
 **Reference implementations**
 - VisTwin — `github.com/metaarchetech/vistwinsite` → `vistwinsite.vercel.app`
 
