@@ -1,4 +1,8 @@
-# E_forge 記憶區(dev 型 · Win 超級 App 專屬)
+> ⚠ **已遷移(2026-07-01)** — E_forge 已併入家族框架的 **Work 區**。記憶搬到
+> `00 系統/記憶/work/`,框架檔 `00 系統/超級 App/Work.md`。本區待退役,內容已蒸餾搬入,
+> 勿再寫此處(避免兩處記憶並存)。新家:[[00 系統/記憶/work/_about|work 記憶]] · [[Work]]。
+
+# E_forge 記憶區(dev 型 · Win 超級 App 專屬)— 已遷移
 
 > 這是 **E_forge(dev 型 / Windows 超級 App)的本地記憶區**。對話 agent、loop 引擎、
 > headless worker 都從這裡讀「開發準則 + 當前狀況 + 過往經驗」,所以**一開口就知道
