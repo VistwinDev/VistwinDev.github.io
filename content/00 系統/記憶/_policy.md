@@ -8,16 +8,16 @@ tags: [system, memory, policy]
 
 # 記憶架構與儲存政策
 
-## 區分規則(從 2026-06-30 起強制)
-- 兩個超級 app:**manager-mac**(經理型 / macOS)與 **dev-windows**(開發型 / Windows)。
+## 區分規則(2026-07-01 起,從平台分→角色分)
+- 三個角色區:**manager**(經理 / macOS)、**work**(工作 / Windows,原 `dev-windows`)、**research**(研究 / 待定)。框架正典見 [[README|超級 App]]。
 - **共用但區分**:同一個 vault,靠「命名空間資料夾 + frontmatter `app:` 欄」分。
-- 每個記憶檔 frontmatter **必含** `app: manager-mac | dev-windows | shared`。
-- GitHub:manager-mac = `vistwin-app` / `vistwin-automation`;dev-windows 用它自己的 repos —— **別混**。
+- 每個記憶檔 frontmatter **必含** `app: manager | work | research | shared`。
+- GitHub:manager = `vistwin-app` / `vistwin-automation`;work / research 用它們自己的 repos —— **別混**。
 
 ## 衝突預防(分區寫入 — 強制)
 > Obsidian Git 每 5 分自動 commit / pull / push,且兩個 app 可能同時動 vault → 寫同一塊會撞。
 - **一檔一主題,寫進獨立檔**;不去共編別人正在動的忙碌檔(如 `Now.md`、`_控管/*`)。
-- **各 app 只寫自己的命名空間**:manager-mac 不碰 `dev-windows/`,反之亦然 → 兩 app 永不互撞。`共用/` 是唯一共寫區,改前留意。
+- **各 app 只寫自己的命名空間**:manager / work / research 互不碰對方資料夾 → 永不互撞。`共用/` 是唯一共寫區,改前留意。
 - **讓自動 sync 收尾**:大批寫入前先確認沒有別處未提交的變更;寫完**交給 Obsidian Git 自動 commit,agent 不要自己在 vault 跑 git**(免得跟外掛打架)。
 - 寧可**多檔小批**,不要單檔大改(縮小衝突面)。
 
@@ -25,10 +25,12 @@ tags: [system, memory, policy]
 ```
 00 系統/記憶/
   _index.md  _policy.md
-  共用/          ← app: shared(原則 / 設計 / 架構,兩邊都吃)
-  manager-mac/   決策/   情節/
-  dev-windows/   決策/   情節/
+  共用/          ← app: shared(原則 / 設計 / 架構,三區都吃)
+  manager/    決策/   情節/
+  work/       決策/   情節/   ← 原 dev-windows
+  research/   決策/   情節/
 ```
+> 框架地圖在隔壁 `00 系統/超級 App/`(README + Manager/Work/Research);此處是累積的記憶日記。
 
 ## 三層 × 大小上限(每個 namespace 各自算)
 | 層 | 位置 | 角色 | 上限 |

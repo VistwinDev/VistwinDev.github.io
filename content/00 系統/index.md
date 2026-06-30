@@ -12,6 +12,7 @@ updated: 2026-06-18
 
 - [[Now]] — 當前焦點
 - [[Entity_Map]] — 實體邊界（正典）
+- [[00 系統/超級 App/README|超級 App]] — 框架正典（Manager / Work / Research）
 - [[00 系統/技能/working-with-frncs/SKILL|working-with-frncs]] — 共事準則（正典）
 - [[00 系統/技能/_index|技能索引]]
 

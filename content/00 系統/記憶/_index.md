@@ -8,22 +8,25 @@ tags: [system, memory, core]
 
 # VisTwin 記憶 · 核心索引
 
-> 常駐記憶:只放「現在為真」+ 指針。架構與 app 區分規則見 [[_policy]]。
+> 常駐記憶:只放「現在為真」+ 指針。架構與 app 區分規則見 [[_policy]]。**框架正典見 [[README|超級 App]]。**
 
-## 兩個超級 app(務必區分)
+## 三個角色區(務必區分,2026-07-01 從平台分→角色分)
 
-| 代號 | 類型 · 平台 | 是什麼 | GitHub repos |
+| 代號 | 角色 · 平台 | 是什麼 | GitHub repos |
 |---|---|---|---|
-| **manager-mac** | 經理型 · macOS | VisTwin 駕駛艙(專案 · 核准 · 監控 · 對話) | `VistwinDev/vistwin-app` · `VistwinDev/vistwin-automation` |
-| **dev-windows** | 開發型 · Windows | 另一端建置中的開發型超級 app | (它自己的 repos,待補) |
-| **shared** | 共用 | 跨兩者的原則 / 設計 / 架構 | 本 vault |
+| **manager** | 經理型 · macOS | VisTwin 駕駛艙(專案 · 核准 · 監控 · 對話) | `VistwinDev/vistwin-app` · `VistwinDev/vistwin-automation` |
+| **work** | 工作型 · Windows | 工作/執行型超級 app(原 `dev-windows`) | (它自己的 repos,待補) |
+| **research** | 研究型 · 待定 | 文獻 / 實驗 / 主線 A·B 研究 | (待補) |
+| **shared** | 共用 | 跨三者的原則 / 設計 / 架構 | 本 vault |
 
-## manager-mac 當前狀態(2026-06-30)
+> 為何角色不平台:每個節點都自帶 Claude CLI = 都能自我開發,平台不再是區分點。
+
+## manager 當前狀態(2026-07-01)
 - 原生 SwiftUI 殼(模組註冊表驅動側邊欄)+ n8n 模組頁 + host bridge;已裝 /Applications、ad-hoc 簽章。
-- 可編輯專案儀表板(雙向寫回 `01 專案/_控管`);設計系統 `web/vistwin.css`。
-- 詳見 [[manager-mac/決策/2026-06-30_駕駛艙建置]]。
+- 可編輯專案儀表板(雙向寫回 `01 專案/_控管`);設計系統 `web/vistwin.css`;n8n 流程已分資料夾。
+- 完整現況見 [[Manager|超級 App/Manager]];決策見 [[2026-06-30_駕駛艙建置]]。
 
-## 下一步(manager-mac)
+## 下一步(manager)
 - LINE outbound 通知 + 唯讀監控 agent(低風險先做)
 - bridge 包成本機 MCP → Claude Desktop 用嘴控
 - 自我開發(先建護欄:分支 + 驗證 + watchdog rollback)
