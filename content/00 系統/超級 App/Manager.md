@@ -61,9 +61,17 @@ tags: [system, 超級app, manager, 駕駛艙]
 - token-gate 寫入路由;讀路由開放;路徑穿越守門。
 - git(Obsidian Git 自動 commit)= 還原網。
 
+## 對話 / CLI 控制 n8n(2026-07-01 完成)
+
+對話(或任何頁的浮窗大腦)就能**查 / 改 / 建 / 刪 / 啟停 / 改名 / 移動 / 標籤** n8n 流程,每步**驗證 + 失敗自動回滾 + audit**;key-free(不靠 n8n API key,代價是改動時 n8n 重啟 10–20s)。
+- `op:n8n` 10 個 action:`list/activate/deactivate/rename/move/tag/untag/edit/create/delete`,全走 bridge `/n8n/apply`(token-gate)。
+- **結構編輯/建立**:Claude 當「JSON 轉換器」(純文字進出、**無檔案系統權限**)→ 驗 JSON(含連線完整性)→ import → restart → webhook 冒煙測 → 壞了回滾。實測 webhook / 排程 / IF 分支都能建。
+- **視覺面**:cockpit 新模組「流程管理」(`/webhook/flows`)—— 列所有流程 + 啟停/刪除鈕;複雜操作導到浮窗大腦。
+- 細節見 repo `docs/overnight-n8n-control.md`。
+
 ## 進行中 / 下一步
 
-- **對話管 n8n**(本 session 設計完):新增 `op:n8n` 動作類別 + `/n8n/apply` 端點 + n8n API key + 四層風險閘(讀 / 可逆 / 結構編輯走 harness / 破壞)。Slice 1 = API key + 讀 + 可逆操作(啟用/停用/改名/tag/移資料夾)。
+- 免重啟路徑 = 裝 n8n API key(JWT,要 UI 產;key-free 已夠用)。
 - 記憶接進 `/ask` 前言(開場載入對應 namespace)。
 - LINE outbound 通知 + 唯讀監控。
 - bridge 包成本機 MCP → Claude Desktop 用嘴控。
