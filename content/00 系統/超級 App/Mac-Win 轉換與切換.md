@@ -48,7 +48,7 @@ tags: [system, 超級app, framework, 跨平台, win]
 
 ## n8n template 庫
 
-- **位置**:`vistwin-automation` repo(`workflows/_gen_*.py` 等)——**不放 vault**(程式/JSON 照規矩進 code repo)。
+- **位置**:`vistwin-manager` monorepo 的 `workflows/`(`_gen_*.py` 等)——**不放 vault**(程式/JSON 照規矩進 code repo)。
 - **內容**:維護 dispatcher、可控 agent-loop、agent-monitor、各模組頁產生器,皆參數化。
 - **各機流程**:import 模板 → 套參數(zone tag = manager/work/research、路徑、埠)→ 進自己的 n8n。各機可再加自己的專屬流程。
 - **分區**:在共用庫上用資料夾 + zone tag 標記(Phase 1)。

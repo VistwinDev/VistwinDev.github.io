@@ -14,7 +14,7 @@ tags: [system, memory, core]
 
 | 代號 | 角色 · 平台 | 是什麼 | GitHub repos |
 |---|---|---|---|
-| **manager** | 經理型 · macOS | VisTwin 駕駛艙(專案 · 核准 · 監控 · 對話) | `VistwinDev/vistwin-app` · `VistwinDev/vistwin-automation` |
+| **manager** | 經理型 · macOS | VisTwin 駕駛艙(專案 · 核准 · 監控 · 對話) | `VistwinDev/vistwin-manager`(monorepo:app/ 殼 + 內臟) |
 | **work** | 工作型 · Windows | 工作/執行型超級 app(原 `dev-windows`) | (它自己的 repos,待補) |
 | **research** | 研究型 · 待定 | 文獻 / 實驗 / 主線 A·B 研究 | (待補) |
 | **shared** | 共用 | 跨三者的原則 / 設計 / 架構 | 本 vault |

@@ -70,7 +70,8 @@ tags: [system, 超級app, manager, 駕駛艙]
 
 ## Repos
 
-- `VistwinDev/vistwin-app`(原生殼)· `VistwinDev/vistwin-automation`(bridge + 產生器 + n8n)。
+- **`VistwinDev/vistwin-manager`(monorepo)** —— `app/`(SwiftUI 殼)+ `host-bridge/` + `workflows/` + `web/` + `modules.json`。2026-07-01 由 `vistwin-app` + `vistwin-automation` 合成(殼/內臟解耦改用資料夾分,而非分倉)。
+  - 本機資料夾仍名 `vistwin-automation`(保 bridge `REPO_ROOT` 預設不動);遠端改名待 org owner 執行。
 
 ## 踩過的雷(精選,全表見 [[2026-06-30_駕駛艙建置]])
 
