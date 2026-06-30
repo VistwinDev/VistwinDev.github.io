@@ -16,10 +16,15 @@
 | **主標誌 Primary**(堆疊括號鎖版) | `logo/vistwin-primary.svg` | 預設首選。封面、關於頁、簡報、正式文件 |
 | **橫式 Horizontal** | `logo/vistwin-horizontal.svg` | 導覽列、信頭、email、頁首頁尾等橫向窄帶 |
 | **英文字標 EN wordmark**(`{ VISTWIN }`) | `logo/vistwin-wordmark-en.svg` | 中文無法辨識的極小尺寸 / 純英文場合 |
-| **Favicon**(`{ V }`) | `favicon/favicon.svg` · `favicon-maskable.svg` | 瀏覽器分頁、app icon、桌捷 |
-| **社群頭像 Avatar** | `favicon/avatar-social.svg` | FB / LinkedIn / X / GitHub org 大頭貼 |
+| **縮寫標記 / Favicon**(`Vist.`) | `favicon/vist-mark-{light,dark,maskable}.svg` | 瀏覽器分頁、app icon、社群頭像、桌捷 |
+| **社群頭像 Avatar**(全稱) | `favicon/avatar-social.svg` | 需放全名的大頭貼(FB / LinkedIn / GitHub org) |
 
 每個 logo 變體都有 4 種配色版本(見 §4)。
+
+> **縮寫標記 = `Vist.`**(Space Grotesk Bold,大寫 V,**句點即綠 signal 點** `#76B900`)。
+> 早期 `{ V }` 版因易與 Channel V 混淆已棄用。檔案:
+> `vist-mark-light`(白底深 V)· `vist-mark-dark`(黑底白 V)· `vist-mark-maskable`(圓角黑底,
+> 供 iOS/Android app icon)· `vist-mark-transparent[-white]`(透明底,疊圖用)。各有 512 / 1024 PNG。
 
 ---
 
