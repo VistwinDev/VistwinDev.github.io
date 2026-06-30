@@ -51,6 +51,7 @@ tags: [system, 超級app, framework, 架構]
 - **分區寫入(強制)**:每個節點**只寫自己的命名空間**(`記憶/<zone>/` + `超級 App/<Zone>.md`);`共用/` 是唯一共寫區,改前留意。Manager 不碰 `work/`,反之亦然。
 - **讓自動 sync 收尾**:Obsidian Git 每 ~5 分自動 commit/pull/push;**agent 不在 vault 跑 git**(免跟外掛打架);大批寫入前先確認沒有別處未提交變更;寧可多檔小批。
 - **新節點上線步驟**:① clone vault → ② 讀本 README(框架)+ [[原則]](治理)→ ③ 認領自己的命名空間(`記憶/<zone>/`、`超級 App/<Zone>.md`)→ ④ 照角色架起自己的 bridge + n8n + cockpit 實例 → ⑤ 共用骨幹照搬、角色差異寫進自己區。
+- **n8n 拓樸 = 各機各跑 + 共用 template 庫**(DB 不跨機共用,只同步模板)。Mac→Win 的完整轉換清單見 [[Mac-Win 轉換與切換]]。
 
 ## 複製化(對外可賣)
 
@@ -61,5 +62,6 @@ tags: [system, 超級app, framework, 架構]
 - [[Manager]] — 經理區現況(完整總結)
 - [[Work]] — 工作區(待 Work 端填)
 - [[Research]] — 研究區(待開)
+- [[Mac-Win 轉換與切換]] — 跨平台轉換清單 + 切換/溝通接口(Win 端讀)
 - [[_index|記憶索引]] · [[_policy|記憶政策]] · [[原則|共用治理原則]] · [[複製化路線]]
 - [[Entity_Map]] — 實體邊界正典
