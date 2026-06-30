@@ -1,20 +1,20 @@
 ---
-title: E_forge 建置 session(2026-06-30~07-01)
+title: VisTwin Work 建置 session(2026-06-30~07-01)
 type: episode
 app: work
 created: 2026-07-01
 updated: 2026-07-01
-tags: [work, 情節, E_forge, 建置]
+tags: [work, 情節, VisTwin Work, 建置]
 ---
 
-# E_forge 建置 session(2026-06-30 → 07-01)
+# VisTwin Work 建置 session(2026-06-30 → 07-01)
 
-> 從「n8n+code 能不能造 loop agent」一路做到原生 app + 對話可用 + Daemon 上線。決策蒸餾見 [[2026-07-01_E_forge-架構]]。
+> 從「n8n+code 能不能造 loop agent」一路做到原生 app + 對話可用 + Daemon 上線。決策蒸餾見 [[2026-07-01_VisTwin Work-架構]]。
 
 ## 路徑
 1. **概念釐清**:loop agent → 不要人介入 → 記憶架構 → 命題定為「治 agent 兩弱點」。
-2. **Phase 0 地基**(`E_forge/core/`):contract / memory-schema / rubric/visual-ux / windows-architecture(rubric 從當天剛做的設計系統萃取 36 條)。
-3. **cockpit 外殼**(`E_forge/ui`,Next16+Tailwind4):IA 兩次修正(照抄管理版 → 扁平化過頭 → **三架構保留+葉子換 dev** 定案)。
+2. **Phase 0 地基**(`VisTwin Work/core/`):contract / memory-schema / rubric/visual-ux / windows-architecture(rubric 從當天剛做的設計系統萃取 36 條)。
+3. **cockpit 外殼**(`VisTwin Work/ui`,Next16+Tailwind4):IA 兩次修正(照抄管理版 → 扁平化過頭 → **三架構保留+葉子換 dev** 定案)。
 4. **A 讀 vault + B Tier C 引擎**:吃自己狗糧掃 ui,抓到 `★`/`✕` 違規 → 飛輪最小可跑證明(measure→經驗→讀回)。
 5. **原生化**:Edge `--app`(icon 仍是 Edge,淘汰)→ **Tauri 原生 `.exe`**(自帶 Vist. icon,Win+Linux 一套)。踩雷:`time 0.3.52` 衝突→釘 0.3.51;ChunkLoadError→啟動器乾淨重啟。
 6. **對話可用**:發現 headless `claude` 沒登入 → `setup-token` 產生訂閱 token → `CLAUDE_CODE_OAUTH_TOKEN` 設好 → `/api/chat` 實測回真答案(且用注入的準則+狀況)。浮動 ChatDock 每頁都在。
