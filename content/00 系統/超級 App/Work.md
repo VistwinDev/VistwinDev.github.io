@@ -62,7 +62,8 @@ tags: [system, 超級app, work, E_forge]
 - E_forge 自己的 GitHub repos(待建)。
 
 ## Repos
-- 待補(E_forge 用自己的 repos,勿與 Manager 的 `vistwin-app`/`vistwin-automation` 混)。
+- **`VistwinDev/e-forge`**(private,2026-07-01 建)— 整個 Work 超級 app(core/ui/engine/n8n)。
+- 勿與 Manager 的 `vistwin-app`/`vistwin-automation` 混。
 
 ## 踩過的雷(精選)
 
