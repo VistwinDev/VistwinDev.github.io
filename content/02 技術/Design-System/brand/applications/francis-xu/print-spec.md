@@ -1,7 +1,8 @@
 # 名片 — 許峰銘 Francis Xu · 印刷規格
 
-> 設計定案 2026-07-04(session 迭代 19 版)。母版 HTML 與 PDF 同目錄。
-> 依 [brand README](../../README.md) §8 名片規格 + Design System 色彩規範。
+> 設計定案 2026-07-04。母版 HTML 與 PDF 同目錄。
+> 依 [brand README](../../README.md) 品牌規範 + Design System 色彩/字型規範。
+> **此為可重用模板**:換人時只改文字內容,版式/字距用固定系統值,不隨姓名長短調整。
 
 ## 檔案
 
@@ -9,38 +10,54 @@
 |---|---|
 | `vistwin-card-A-print.pdf` | A 版:正面深 slab 品牌面 / 背面白底人物面(2 頁 = 正 + 背)|
 | `vistwin-card-B-print.pdf` | B 版:黑白互換(正面白品牌 / 背面深人物)|
-| `card-A.html` / `card-B.html` | 母版(可重新輸出 PDF,見下「重建」)|
+| `card-A.html` / `card-B.html` | 母版(可重新輸出 PDF,見「重建」)|
 
-## 尺寸
+## 尺寸（國際 / 美加標準）
 
-- **成品(trim)**:90 × 54 mm,橫式
-- **出血(bleed)**:四邊各 3 mm → **PDF 頁面 = 96 × 60 mm**,底色已滿出血
-- **安全區**:離裁切線 3 mm 內不置文字(目前版面最小邊距 ~7 mm,安全)
+- **成品(trim)**:**3.5 × 2 in**(88.9 × 50.8 mm),橫式,比例 1.75
+- **出血(bleed)**:美規四邊各 **0.125 in**(3.175 mm)→ **PDF 頁面 = 3.75 × 2.25 in**
+  - 已驗證 PDF MediaBox = **270 × 162 pt**(= 3.75 × 2.25 in),物理尺寸正確
+- **安全區**:離裁切線 0.125 in 內不置文字
+- 母版以 96dpi 原生像素排版(trim 336 × 192 px),文字/logo 皆向量、無縮放,列印清晰
+
+> 註:先前曾用「90 × 54 mm(台灣標準)」+ 錯誤的 px 頁面單位,已於定案改為國際 3.5×2in 並修正物理尺寸。
 
 ## 色彩
 
-- PDF 為 RGB,交印廠時請印廠轉 CMYK 打樣校色
+- PDF 為 RGB;交印廠請印廠轉 CMYK 打樣校色
 - **Signal 綠 `#76B900`**(括號、live-dot)→ 指定 **Pantone 376 C**;CMYK 近似 `50 0 100 0`
 - 深面底色 `#09090B` → 建議 rich black `C60 M50 Y40 K100`(依印廠標準)
 - 灰階:zinc scale(見 Design System §1.1)
 
-## 紙材與工藝(建議)
+## 紙材與工藝（建議）
 
 - **350–400 gsm 霧面棉卡**(消光、不反光,配大量留白)
 - 單一招牌工法擇一:深面 `{ }` 括號 **燙綠箔(Pantone 376C 近似箔)** 或 **spot UV**
 - **B 版注意**:背面深底白字,一般四色印易發灰 → 指定**白墨絹印**或**燙白箔**打底
 
-## 內容(定稿)
+## 內容（定稿）
 
-- 正面:`{ VISTWIN }` 外框鎖版(370/540 卡寬,括號已做垂直光學置中修正 +95 units)
-  + `● 維思孿生科技` + tagline `智能數位孿生 · 企業系統架構` / EN HUD 行
-- 背面:小鎖版 + `維思孿生科技 ●`(右上)/ `許峰銘`(54/540)+ `FRANCIS XU`
-  / `執行總監` + `Chief Executive Officer`(左下)/ `+886 905 255 570` + `frncsxu@vistwin.com`(右下)
+**正面**(品牌面,三層):
+- 頂:`● 維思孿生科技`(公司名+綠點微鎖版,11px→scaled / 0.18em)
+- 中:`{ VISTWIN }` 外框鎖版 — 括號已縮至**與字母同高、上下對齊、左右氣口對稱**
+- 底:tagline `數位孿生 × 人工智能 × 系統部署` + HUD `Digital twin × AI × System deployment`
+
+**背面**(人物面):
+- 上:小鎖版 `{ VISTWIN }` + `維思孿生科技 ●`(綠點右,與正面對稱)
+- 主:`許峰銘`(大標)/ `Francis Xu`(字首大寫,非全大寫)
+- 底:`執行總監` / `Chief Executive Officer` ‧ `+886 905 255 570` / `frncsxu@vistwin.com`
+
+## 模板規則（換人沿用）
+
+- 英文名:**字首大寫**、Space Grotesk 500、字距 0.02em(固定,不為對齊中文名寬度而調)
+- 綠色僅出現在 `{ }` 括號與 live-dot,≤5%
+- 公司名+綠點:11px / 0.18em,綠點與末字視覺間距約統一
+- 職稱中英分列:中文掛「執行總監」、英文全稱「Chief Executive Officer」(使用者刻意,非 CEO 縮寫)
 
 ## 重建
 
 ```powershell
-& "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --headless --disable-gpu `
+& "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --headless=new --disable-gpu `
   --no-pdf-header-footer --virtual-time-budget=20000 `
   --print-to-pdf="vistwin-card-A-print.pdf" "file:///<此目錄>/card-A.html"
 ```
@@ -48,7 +65,8 @@
 字型走 CDN(Chiron Hei HK / Space Grotesk / JetBrains Mono / Noto Sans TC),需連網。
 PDF 內字型為嵌入子集;若印廠堅持全外框,將 HTML 文字改由 fontTools 管線轉 path(見 brand README §9)。
 
-## 待辦
+## 待辦 / 選項
 
 - [ ] A / B 版擇定(或 A 正 + B 背混搭)
-- [ ] **括號垂直置中修正(+95 units)回寫 `brand/logo/` 全系列母檔**——目前所有正式 logo 檔都有「字偏上」的原始偏移
+- [ ] 若日後也要台灣本地版 → 另出 90×54mm(名片簿/名片夾相容)
+- [ ] 括號垂直置中修正(brand `logo/` 母檔仍有「字偏上」原始偏移,可一併回寫全系列)
