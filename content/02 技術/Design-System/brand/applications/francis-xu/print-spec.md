@@ -6,15 +6,16 @@
 
 ## 檔案
 
-A / B 兩版 × 國際 / 台灣兩尺寸 = 四份 PDF(每份 2 頁 = 正 + 背)。
-A = 深品牌面 / 白人物面;B = 黑白互換。
+黑版 / 白版 × 國際 / 台灣兩尺寸 = 四份 PDF(每份 2 頁 = 正 + 背)。
+**黑版** = 正反皆深(白 VISTWIN / 白 許峰銘);**白版** = 正反皆白(黑 VISTWIN / 黑 許峰銘)。
+綠只在 `{ }` 括號與 live-dot。
 
 | 檔案 | 內容 |
 |---|---|
-| `vistwin-card-A-intl-3.5x2.pdf` · `vistwin-card-B-intl-3.5x2.pdf` | **國際版 3.5 × 2 in** |
-| `vistwin-card-A-tw-90x54.pdf` · `vistwin-card-B-tw-90x54.pdf` | **台灣版 90 × 54 mm** |
-| `card-A-intl.html` · `card-B-intl.html` | 國際版母版 |
-| `card-A-tw.html` · `card-B-tw.html` | 台灣版母版 |
+| `vistwin-card-black-intl-3.5x2.pdf` · `vistwin-card-white-intl-3.5x2.pdf` | **國際 3.5 × 2 in**(黑 / 白)|
+| `vistwin-card-black-tw-90x54.pdf` · `vistwin-card-white-tw-90x54.pdf` | **台灣 90 × 54 mm**(黑 / 白)|
+| `card-black-intl.html` · `card-white-intl.html` | 國際版母版 |
+| `card-black-tw.html` · `card-white-tw.html` | 台灣版母版 |
 
 ## 尺寸（兩個版本並存)
 
@@ -75,6 +76,6 @@ PDF 內字型為嵌入子集;若印廠堅持全外框,將 HTML 文字改由 font
 
 ## 待辦 / 選項
 
-- [x] 國際 3.5×2in + 台灣 90×54mm 各出 A / B(共四份,已定案)
-- [ ] 實際送印時挑「主用版」(A 或 B),或兩版都印一小批
+- [x] 國際 3.5×2in + 台灣 90×54mm 各出 黑 / 白(共四份,已定案)
+- [ ] 實際送印時挑「主用版」(黑 或 白),或兩版都印一小批
 - [ ] 括號垂直置中修正(brand `logo/` 母檔仍有「字偏上」原始偏移,可一併回寫全系列)
