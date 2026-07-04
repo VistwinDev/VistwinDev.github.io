@@ -51,7 +51,8 @@
 
 **正面**(品牌面):
 - 上排如上;中:`{ VISTWIN }` 大標,**放大到左緣貼左界、右緣接近右界(既靠左又置中)、上下置中**;
-- 左下:一條短槓 + tagline `數位孿生 × BIM × 人工智能部署` + HUD `Digital twin × BIM × AI deployment`。
+- 左下:一條短槓 + tagline `數位孿生 × BIM應用 × 人工智能部署` + HUD `Digital twin × Applied BIM × AI deployment`。
+  - **BIM 刻意標「應用 / Applied」**:VisTwin 做的是 BIM 之上的應用,非 BIM 建模本身;與「人工智能部署」平行(皆「我們應用/落地」),`數位孿生` 才是核心產品。
 
 **背面**(人物面,依語言分塊):
 - 主(中文身分塊):`許峰銘`(大)+ `執行總監`(其下);
