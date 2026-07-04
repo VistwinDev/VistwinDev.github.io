@@ -2,14 +2,16 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<title>VisTwin card — Black — international 3.5x2in bleed</title>
+<title>VisTwin card — Black — international 3.5x2in + crop marks</title>
 <style>
 @import url("https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont@2.6.8/css/vf.css");
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap");
-@page{size:3.75in 2.25in;margin:0}
+@page{size:4.125in 2.625in;margin:0}
 html,body{margin:0;padding:0}
-.page{width:3.75in;height:2.25in;position:relative;overflow:hidden;page-break-after:always;font-family:"Space Grotesk",sans-serif;background:#09090B}
+.sheet{width:4.125in;height:2.625in;position:relative;overflow:hidden;page-break-after:always;background:#FFFFFF;font-family:"Space Grotesk",sans-serif}
+.bleed{position:absolute;left:18px;top:18px;width:360px;height:216px;background:#09090B}
 .card{position:absolute;left:12px;top:12px;width:336px;height:192px}
+.cm{position:absolute;background:#000000}
 .dot{width:4.2px;height:4.2px;border-radius:50%;background:#76B900;display:inline-block}
 .bar{position:absolute;left:29px;bottom:54px;height:1px;width:16px;background:#52525B}
 .cn{font-family:"Chiron Hei HK WS","Noto Sans TC",sans-serif}
@@ -23,8 +25,9 @@ html,body{margin:0;padding:0}
 </head>
 <body>
 
-<div class="page">
-  <div class="card">
+<div class="sheet">
+  <div class="bleed">
+    <div class="card">
     <div style="position:absolute;left:29px;right:26px;top:20px;display:flex;align-items:center;justify-content:space-between">
       <div class="co">
         <span class="dot" style="margin-right:5px"></span>
@@ -46,11 +49,21 @@ html,body{margin:0;padding:0}
       <div class="cn" style="font-size:10px;color:#A1A1AA;letter-spacing:0.2em;line-height:1">數位孿生&nbsp;×&nbsp;BIM&nbsp;×&nbsp;人工智能部署</div>
       <div class="hud" style="font-size:6.6px;color:#52525B;letter-spacing:0.2em;line-height:1;margin-top:6px">Digital twin × BIM × AI deployment</div>
     </div>
+    </div>
   </div>
+  <div class="cm" style="left:6px;top:30px;width:12px;height:1px"></div>
+  <div class="cm" style="left:30px;top:6px;width:1px;height:12px"></div>
+  <div class="cm" style="left:378px;top:30px;width:12px;height:1px"></div>
+  <div class="cm" style="left:366px;top:6px;width:1px;height:12px"></div>
+  <div class="cm" style="left:6px;top:222px;width:12px;height:1px"></div>
+  <div class="cm" style="left:30px;top:234px;width:1px;height:12px"></div>
+  <div class="cm" style="left:378px;top:222px;width:12px;height:1px"></div>
+  <div class="cm" style="left:366px;top:234px;width:1px;height:12px"></div>
 </div>
 
-<div class="page">
-  <div class="card">
+<div class="sheet">
+  <div class="bleed">
+    <div class="card">
     <div style="position:absolute;left:29px;right:26px;top:20px;bottom:18px;display:flex;flex-direction:column;justify-content:space-between">
       <div style="display:flex;align-items:center;justify-content:space-between">
         <div class="co">
@@ -81,7 +94,16 @@ html,body{margin:0;padding:0}
       </div>
     </div>
     <div class="bar"></div>
+    </div>
   </div>
+  <div class="cm" style="left:6px;top:30px;width:12px;height:1px"></div>
+  <div class="cm" style="left:30px;top:6px;width:1px;height:12px"></div>
+  <div class="cm" style="left:378px;top:30px;width:12px;height:1px"></div>
+  <div class="cm" style="left:366px;top:6px;width:1px;height:12px"></div>
+  <div class="cm" style="left:6px;top:222px;width:12px;height:1px"></div>
+  <div class="cm" style="left:30px;top:234px;width:1px;height:12px"></div>
+  <div class="cm" style="left:378px;top:222px;width:12px;height:1px"></div>
+  <div class="cm" style="left:366px;top:234px;width:1px;height:12px"></div>
 </div>
 
 </body>
