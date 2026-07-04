@@ -49,8 +49,8 @@
 **正面**(品牌面,三層):
 - 頂:`● 維思孿生科技`(公司名+綠點微鎖版,11px→scaled / 0.18em)
 - 中:`{ VISTWIN }` 外框鎖版 — 括號縮至**與字母同高、上下對齊、左右氣口對稱**
-- 底:tagline `人工智能 × 系統部署 × BIM 數位孿生` + HUD `AI × System deployment × BIM digital twin`
-  (三概念:短→長排列,BIM 數位孿生 壓軸;BIM 當熟悉錨接到「數位孿生」,對 BIM 圈更好懂)
+- 底:tagline `數位孿生 × BIM × 人工智能部署` + HUD `Digital twin × BIM × AI deployment`
+  (三概念各自獨立、不擠;數位孿生領頭扣品牌、BIM 獨立當熟悉錨、人工智能部署壓軸)
 
 **背面**(人物面):
 - 上:小鎖版 `{ VISTWIN }` + `維思孿生科技 ●`(綠點右,與正面對稱)
