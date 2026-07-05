@@ -1,0 +1,7 @@
+{
+  "_readme": "排程型 workflow 的擁有權註冊表(指派制,防跨機雙跑)。owner 用機器邏輯名 = 各機 .env 的 VTM_HOST(win: dev-windows / mac: manager-mac)。bridge 發現『本機啟用中但 owner 是別台』會在 /machines 出警告(不自動停用,人決定)。webhook 頁面型 workflow 不用登記 —— 只服務各自的 localhost,不會互撞。",
+  "owners": {
+    "vaultmaint01": "manager-mac",
+    "agentloopdemo01": "manager-mac"
+  }
+}
