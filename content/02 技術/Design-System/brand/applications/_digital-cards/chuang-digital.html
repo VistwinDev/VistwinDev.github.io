@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<style>
+@import url("https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont@2.6.8/css/vf.css");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap");
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#3F3F46}
+.card{width:540px;height:700px;position:relative;overflow:hidden;background:#FFFFFF;font-family:"Space Grotesk",sans-serif}
+.cn{font-family:"Chiron Hei HK WS","Noto Sans TC",sans-serif}
+.mono{font-family:"JetBrains Mono",monospace}
+.dot{width:6px;height:6px;border-radius:50%;background:#76B900;display:inline-block}
+
+.hero{position:absolute;top:0;left:0;width:540px;height:398px;background:#09090B;overflow:hidden}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:38px 38px}
+.tick{position:absolute;width:16px;height:16px}
+.tick.tl{top:22px;left:22px;border-top:1px solid #3F3F46;border-left:1px solid #3F3F46}
+.tick.tr{top:22px;right:22px;border-top:1px solid #3F3F46;border-right:1px solid #3F3F46}
+.tick.bl{bottom:22px;left:22px;border-bottom:1px solid #3F3F46;border-left:1px solid #3F3F46}
+.tick.br{bottom:22px;right:22px;border-bottom:1px solid #3F3F46;border-right:1px solid #3F3F46}
+.hud{position:absolute;top:40px;left:40px;right:40px;display:flex;justify-content:space-between;align-items:center}
+.hud .co{display:flex;align-items:center;gap:8px}
+.hud .co span{font-size:12px;letter-spacing:.2em;color:#A1A1AA}
+.hud .url{font-size:11px;letter-spacing:.04em;color:#A1A1AA}
+.hud .url b{color:#76B900;font-weight:400}
+.lock{position:absolute;left:40px;top:158px;width:392px}
+.lock svg{width:100%;display:block}
+.bar{position:absolute;left:42px;top:262px;width:26px;height:2px;background:#76B900}
+.tag-en{position:absolute;left:42px;top:286px;font-size:11px;letter-spacing:.22em;color:#9DD11F;text-transform:uppercase}
+.tag-cn{position:absolute;left:42px;top:312px;font-size:14px;letter-spacing:.14em;color:#A1A1AA}
+
+.info{position:absolute;top:398px;left:0;width:540px;height:302px;background:#FFFFFF;padding:30px 40px 26px;display:flex;flex-direction:column}
+.accent{position:absolute;top:0;left:0;width:64px;height:3px;background:#76B900}
+.who{display:flex;justify-content:space-between;align-items:flex-start}
+.cname{font-size:36px;font-weight:500;letter-spacing:.06em;color:#18181B;line-height:1}
+.ename{font-size:13px;letter-spacing:.04em;color:#71717A;margin-top:9px}
+.brandmark{width:104px;opacity:.92;margin-top:4px}
+.brandmark svg{width:100%;display:block}
+.titles{margin-top:18px}
+.ctitle{font-size:15px;font-weight:500;letter-spacing:.08em;color:#27272A}
+.etitle{font-size:11px;letter-spacing:.04em;color:#71717A;margin-top:5px}
+.contact{margin-top:auto;display:flex;flex-direction:column;gap:9px}
+.row{display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.02em;color:#3F3F46}
+.row .arr{color:#76B900;margin-left:1px}
+.foot{margin-top:16px;padding-top:12px;border-top:1px solid #E4E4E7;font-size:9.5px;letter-spacing:.08em;color:#A1A1AA;text-transform:uppercase}
+</style></head>
+<body>
+<div class="card">
+  <div class="hero">
+    <div class="grid"></div>
+    <div class="tick tl"></div><div class="tick tr"></div><div class="tick bl"></div><div class="tick br"></div>
+    <div class="hud">
+      <div class="co"><span class="dot"></span><span class="cn">維思孿生科技</span></div>
+      <div class="url mono">vistwin.com<b> ↗</b></div>
+    </div>
+    <div class="lock">
+      <svg viewBox="26 9 486 117">
+        <g transform="translate(27.3,86.13) scale(0.072655,-0.072655)" fill="#76B900"><path d="M280 -246H450V-138H327C309 -138 300 -128 300 -108V166C300 211 269 246 222 246H206V264H222C269 264 300 299 300 344V618C300 638 309 648 327 648H450V756H280C220 756 178 714 178 654V344C178 325 169 315 151 315H36V195H151C169 195 178 185 178 166V-144C178 -204 220 -246 280 -246Z"/></g>
+        <g transform="translate(77.584,104) scale(0.104,-0.104)" fill="#F4F4F5"><path d="M196 0H422L600 700H464L316 85H302L154 700H18Z"/><path transform="translate(588,0)" d="M66 0H198V700H66Z"/><path transform="translate(822,0)" d="M309 -14C471 -14 574 74 574 202C574 330 475 382 326 414L303 419C219 437 180 462 180 514C180 566 217 598 297 598C377 598 426 566 426 486V456H556V486C556 638 447 714 297 714C147 714 50 638 50 510C50 382 135 333 280 301L303 296C393 276 444 256 444 198C444 142 399 102 309 102C219 102 164 144 164 228V256H34V228C34 76 147 -14 309 -14Z"/><path transform="translate(1398,0)" d="M228 0H360V580H564V700H24V580H228Z"/><path transform="translate(1956,0)" d="M122 0H350L440 622H458L548 0H776L868 700H737L669 92H651L563 700H335L247 92H229L161 700H30Z"/><path transform="translate(2824,0)" d="M66 0H198V700H66Z"/><path transform="translate(3058,0)" d="M66 0H196V610H214L353 0H604V700H474V90H456L317 700H66Z"/></g>
+        <g transform="translate(476.8,86.13) scale(0.072655,-0.072655)" fill="#76B900"><path d="M16 -246H186C246 -246 288 -204 288 -144V166C288 185 297 195 315 195H430V315H315C297 315 288 325 288 344V654C288 714 246 756 186 756H16V648H139C157 648 166 638 166 618V344C166 299 197 264 244 264H260V246H244C197 246 166 211 166 166V-108C166 -128 157 -138 139 -138H16Z"/></g>
+      </svg>
+    </div>
+    <div class="bar"></div>
+    <div class="tag-en mono">Digital&nbsp;twin&nbsp;&times;&nbsp;Applied&nbsp;BIM&nbsp;&times;&nbsp;AI&nbsp;deployment</div>
+    <div class="tag-cn cn">數位孿生&nbsp;×&nbsp;BIM應用&nbsp;×&nbsp;人工智能部署</div>
+  </div>
+
+  <div class="info">
+    <div class="accent"></div>
+    <div class="who">
+      <div>
+        <div class="cname cn">莊子洋</div>
+        <div class="ename mono">Tzu-Yang Chuang</div>
+      </div>
+      <div class="brandmark">
+        <svg viewBox="26 9 486 117">
+          <g transform="translate(27.3,86.13) scale(0.072655,-0.072655)" fill="#76B900"><path d="M280 -246H450V-138H327C309 -138 300 -128 300 -108V166C300 211 269 246 222 246H206V264H222C269 264 300 299 300 344V618C300 638 309 648 327 648H450V756H280C220 756 178 714 178 654V344C178 325 169 315 151 315H36V195H151C169 195 178 185 178 166V-144C178 -204 220 -246 280 -246Z"/></g>
+          <g transform="translate(77.584,104) scale(0.104,-0.104)" fill="#18181B"><path d="M196 0H422L600 700H464L316 85H302L154 700H18Z"/><path transform="translate(588,0)" d="M66 0H198V700H66Z"/><path transform="translate(822,0)" d="M309 -14C471 -14 574 74 574 202C574 330 475 382 326 414L303 419C219 437 180 462 180 514C180 566 217 598 297 598C377 598 426 566 426 486V456H556V486C556 638 447 714 297 714C147 714 50 638 50 510C50 382 135 333 280 301L303 296C393 276 444 256 444 198C444 142 399 102 309 102C219 102 164 144 164 228V256H34V228C34 76 147 -14 309 -14Z"/><path transform="translate(1398,0)" d="M228 0H360V580H564V700H24V580H228Z"/><path transform="translate(1956,0)" d="M122 0H350L440 622H458L548 0H776L868 700H737L669 92H651L563 700H335L247 92H229L161 700H30Z"/><path transform="translate(2824,0)" d="M66 0H198V700H66Z"/><path transform="translate(3058,0)" d="M66 0H196V610H214L353 0H604V700H474V90H456L317 700H66Z"/></g>
+          <g transform="translate(476.8,86.13) scale(0.072655,-0.072655)" fill="#76B900"><path d="M16 -246H186C246 -246 288 -204 288 -144V166C288 185 297 195 315 195H430V315H315C297 315 288 325 288 344V654C288 714 246 756 186 756H16V648H139C157 648 166 638 166 618V344C166 299 197 264 244 264H260V246H244C197 246 166 211 166 166V-108C166 -128 157 -138 139 -138H16Z"/></g>
+        </svg>
+      </div>
+    </div>
+    <div class="titles">
+      <div class="ctitle cn">商務開發專員</div>
+      <div class="etitle mono">Business Development</div>
+    </div>
+    <div class="contact">
+      <div class="row mono"><span class="dot"></span>+886 910 109 489</div>
+      <div class="row mono"><span class="dot"></span>abc24679220@gmail.com<span class="arr"> ↗</span></div>
+    </div>
+    <div class="foot mono">維思孿生科技 · VisTwin Technology · vistwin.com</div>
+  </div>
+</div>
+</body></html>
