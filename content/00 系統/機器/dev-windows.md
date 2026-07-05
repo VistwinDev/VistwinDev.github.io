@@ -3,7 +3,7 @@ host: dev-windows
 os: win32
 bridge_port: 8787
 n8n_active: 9
-updated: 2026-07-05T14:40:14.107Z
+updated: 2026-07-05T14:50:14.111Z
 ---
 
 # dev-windows
