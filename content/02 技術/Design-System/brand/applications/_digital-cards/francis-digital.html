@@ -28,8 +28,13 @@ html,body{background:#3F3F46}
 .tag-en{position:absolute;left:42px;top:242px;font-size:11px;letter-spacing:.22em;color:#9DD11F;text-transform:uppercase}
 .tag-cn{position:absolute;left:42px;top:268px;font-size:14px;letter-spacing:.14em;color:#A1A1AA}
 
-.info{position:absolute;top:350px;left:0;width:540px;height:350px;background:#FFFFFF;padding:34px 40px 28px;display:flex;flex-direction:column;justify-content:space-between}
+.info{position:absolute;top:350px;left:0;width:540px;height:350px;background-color:#FFFFFF;background-image:linear-gradient(rgba(24,24,27,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(24,24,27,.035) 1px,transparent 1px);background-size:38px 38px;background-position:0 30px;padding:34px 40px 28px;display:flex;flex-direction:column;justify-content:space-between}
 .accent{position:absolute;top:0;left:0;width:64px;height:3px;background:#76B900}
+.itick{position:absolute;width:16px;height:16px}
+.itick.tl{top:20px;left:20px;border-top:1px solid #D4D4D8;border-left:1px solid #D4D4D8}
+.itick.tr{top:20px;right:20px;border-top:1px solid #D4D4D8;border-right:1px solid #D4D4D8}
+.itick.bl{bottom:20px;left:20px;border-bottom:1px solid #D4D4D8;border-left:1px solid #D4D4D8}
+.itick.br{bottom:20px;right:20px;border-bottom:1px solid #D4D4D8;border-right:1px solid #D4D4D8}
 .who{display:flex;justify-content:space-between;align-items:flex-start}
 .cname{font-size:36px;font-weight:500;letter-spacing:.06em;color:#18181B;line-height:1}
 .ename{font-size:13px;letter-spacing:.04em;color:#71717A;margin-top:9px}
@@ -66,6 +71,7 @@ html,body{background:#3F3F46}
 
   <div class="info">
     <div class="accent"></div>
+    <div class="itick tl"></div><div class="itick tr"></div><div class="itick bl"></div><div class="itick br"></div>
     <div class="idblock">
     <div class="who">
       <div>
